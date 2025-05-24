@@ -22,12 +22,9 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     address: {
-      type: String,
-      required: true,
-    },
-    coupon: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Coupon",
+      ref: "Address",
+      required: true,
     },
     status: {
       type: String,

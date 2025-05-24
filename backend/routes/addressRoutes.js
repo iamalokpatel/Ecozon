@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", protect, getAllAddresses);
 router.post("/add", protect, addAddress);
-router.put("/:id", protect, getAddressById);
+router.get("/:id", protect, getAddressById);
 router.put("/:id", protect, updateAddress);
 router.delete("/:id", protect, deleteAddress);
 router.patch("/:id/default", protect, setDefaultAddress);
