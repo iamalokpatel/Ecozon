@@ -1,23 +1,31 @@
 import Cart from "../models/Cart.js";
 
-// Add a Product In Cart
+// Add or Increase Product Quantity in Cart
 export const addToCart = async (req, res) => {
-  const { productId, quantity } = req.body;
+  const { productId, quantity = 1 } = req.body;
   let cart = await Cart.findOne({ user: req.user._id });
 
   if (!cart) {
+    // Create new cart if not exists
     cart = new Cart({ user: req.user._id, items: [] });
   }
+
   const itemIndex = cart.items.findIndex(
     (item) => item.product.toString() === productId
   );
+
   if (itemIndex > -1) {
-    return res.status(400).json({ message: "Product already in cart" });
+    // ✅ If product already exists → increase quantity
+    cart.items[itemIndex].quantity += quantity;
   } else {
+    // ✅ If new product → push it
     cart.items.push({ product: productId, quantity });
   }
+
   await cart.save();
-  res.json(cart);
+  await cart.populate("items.product"); // optional but useful
+
+  res.status(200).json({ message: "Cart updated", cart });
 };
 
 // Get all Cart Product
@@ -26,6 +34,30 @@ export const getCart = async (req, res) => {
     "items.product"
   );
   res.json(cart || { items: [] });
+};
+
+//UpdateD Cart
+// POST /api/cart/update
+export const updateCartItem = async (req, res) => {
+  const { userId, productId, action } = req.body;
+
+  const cart = await Cart.findOne({ user: userId });
+  if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+  const item = cart.items.find((i) => i.product.toString() === productId);
+  if (!item) return res.status(404).json({ message: "Item not found in cart" });
+
+  if (action === "increase") {
+    item.quantity += 1;
+  } else if (action === "decrease") {
+    item.quantity -= 1;
+    if (item.quantity <= 0) {
+      cart.items = cart.items.filter((i) => i.product.toString() !== productId);
+    }
+  }
+
+  await cart.save();
+  res.json({ message: "Cart updated", cart });
 };
 
 // Remove Product From  Cart

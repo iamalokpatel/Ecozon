@@ -1,4 +1,5 @@
 "use client";
+
 import api from "@/utils/api";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
@@ -18,6 +19,22 @@ const CartPage = () => {
       setCartItems(res.data.cart.items);
     } catch (error) {
       console.error("Error removing item:", error);
+    }
+  };
+
+  const handleQuantityChange = async (productId, action) => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await api.post(
+        "/cart/update",
+        { productId, action },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setCartItems(res.data.cart.items);
+    } catch (error) {
+      console.error("Error updating quantity:", error);
     }
   };
 
@@ -41,18 +58,12 @@ const CartPage = () => {
       router.push("/users/login");
       return;
     }
-    // if (role !== "user") {
-    //   alert("Unauthorized! Only User can access the Cart");
-    //   router.push("/");
-    //   return;
-    // }
 
     const fetchCart = async () => {
       const token = localStorage.getItem("token");
       const res = await api.get("/cart", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(res.data);
       setCartItems(res.data.items);
     };
     fetchCart();
@@ -86,7 +97,17 @@ const CartPage = () => {
         <>
           <div className="space-y-4 mb-6">
             {cartItems.map((item) => (
-              <CartItem key={item._id} item={item} onRemove={handleRemove} />
+              <CartItem
+                key={item._id}
+                item={item}
+                onRemove={handleRemove}
+                onIncrease={() =>
+                  handleQuantityChange(item.product._id, "increase")
+                }
+                onDecrease={() =>
+                  handleQuantityChange(item.product._id, "decrease")
+                }
+              />
             ))}
           </div>
 
