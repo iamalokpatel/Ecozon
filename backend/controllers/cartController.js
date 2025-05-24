@@ -39,9 +39,11 @@ export const getCart = async (req, res) => {
 //UpdateD Cart
 // POST /api/cart/update
 export const updateCartItem = async (req, res) => {
-  const { userId, productId, action } = req.body;
+  const userId = req.user._id;
+  const { productId, action } = req.body;
 
   const cart = await Cart.findOne({ user: userId });
+  console.log(cart);
   if (!cart) return res.status(404).json({ message: "Cart not found" });
 
   const item = cart.items.find((i) => i.product.toString() === productId);
@@ -57,6 +59,7 @@ export const updateCartItem = async (req, res) => {
   }
 
   await cart.save();
+  await cart.populate("items.product");
   res.json({ message: "Cart updated", cart });
 };
 

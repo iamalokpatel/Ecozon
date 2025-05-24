@@ -24,6 +24,7 @@ const CartPage = () => {
 
   const handleQuantityChange = async (productId, action) => {
     const token = localStorage.getItem("token");
+
     try {
       const res = await api.post(
         "/cart/update",
