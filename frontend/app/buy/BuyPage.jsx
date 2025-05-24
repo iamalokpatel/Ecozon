@@ -17,14 +17,12 @@ const BuyPage = () => {
   const productId = searchParams.get("productId");
 
   const [productsToOrder, setProductsToOrder] = useState([]);
-  const [product, setProduct] = useState(null);
-  const [cartItems, setCartItems] = useState([]);
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  const [step, setStep] = useState(2); // Track current step
+  const [step, setStep] = useState(2);
 
   const token = typeof window !== "undefined" && localStorage.getItem("token");
 
@@ -37,7 +35,7 @@ const BuyPage = () => {
     if (mode === "single" && productId) {
       api
         .get(`/products/${productId}`)
-        .then((res) => setProductsToOrder(res.data))
+        .then((res) => setProductsToOrder([{ product: res.data, quantity: 1 }]))
         .catch(() => setError("Failed to fetch product"));
     } else if (mode === "cart") {
       api
@@ -77,29 +75,19 @@ const BuyPage = () => {
     }
   };
 
-  // const preparedProducts =
-  //   mode === "single" && product
-  //     ? [{ price: product.price, quantity: 1, name: product.title }]
-  //     : cartItems.map((item) => ({
-  //         price: item.product.price,
-  //         quantity: item.quantity,
-  //         name: item.product.title,
-  //       }));
-
   return (
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-2 space-y-6">
         {/* Step 1: Login */}
         {step >= 1 && (
-          <section className="border rounded p-4 bg-white">
-            <h2 className="text-lg font-bold mb-2">1. Login</h2>
+          <section className="rounded p-4 bg-white">
             <LoginPage />
           </section>
         )}
 
         {/* Step 2: Address */}
         {step >= 2 && (
-          <section className="border rounded p-4 bg-white">
+          <section className="rounded p-4 bg-white">
             <h2 className="text-lg font-bold mb-2">2. Delivery Address</h2>
             <DeliveryAddress onSelect={(addr) => setAddress(addr)} />
             <button
@@ -156,7 +144,13 @@ const BuyPage = () => {
 
       {/* Sticky Price Summary */}
       <div className="sticky top-6 h-fit">
-        <PriceDetails products={productsToOrder} />
+        {productsToOrder.length === 0 ? (
+          <div className="p-4 bg-white border rounded">
+            Loading price details...
+          </div>
+        ) : (
+          <PriceDetails products={productsToOrder} />
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 const PriceDetails = ({ products }) => {
   const total = products.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + item.product.price * item.quantity,
     0
   );
 
