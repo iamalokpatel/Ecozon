@@ -53,14 +53,17 @@ const AddressList = () => {
                 >
                   Edit
                 </button>
+                <div className="flex gap-2">
+                  <p className="font-semibold text-lg">{address.fullName}</p>
+                  <p>Home</p>
+                  <p>{address.mobile}</p>
+                </div>
 
-                <p className="font-semibold text-lg">{address.fullName}</p>
-                <p>{address.mobile}</p>
                 <p>
                   {address.addressLine}, {address.city}, {address.state} -{" "}
                   {address.pincode}
                 </p>
-                {address.landmark && <p>Landmark: {address.landmark}</p>}
+                {/* {address.landmark && <p>Landmark: {address.landmark}</p>} */}
               </div>
             ))}
           </div>

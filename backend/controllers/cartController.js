@@ -43,7 +43,6 @@ export const updateCartItem = async (req, res) => {
   const { productId, action } = req.body;
 
   const cart = await Cart.findOne({ user: userId });
-  console.log(cart);
   if (!cart) return res.status(404).json({ message: "Cart not found" });
 
   const item = cart.items.find((i) => i.product.toString() === productId);
