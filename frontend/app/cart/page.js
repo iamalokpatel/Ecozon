@@ -4,6 +4,7 @@ import api from "@/utils/api";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
 import CartItem from "@/components/CartItem";
+import CartSummary from "@/components/CartSummary";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -110,6 +111,7 @@ const CartPage = () => {
                 }
               />
             ))}
+            <CartSummary items={cartItems} />
           </div>
 
           <button
