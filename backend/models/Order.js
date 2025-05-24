@@ -1,0 +1,44 @@
+import mongoose from "mongoose";
+
+const orderSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    items: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          default: 1,
+        },
+      },
+    ],
+    address: {
+      type: String,
+      required: true,
+    },
+    coupon: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Coupon",
+    },
+    status: {
+      type: String,
+      enum: ["processing", "shipped", "delivered"],
+      default: "processing",
+    },
+    totalPrice: {
+      type: Number,
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("Order", orderSchema);
