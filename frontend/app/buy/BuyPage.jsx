@@ -52,20 +52,18 @@ const BuyPage = () => {
 
     try {
       const payload = {
+        mode, // "single" or "cart"
         address,
         paymentMethod,
       };
 
       if (mode === "single" && productId) {
         payload.productId = productId;
-        await api.post("/orders", payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } else if (mode === "cart") {
-        await api.post("/orders/cart", payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
       }
+
+      await api.post("/orders/buy", payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       setSuccess("Order placed successfully!");
       setTimeout(() => router.push("/orders"), 1200);
@@ -74,7 +72,6 @@ const BuyPage = () => {
       alert("Something went wrong!");
     }
   };
-
   return (
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-2 space-y-6">
@@ -89,7 +86,7 @@ const BuyPage = () => {
         {step >= 2 && (
           <section className="rounded p-4 bg-white">
             <h2 className="text-lg font-bold mb-2">2. Delivery Address</h2>
-            <DeliveryAddress onSelect={(addr) => setAddress(addr)} />
+            <DeliveryAddress onSelect={(address) => setAddress(address._id)} />
             <button
               className="mt-4 bg-orange-600 text-white px-4 py-2 rounded"
               onClick={() => {

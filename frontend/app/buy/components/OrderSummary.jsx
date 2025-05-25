@@ -2,14 +2,6 @@ const OrderSummary = ({ products, onQuantityChange }) => {
   return (
     <div className="mt-6">
       <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-      {/* {products.map((setProductsToOrder) => (
-        <div>
-
-
-        </div>
-
-
- ))} */}
       {products.map((item, index) => (
         <div
           key={item._id || index}

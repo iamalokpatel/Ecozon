@@ -1,87 +1,93 @@
+// controllers/orderController.js
+
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import Cart from "../models/Cart.js";
-import User from "../models/User.js";
 
-// Place a single product order
-export const placeOrder = async (req, res) => {
-  try {
-    const { productId, address } = req.body;
-
-    if (!productId || !address) {
-      return res
-        .status(400)
-        .json({ message: "Product ID and address are required" });
-    }
-
-    const product = await Product.findById(productId);
-    if (!product) return res.status(404).json({ message: "Product not found" });
-
-    const order = new Order({
-      user: req.user._id,
-      items: [{ product: product._id, quantity: 1 }],
-      totalPrice: product.price,
-      address,
-      paymentMethod: "cod",
-      paymentStatus: "pending",
-    });
-
-    await order.save();
-
-    res.status(201).json({ message: "Order placed successfully", order });
-  } catch (err) {
-    console.error("Order error:", err);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-// Place order for all cart items
-export const placeCartOrder = async (req, res) => {
+export const placeBuyOrder = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { address } = req.body;
+    const { mode, productId, address, paymentMethod = "cod" } = req.body;
 
     if (!address) {
       return res.status(400).json({ message: "Address is required" });
     }
 
-    const cart = await Cart.findOne({ user: userId }).populate("items.product");
+    if (mode === "single") {
+      if (!productId) {
+        return res
+          .status(400)
+          .json({ message: "Product ID is required for single order" });
+      }
 
-    if (!cart || cart.items.length === 0) {
-      return res.status(400).json({ message: "Cart is empty" });
+      const product = await Product.findById(productId);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+
+      const order = new Order({
+        user: userId,
+        items: [{ product: product._id, quantity: 1 }],
+        totalPrice: product.price,
+        address,
+        paymentMethod,
+        paymentStatus: "pending",
+      });
+      console.log(order);
+
+      await order.save();
+
+      return res
+        .status(201)
+        .json({ message: "Order placed successfully", order });
     }
 
-    const total = cart.items.reduce(
-      (acc, item) => acc + item.product.price * item.quantity,
-      0
-    );
+    if (mode === "cart") {
+      const cart = await Cart.findOne({ user: userId }).populate(
+        "items.product"
+      );
 
-    const order = new Order({
-      user: userId,
-      items: cart.items.map((item) => ({
-        product: item.product._id,
-        quantity: item.quantity,
-      })),
-      totalPrice: total,
-      address,
-      paymentMethod: "cod",
-      paymentStatus: "pending",
-    });
+      if (!cart || cart.items.length === 0) {
+        return res.status(400).json({ message: "Cart is empty" });
+      }
 
-    await order.save();
+      const total = cart.items.reduce(
+        (acc, item) => acc + item.product.price * item.quantity,
+        0
+      );
 
-    // Empty the cart after placing order
-    cart.items = [];
-    await cart.save();
+      const order = new Order({
+        user: userId,
+        items: cart.items.map((item) => ({
+          product: item.product._id,
+          quantity: item.quantity,
+        })),
+        totalPrice: total,
+        address,
+        paymentMethod,
+        paymentStatus: "pending",
+      });
 
-    res.status(201).json({ message: "Cart order placed successfully", order });
-  } catch (err) {
-    console.error("Error placing cart order:", err);
-    res.status(500).json({ message: "Internal Server Error" });
+      await order.save();
+
+      cart.items = [];
+      await cart.save();
+
+      return res
+        .status(201)
+        .json({ message: "Cart order placed successfully", order });
+    }
+
+    return res
+      .status(400)
+      .json({ message: "Invalid mode. Must be 'single' or 'cart'" });
+  } catch (error) {
+    console.error("Error placing order:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// Order summary for buy page
+////////////////////////   Order summary for buy page  ////////////////////////
 export const OrderSummary = async (req, res) => {
   const { mode, productId } = req.query;
   const userId = req.user._id;
@@ -125,7 +131,7 @@ export const OrderSummary = async (req, res) => {
   }
 };
 
-// Get all orders for user
+//////////////////   Get all orders for user   ///////////////////////
 export const getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })

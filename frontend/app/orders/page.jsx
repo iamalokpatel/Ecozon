@@ -55,10 +55,10 @@ const UserOrdersPage = () => {
               <strong>Product:</strong> {order.product?.title}
             </p>
             <p>
-              <strong>Price:</strong> ₹{order.product?.price}
+              <strong>Price:</strong> ₹{order?.totalPrice}
             </p>
             <p>
-              <strong>Address:</strong> {order.address}
+              <strong>Address:</strong> {order?.address}
             </p>
             <p>
               <strong>Ordered on:</strong>
