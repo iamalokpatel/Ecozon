@@ -33,7 +33,6 @@ export const placeBuyOrder = async (req, res) => {
         paymentMethod,
         paymentStatus: "pending",
       });
-      console.log(order);
 
       await order.save();
 
@@ -135,9 +134,12 @@ export const OrderSummary = async (req, res) => {
 export const getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
-      .populate("items.product")
+      .populate("items.product") // populates product details
+      .populate("address") // populates address details
       .sort({ createdAt: -1 });
-
+    orders.forEach((order) => {
+      console.log("Items for order:", order._id, order.items);
+    });
     res.json(orders);
   } catch (error) {
     console.error("Error fetching orders:", error);

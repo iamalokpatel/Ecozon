@@ -86,7 +86,7 @@ const BuyPage = () => {
         {step >= 2 && (
           <section className="rounded p-4 bg-white">
             <h2 className="text-lg font-bold mb-2">2. Delivery Address</h2>
-            <DeliveryAddress onSelect={(address) => setAddress(address._id)} />
+            <DeliveryAddress onSelect={(address) => setAddress(address)} />
             <button
               className="mt-4 bg-orange-600 text-white px-4 py-2 rounded"
               onClick={() => {
