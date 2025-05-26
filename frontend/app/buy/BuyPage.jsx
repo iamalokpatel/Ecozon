@@ -51,6 +51,9 @@ const BuyPage = () => {
     const updated = [...productsToOrder];
     updated[index].quantity = newQty;
     setProductsToOrder(updated);
+    productsToOrder.map((product) => {
+      console.log(product.quantity);
+    });
 
     if (mode === "cart") {
       api
