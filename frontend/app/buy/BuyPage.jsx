@@ -47,18 +47,43 @@ const BuyPage = () => {
     }
   }, [mode, productId]);
 
+  const onQuantityChange = (index, newQty) => {
+    const updated = [...productsToOrder];
+    updated[index].quantity = newQty;
+    setProductsToOrder(updated);
+
+    if (mode === "cart") {
+      api
+        .post(
+          "/cart/update",
+          {
+            productId: updated[index].product._id,
+            quantity: newQty,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .catch((err) => {
+          console.error("Failed to update cart quantity", err);
+        });
+    }
+  };
+
   const handleConfirmOrder = async () => {
     if (!address) return alert("Please select your address");
 
     try {
       const payload = {
-        mode, // "single" or "cart"
+        mode,
         address,
         paymentMethod,
       };
 
       if (mode === "single" && productId) {
+        const product = productsToOrder[0];
         payload.productId = productId;
+        payload.quantity = productsToOrder[0].quantity; // ✅ FIX: Send updated quantity
       }
 
       await api.post("/orders/buy", payload, {
@@ -72,17 +97,16 @@ const BuyPage = () => {
       alert("Something went wrong!");
     }
   };
+
   return (
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-2 space-y-6">
-        {/* Step 1: Login */}
         {step >= 1 && (
           <section className="rounded p-4 bg-white">
             <LoginPage />
           </section>
         )}
 
-        {/* Step 2: Address */}
         {step >= 2 && (
           <section className="rounded p-4 bg-white">
             <h2 className="text-lg font-bold mb-2">2. Delivery Address</h2>
@@ -99,17 +123,12 @@ const BuyPage = () => {
           </section>
         )}
 
-        {/* Step 3: Order Summary */}
         {step >= 3 && (
           <section className="border rounded p-4 bg-white">
             <h2 className="text-lg font-bold mb-2">3. Order Summary</h2>
             <OrderSummary
               products={productsToOrder}
-              onQuantityChange={(index, newQty) => {
-                const updated = [...productsToOrder];
-                updated[index].quantity = newQty;
-                setProductsToOrder(updated);
-              }}
+              onQuantityChange={onQuantityChange}
             />
             <button
               className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
@@ -120,7 +139,6 @@ const BuyPage = () => {
           </section>
         )}
 
-        {/* Step 4: Payment Options */}
         {step >= 4 && (
           <section className="border rounded p-4 bg-white">
             <h2 className="text-lg font-bold mb-2">4. Payment Options</h2>
@@ -139,7 +157,6 @@ const BuyPage = () => {
         )}
       </div>
 
-      {/* Sticky Price Summary */}
       <div className="sticky top-6 h-fit">
         {productsToOrder.length === 0 ? (
           <div className="p-4 bg-white border rounded">

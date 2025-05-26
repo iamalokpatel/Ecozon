@@ -12,7 +12,6 @@ const OrderSummary = ({ products, onQuantityChange }) => {
             alt={item.product.title}
             className="w-20 h-20 object-contain rounded"
           />
-
           <div className="flex-1">
             <p className="font-medium">{item.product.title}</p>
             <div className="flex items-center gap-2 mt-1">
@@ -33,7 +32,6 @@ const OrderSummary = ({ products, onQuantityChange }) => {
               </button>
             </div>
           </div>
-
           <div className="text-right font-semibold">
             ₹{item.product.price * item.quantity}
           </div>

@@ -52,7 +52,6 @@ export const addAddress = async (req, res) => {
 /// Get Addrss ByID
 
 export const getAddressById = async (req, res) => {
-  console.log("GetAddress");
   try {
     const addressId = req.params.id;
 

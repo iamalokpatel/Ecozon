@@ -7,7 +7,13 @@ import Cart from "../models/Cart.js";
 export const placeBuyOrder = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { mode, productId, address, paymentMethod = "cod" } = req.body;
+    const {
+      mode,
+      productId,
+      quantity,
+      address,
+      paymentMethod = "cod",
+    } = req.body;
 
     if (!address) {
       return res.status(400).json({ message: "Address is required" });
@@ -27,7 +33,7 @@ export const placeBuyOrder = async (req, res) => {
 
       const order = new Order({
         user: userId,
-        items: [{ product: product._id, quantity: 1 }],
+        items: [{ product: product._id, quantity: quantity }],
         totalPrice: product.price,
         address,
         paymentMethod,
@@ -137,9 +143,6 @@ export const getUserOrders = async (req, res) => {
       .populate("items.product") // populates product details
       .populate("address") // populates address details
       .sort({ createdAt: -1 });
-    orders.forEach((order) => {
-      console.log("Items for order:", order._id, order.items);
-    });
     res.json(orders);
   } catch (error) {
     console.error("Error fetching orders:", error);
