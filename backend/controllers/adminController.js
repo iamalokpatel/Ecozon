@@ -1,12 +1,14 @@
 import Order from "../models/Order.js";
 import User from "../models/User.js";
+import Address from "../models/Address.js";
 
 // For Find All Orders For Admin
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
-      .populate("user", "name email")
-      .populate("product", "title price");
+      .populate("user", "username")
+      .populate("address", "address city state pincode")
+      .populate("items.product", "title price");
 
     res.json({ total: orders.length, orders });
   } catch (err) {

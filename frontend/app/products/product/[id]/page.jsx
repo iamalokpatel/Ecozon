@@ -11,9 +11,21 @@ const ProductDetail = () => {
   const params = useParams();
   const id = params.id;
 
-  const handleAddToCart = async (id) => {
+  const checkLogin = () => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please login first.");
+      router.push("/users/login");
+      return false;
+    }
+    return true;
+  };
+
+  const handleAddToCart = async (id) => {
+    if (!checkLogin()) return;
+
     try {
+      const token = localStorage.getItem("token");
       await api.post(
         "/cart/add",
         { productId: id, quantity: 1 },
@@ -21,12 +33,14 @@ const ProductDetail = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       const productExists = cart.find((item) => item.productId === id);
 
       if (!productExists) {
         cart.push({ productId: id, quantity: 1 });
       }
+
       router.push("/cart");
     } catch (error) {
       if (error.response?.data?.message === "Product already in cart") {
@@ -39,6 +53,7 @@ const ProductDetail = () => {
   };
 
   const handleBuy = (id) => {
+    if (!checkLogin()) return;
     router.push("/buy?mode=single&productId=" + product._id);
   };
 

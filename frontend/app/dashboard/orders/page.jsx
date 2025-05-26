@@ -54,16 +54,33 @@ const AdminDashboard = () => {
               className="border rounded p-4 mb-4 bg-white shadow"
             >
               <p>
-                <strong>User:</strong> {order.user?.name} ({order.user?.email})
+                <strong>User:</strong> {order.user?.username}
               </p>
+
+              <div className="mt-2">
+                <strong>Items:</strong>
+                {order.items?.map((item, index) => (
+                  <div
+                    key={index}
+                    className="mb-2 pl-4 border-l-2 border-gray-300"
+                  >
+                    <p>
+                      <strong>Product:</strong> {item.product?.title}
+                    </p>
+                    <p>
+                      <strong>Price:</strong> ₹{item.product?.price}
+                    </p>
+                    <p>
+                      <strong>Quantity:</strong> {item.quantity}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
               <p>
-                <strong>Product:</strong> {order.product?.title}
-              </p>
-              <p>
-                <strong>Price:</strong> ₹{order.product?.price}
-              </p>
-              <p>
-                <strong>Address:</strong> {order.address}
+                <strong>Address:</strong> {order.address?.address},
+                {order.address?.city}, {order.address?.state} -
+                {order.address?.pincode}
               </p>
             </div>
           ))

@@ -9,6 +9,7 @@ import CartSummary from "@/components/CartSummary";
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const hasCheckedRef = useRef(false);
+  const [accessMessage, setAccessMessage] = useState("");
   const router = useRouter();
 
   const handleRemove = async (productId) => {
@@ -56,8 +57,18 @@ const CartPage = () => {
     const role = localStorage.getItem("userRole");
 
     if (!token) {
-      alert("Please login to access the Cart");
-      router.push("/users/login");
+      setAccessMessage("Only users can access this page.");
+      setTimeout(() => {
+        router.push("/users/login");
+      }, 2000);
+      return;
+    }
+
+    if (role !== "user") {
+      setAccessMessage("Only users can access this page.");
+      setTimeout(() => {
+        router.back(); // Redirect to previous page after 3 seconds
+      }, 2000);
       return;
     }
 
@@ -70,6 +81,14 @@ const CartPage = () => {
     };
     fetchCart();
   }, []);
+
+  if (accessMessage) {
+    return (
+      <div className="max-w-3xl mx-auto mt-8 p-8 shadow-[0_10px_25px_rgba(0,0,0,0.25)]  text-center text-red-600 font-semibold text-lg">
+        {accessMessage}
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
