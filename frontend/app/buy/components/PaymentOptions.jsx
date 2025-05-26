@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React from "react";
 import { CreditCard, Banknote, Wallet, IndianRupee } from "lucide-react";
 
 const paymentMethods = [

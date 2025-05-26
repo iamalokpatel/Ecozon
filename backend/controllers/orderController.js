@@ -7,13 +7,7 @@ import Cart from "../models/Cart.js";
 export const placeBuyOrder = async (req, res) => {
   try {
     const userId = req.user._id;
-    const {
-      mode,
-      productId,
-      quantity,
-      address,
-      paymentMethod = "cod",
-    } = req.body;
+    const { mode, productId, quantity, address, paymentMethod } = req.body;
 
     if (!address) {
       return res.status(400).json({ message: "Address is required" });

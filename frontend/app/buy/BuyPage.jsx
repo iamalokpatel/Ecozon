@@ -84,7 +84,6 @@ const BuyPage = () => {
       };
 
       if (mode === "single" && productId) {
-        const product = productsToOrder[0];
         payload.productId = productId;
         payload.quantity = productsToOrder[0].quantity; // ✅ FIX: Send updated quantity
       }
@@ -146,8 +145,8 @@ const BuyPage = () => {
           <section className="border rounded p-4 bg-white">
             <h2 className="text-lg font-bold mb-2">4. Payment Options</h2>
             <PaymentOptions
-              selectedOption={paymentMethod}
-              setSelectedOption={setPaymentMethod}
+              selectedMethod={paymentMethod}
+              setSelectedMethod={setPaymentMethod}
             />
             <button
               className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded"
