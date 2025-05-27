@@ -23,18 +23,30 @@ const LoginInfo = () => {
     }
   }, []);
   return (
-    <div className="border p-4 rounded mb-4 bg-white">
-      <div className="flex flex-col gap-2">
-        <h3 className="text-lg font-semibold">1. LOGIN</h3>
-        {user ? (
-          <div className="flex gap-2">
-            <p>{user.username}</p>
-            <p>{user.email}</p>
-          </div>
-        ) : (
-          <p>Loading user info...</p>
-        )}
+    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md mb-6">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-bold text-gray-800 tracking-wide">
+          1. LOGIN
+        </h3>
+        <span className="inline-block px-3 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
+          Verified
+        </span>
       </div>
+
+      {user ? (
+        <div className="mt-4 space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="bg-gray-100 rounded-full px-4 py-1 text-sm text-gray-700 font-medium">
+              {user.username}
+            </div>
+            <div className="bg-gray-100 rounded-full px-4 py-1 text-sm text-gray-700 font-medium">
+              {user.email}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <p className="mt-4 text-gray-500 text-sm">Loading user info...</p>
+      )}
     </div>
   );
 };

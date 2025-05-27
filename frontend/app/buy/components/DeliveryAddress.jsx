@@ -40,19 +40,19 @@ const DeliveryAddress = ({ onSelect }) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {addresses.length === 0 ? (
         <p className="text-center text-gray-500">No addresses found.</p>
       ) : (
         addresses.map((address) => (
           <div
             key={address._id}
-            className={`relative border rounded-xl p-4 shadow-sm cursor-pointer transition 
-              ${
-                selectedAddressId === address._id
-                  ? "border-green-500 bg-green-50"
-                  : "bg-gray-50 hover:border-gray-400"
-              }`}
+            className={`relative p-5 rounded-2xl transition-all duration-200 cursor-pointer shadow-sm border-2 group
+          ${
+            selectedAddressId === address._id
+              ? "border-green-500 bg-green-50 ring-2 ring-green-400/30"
+              : "border-gray-300 bg-white hover:border-blue-400 hover:shadow-md"
+          }`}
             onClick={() => handleSelect(address)}
           >
             <button
@@ -60,29 +60,33 @@ const DeliveryAddress = ({ onSelect }) => {
                 e.stopPropagation();
                 handleEdit(address._id);
               }}
-              className="absolute top-3 right-3 text-blue-600 hover:text-blue-800 font-semibold text-sm"
-              aria-label={`Edit address of ${address.fullName}`}
+              className="absolute top-4 right-4 text-sm font-semibold text-blue-600 hover:text-blue-800 transition"
             >
               Edit
             </button>
-            <div className="flex gap-2">
-              <p className="font-semibold text-lg">{address.fullName}</p>
-              <p>Home</p>
-              <p>{address.mobile}</p>
-            </div>
 
-            <p>
-              {address.addressLine}, {address.city}, {address.state} -{" "}
-              {address.pincode}
-            </p>
+            <div className="flex flex-col gap-1 text-gray-800">
+              <div className="flex items-center gap-3 mb-1">
+                <p className="text-lg font-bold">{address.fullName}</p>
+                <span className="text-sm text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                  Home
+                </span>
+                <span className="text-sm">{address.mobile}</span>
+              </div>
+              <p className="text-sm leading-relaxed text-gray-700">
+                {address.addressLine}, {address.city}, {address.state} –{" "}
+                {address.pincode}
+              </p>
+            </div>
           </div>
         ))
       )}
+
       {/* Add New Address Button */}
-      <div className="text-center mt-4">
+      <div className="text-center mt-6">
         <button
           onClick={handleAddNew}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2.5 rounded-xl hover:from-blue-700 hover:to-indigo-700 shadow-md transition duration-200"
         >
           + Add New Address
         </button>

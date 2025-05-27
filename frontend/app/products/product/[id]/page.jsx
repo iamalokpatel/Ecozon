@@ -91,40 +91,44 @@ const ProductDetail = () => {
     );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start bg-white p-8 rounded-3xl shadow-2xl">
+    <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start bg-gradient-to-br from-white via-gray-50 to-gray-100 p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-gray-200">
         <img
           src={product.image}
           alt={product.title}
-          className="w-full h-96 object-cover rounded-2xl transition-transform duration-300 hover:scale-105"
+          className="w-full h-[26rem] object-contain rounded-[1.5rem] transition-transform duration-500 ease-in-out hover:scale-105 hover:rotate-1 shadow-lg"
         />
 
         <div className="space-y-6">
-          <h1 className="text-4xl font-bold text-gray-800">{product.title}</h1>
-          <h2 className="text-xl font-medium text-gray-500">
+          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+            {product.title}
+          </h1>
+
+          <h2 className="text-2xl font-medium text-gray-500 italic">
             {product.subtitle}
           </h2>
-          <p className="text-gray-700 text-lg leading-relaxed">
+
+          <p className="text-gray-700 text-lg leading-relaxed border-l-4 border-yellow-400 pl-4">
             {product.description}
           </p>
 
-          <div className="text-3xl font-bold text-green-600">
+          <div className="text-4xl font-bold text-green-600 animate-pulse drop-shadow-md">
             ${product.price}
           </div>
 
-          <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex flex-wrap gap-4 mt-8">
             <button
               onClick={() => handleAddToCart(product._id)}
-              className="px-6 py-3 bg-yellow-500 text-white rounded-full font-semibold hover:bg-yellow-600 transition duration-300"
+              className="px-8 py-3 bg-yellow-500 text-white rounded-full font-bold shadow-lg hover:bg-yellow-600 transition duration-300 hover:scale-105 active:scale-95"
             >
-              Add to Cart
+              🛒 Add to Cart
             </button>
 
             <button
               onClick={() => handleBuy(product._id)}
-              className="px-6 py-3 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 transition duration-300"
+              className="px-8 py-3 bg-green-600 text-white rounded-full font-bold shadow-lg hover:bg-green-700 transition duration-300 hover:scale-105 active:scale-95"
             >
-              Buy Now
+              ⚡ Buy Now
             </button>
           </div>
         </div>

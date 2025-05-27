@@ -24,23 +24,26 @@ const paymentMethods = [
 
 const PaymentOptions = ({ selectedMethod, setSelectedMethod }) => {
   return (
-    <div className="border rounded-lg p-4 bg-white shadow-sm">
-      <h2 className="text-lg font-semibold mb-4 text-gray-800">
+    <div className="rounded-2xl p-6 bg-white shadow-xl border border-gray-200">
+      <h2 className="text-xl font-bold mb-5 text-gray-900">
         Select Payment Method
       </h2>
-      <div className="space-y-3">
+      <div className="space-y-4">
         {paymentMethods.map((method) => (
           <div
             key={method.value}
             onClick={() => setSelectedMethod(method.value)}
-            className={`flex items-center p-3 rounded-lg cursor-pointer border ${
-              selectedMethod === method.value
-                ? "border-blue-600 bg-blue-50"
-                : "border-gray-300 hover:border-blue-400"
-            }`}
+            className={`flex items-center p-4 rounded-2xl cursor-pointer transition-all duration-200 shadow-sm border-2 group
+          ${
+            selectedMethod === method.value
+              ? "border-green-500 bg-green-50 ring-2 ring-green-400/40"
+              : "border-gray-300 hover:border-blue-400 hover:shadow-md"
+          }`}
           >
-            <div className="mr-3">{method.icon}</div>
-            <div className="text-sm font-medium text-gray-800">
+            <div className="mr-4 text-xl text-blue-600 group-hover:scale-110 transition-transform">
+              {method.icon}
+            </div>
+            <div className="text-base font-medium text-gray-800">
               {method.label}
             </div>
           </div>

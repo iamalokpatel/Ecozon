@@ -91,8 +91,8 @@ const CartPage = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
-      <h2 className="text-xl font-bold mb-8 text-center text-gray-500">
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <h2 className="text-2xl font-bold mb-10 text-gray-700 text-center">
         Your Shopping Cart
       </h2>
 
@@ -104,7 +104,7 @@ const CartPage = () => {
             className="w-60 h-30 opacity-80 mb-6"
           />
 
-          <p className="text-sm text-gray-600 mb-4 ">
+          <p className="text-md text-gray-600 mb-4">
             Your Cart is Currently Empty
           </p>
           <button
@@ -115,8 +115,9 @@ const CartPage = () => {
           </button>
         </div>
       ) : (
-        <>
-          <div className="space-y-4 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left: Cart Items */}
+          <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item) => (
               <CartItem
                 key={item._id}
@@ -130,16 +131,22 @@ const CartPage = () => {
                 }
               />
             ))}
-            <CartSummary items={cartItems} />
+            <button
+              onClick={handleGoToPlaceCartOrder}
+              className="mt-6 w-full bg-orange-500 text-white text-lg font-semibold py-3 rounded-lg hover:bg-orange-600 transition duration-300"
+            >
+              🛍️ Place Order
+            </button>
           </div>
 
-          <button
-            onClick={handleGoToPlaceCartOrder}
-            className="bg-orange-500 text-white text-lg font-semibold w-full py-4 rounded-lg hover:bg-orange-600 transition duration-300"
-          >
-            🛍️ Place Order
-          </button>
-        </>
+          {/* Right: Summary */}
+          <div className="bg-white border rounded-xl shadow-md p-6 h-fit sticky top-20">
+            <h3 className="text-xl font-semibold mb-4 text-gray-700">
+              Price Summary
+            </h3>
+            <CartSummary items={cartItems} />
+          </div>
+        </div>
       )}
     </div>
   );
