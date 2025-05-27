@@ -35,6 +35,10 @@ const DeliveryAddress = ({ onSelect }) => {
     onSelect?.(address); // Call parent handler
   };
 
+  const handleAddNew = () => {
+    router.push("/address/add");
+  };
+
   return (
     <div className="space-y-4">
       {addresses.length === 0 ? (
@@ -74,6 +78,15 @@ const DeliveryAddress = ({ onSelect }) => {
           </div>
         ))
       )}
+      {/* Add New Address Button */}
+      <div className="text-center mt-4">
+        <button
+          onClick={handleAddNew}
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          + Add New Address
+        </button>
+      </div>
     </div>
   );
 };

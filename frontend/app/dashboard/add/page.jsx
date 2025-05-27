@@ -95,12 +95,18 @@ const AddProducts = () => {
               } bg-white`}
               required
             >
-              <option value="choose">Choose Category</option>
-              <option value="mobile">Mobile</option>
+              <option value="">Choose Category</option>
+              <option value="mobiles">Mobiles</option>
               <option value="laptop">Laptop</option>
-              <option value="airbuds">Airbuds</option>
-              <option value="fashion">Fashion</option>
+              <option value="earbuds">Earbuds</option>
+              <option value="earphone">Earphone</option>
+              <option value="watch">Watch</option>
+              <option value="projector">Projector</option>
+              <option value="camera">Camera</option>
+              <option value="projector">Projector</option>
+              <option value="speaker">Speaker</option>
               <option value="electronic">Electronic</option>
+              <option value="fashion">Fashion</option>
               <option value="others">Others</option>
             </select>
             {categoryError && (

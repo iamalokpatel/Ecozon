@@ -128,11 +128,17 @@ const EditProduct = ({ params }) => {
               className="appearance-none w-full p-[6px] pl-2 mt-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
               required
             >
-              <option value="mobile">Mobile</option>
+              <option value="">Choose Category</option>
+              <option value="mobiles">Mobiles</option>
               <option value="laptop">Laptop</option>
-              <option value="airbuds">Airbuds</option>
-              <option value="fashion">Fashion</option>
+              <option value="earbuds">Earbuds</option>
+              <option value="earphone">Earphone</option>
+              <option value="watch">Watch</option>
+              <option value="camera">Camera</option>
+              <option value="projector">Projector</option>
+              <option value="speaker">Speaker</option>
               <option value="electronic">Electronic</option>
+              <option value="fashion">Fashion</option>
               <option value="others">Others</option>
             </select>
           </div>
