@@ -41,47 +41,54 @@ const AdminDashboard = () => {
   return (
     <>
       <div className="max-w-6xl w-full mx-auto p-6">
-        <p className="mb-4 text-lg">
-          Total Orders: <strong>{total}</strong>
+        <p className="mb-6 text-xl font-semibold text-gray-800">
+          Total Orders: <span className="text-blue-600 font-bold">{total}</span>
         </p>
 
         {orders.length === 0 ? (
-          <p>No orders found.</p>
+          <p className="text-gray-500 text-lg">No orders found.</p>
         ) : (
           orders.map((order) => (
             <div
               key={order._id}
-              className="border rounded p-4 mb-4 bg-white shadow"
+              className="border border-gray-200 rounded-xl p-6 mb-6 bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
             >
-              <p>
-                <strong>User:</strong> {order.user?.username}
+              <p className="text-lg font-medium text-gray-800 mb-2">
+                👤 <strong>User:</strong> {order.user?.username}
               </p>
 
-              <div className="mt-2">
-                <strong>Items:</strong>
-                {order.items?.map((item, index) => (
-                  <div
-                    key={index}
-                    className="mb-2 pl-4 border-l-2 border-gray-300"
-                  >
-                    <p>
-                      <strong>Product:</strong> {item.product?.title}
-                    </p>
-                    <p>
-                      <strong>Price:</strong> ₹{item.product?.price}
-                    </p>
-                    <p>
-                      <strong>Quantity:</strong> {item.quantity}
-                    </p>
-                  </div>
-                ))}
+              <div className="mt-4">
+                <p className="text-gray-700 font-semibold mb-2">🛒 Items:</p>
+                <div className="grid gap-4 pl-4 border-l-4 border-blue-200">
+                  {order.items?.map((item, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-50 p-3 rounded-lg border border-gray-100"
+                    >
+                      <p>
+                        <span className="font-semibold">📦 Product:</span>{" "}
+                        {item.product?.title}
+                      </p>
+                      <p>
+                        <span className="font-semibold">💰 Price:</span> ₹
+                        {item.product?.price}
+                      </p>
+                      <p>
+                        <span className="font-semibold">🔢 Quantity:</span>{" "}
+                        {item.quantity}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <p>
-                <strong>Address:</strong> {order.address?.address},
-                {order.address?.city}, {order.address?.state} -
-                {order.address?.pincode}
-              </p>
+              <div className="mt-4 text-gray-700">
+                <p>
+                  <span className="font-semibold">📍 Address:</span>{" "}
+                  {order.address?.address}, {order.address?.city},{" "}
+                  {order.address?.state} - {order.address?.pincode}
+                </p>
+              </div>
             </div>
           ))
         )}

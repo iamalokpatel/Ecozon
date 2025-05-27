@@ -17,7 +17,7 @@ const navItems = [
   },
 ];
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ onLinkClick }) => {
   const router = useRouter();
 
   return (
@@ -29,7 +29,10 @@ const AdminSidebar = () => {
         {navItems.map((item) => (
           <button
             key={item.label}
-            onClick={() => router.push(item.href)}
+            onClick={() => {
+              router.push(item.href);
+              if (onLinkClick) onLinkClick(); // 👈 Close sidebar on click
+            }}
             className="flex items-center gap-3 px-3 py-2 w-full text-left cursor-pointer rounded hover:bg-gray-50"
           >
             {item.icon}

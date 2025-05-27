@@ -16,7 +16,7 @@ const ProductDetail = () => {
     if (!token) {
       alert("Please login first.");
       router.push("/users/login");
-      return false;
+      return;
     }
     return true;
   };
