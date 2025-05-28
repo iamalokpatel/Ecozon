@@ -27,7 +27,7 @@ const UserOrdersPage = () => {
     if (role !== "user") {
       setAccessMessage("Only users can access this page.");
       setTimeout(() => {
-        router.back(); // Redirect to previous page after 3 seconds
+        router.back();
       }, 2000);
       return;
     }
@@ -48,7 +48,7 @@ const UserOrdersPage = () => {
 
   if (accessMessage) {
     return (
-      <div className="max-w-3xl mx-auto mt-8 p-8 shadow-[0_10px_25px_rgba(0,0,0,0.25)]  text-center text-red-600 font-semibold text-lg">
+      <div className="max-w-3xl mx-auto mt-8 p-8 shadow-[0_10px_25px_rgba(0,0,0,0.25)] text-center text-red-600 font-semibold text-lg">
         {accessMessage}
       </div>
     );
@@ -67,7 +67,8 @@ const UserOrdersPage = () => {
           {orders.map((order) => (
             <div
               key={order._id}
-              className="bg-white border border-gray-200 shadow-md rounded-2xl p-6 hover:shadow-lg transition-shadow"
+              onClick={() => router.push(`/orders/${order._id}`)}
+              className="bg-white border border-gray-200 shadow-md rounded-2xl p-6 hover:shadow-lg transition-shadow cursor-pointer"
             >
               <div className="mb-4">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">

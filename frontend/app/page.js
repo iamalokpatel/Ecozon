@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import ProductsPage from "./products/page";
 import FeaturedProducts from "@/components/FeturersProduct";
+import AllProductsList from "@/components/AllProductsList";
 
 const HomePage = () => {
   return (
@@ -28,7 +28,7 @@ const HomePage = () => {
         </div>
       </section>
       <section>
-        <ProductsPage />
+        <AllProductsList />
       </section>
     </div>
   );

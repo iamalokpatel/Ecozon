@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const ProjectCard = ({ product }) => {
+const ProductCard = ({ product }) => {
   const router = useRouter();
 
   const handleBuy = (id) => {
@@ -51,4 +51,4 @@ const ProjectCard = ({ product }) => {
   );
 };
 
-export default ProjectCard;
+export default ProductCard;

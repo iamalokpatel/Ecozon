@@ -1,7 +1,7 @@
 "use client";
 import api from "@/utils/api";
 import { useEffect, useState } from "react";
-import ProjectCard from "@/components/ProductCard";
+import ProductCard from "@/components/ProductCard";
 
 export default function CategoryPage() {
   const [categories, setCategories] = useState([]);
@@ -100,7 +100,7 @@ export default function CategoryPage() {
                 }
                 className="rounded p-4 transition center flex justify-center"
               >
-                <ProjectCard key={product._id} product={product} />
+                <ProductCard key={product._id} product={product} />
               </div>
             ))}
         </div>

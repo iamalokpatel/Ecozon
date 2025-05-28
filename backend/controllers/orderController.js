@@ -1,8 +1,9 @@
 // controllers/orderController.js
 
-import Order from "../models/Order.js";
-import Product from "../models/Product.js";
 import Cart from "../models/Cart.js";
+import Order from "../models/Order.js";
+import User from "../models/User.js";
+import Product from "../models/Product.js";
 
 export const placeBuyOrder = async (req, res) => {
   try {
@@ -28,13 +29,20 @@ export const placeBuyOrder = async (req, res) => {
       const order = new Order({
         user: userId,
         items: [{ product: product._id, quantity: quantity }],
-        totalPrice: product.price,
+        totalPrice: product.price * quantity,
         address,
         paymentMethod,
         paymentStatus: "pending",
       });
 
       await order.save();
+
+      // *** Update user orders array ***
+      await User.findByIdAndUpdate(
+        userId,
+        { $push: { orders: order._id } },
+        { new: true }
+      );
 
       return res
         .status(201)
@@ -68,6 +76,12 @@ export const placeBuyOrder = async (req, res) => {
       });
 
       await order.save();
+
+      await User.findByIdAndUpdate(
+        userId,
+        { $push: { orders: order._id } },
+        { new: true }
+      );
 
       cart.items = [];
       await cart.save();
@@ -127,6 +141,31 @@ export const OrderSummary = async (req, res) => {
   } catch (err) {
     console.error("Order summary error:", err);
     res.status(500).json({ error: "Server error" });
+  }
+};
+
+///GEt Orders BYId
+export const getOrderDetails = async (req, res) => {
+  const { orderId } = req.params;
+
+  try {
+    const order = await Order.findById(orderId)
+      .populate("items.product") // gets full product info
+      .populate("address"); // gets full address info
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Make sure the logged-in user is the owner
+    if (order.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Unauthorized access" });
+    }
+
+    res.json(order);
+  } catch (error) {
+    console.error("Error fetching order details:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
