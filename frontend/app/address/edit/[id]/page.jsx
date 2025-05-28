@@ -1,10 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import api from "@/utils/api";
 
 const EditAddress = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get("returnTo"); // ✅ Safe way
   const { id } = useParams();
 
   const [fullname, setFullname] = useState("");
@@ -63,8 +66,12 @@ const EditAddress = () => {
           },
         }
       );
-
-      router.push("/address"); // redirect after successful update
+      // ✅ Redirect back after success
+      if (returnTo) {
+        router.push(returnTo); // go back to Buy page with original params
+      } else {
+        router.push("/buy"); // fallback
+      }
     } catch (error) {
       console.error("Failed to update address:", error);
       alert("Error updating address.");

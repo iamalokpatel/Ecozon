@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import api from "@/utils/api";
 
 const AddAddress = () => {
@@ -13,6 +14,8 @@ const AddAddress = () => {
   const [landmark, setLandmark] = useState("");
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get("returnTo"); // ✅ Safe way
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,8 +39,12 @@ const AddAddress = () => {
           },
         }
       );
-
-      router.push("/address");
+      // ✅ Redirect back after success
+      if (returnTo) {
+        router.push(returnTo); // go back to Buy page with original params
+      } else {
+        router.push("/buy"); // fallback
+      }
     } catch (error) {
       console.error("Failed to add address:", error);
       alert("Error adding address.");

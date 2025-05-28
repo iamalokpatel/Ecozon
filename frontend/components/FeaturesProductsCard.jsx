@@ -25,7 +25,7 @@ const FeaturesProjectCard = ({ product }) => {
   return (
     <div
       onClick={handleClick}
-      className=" w-94.4 bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer "
+      className=" w-94.4 bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer  "
     >
       <div className="bg-gray-100 flex-1 overflow-hidden">
         <div className="w-full h-60 bg-gray-100 rounded-2xl">

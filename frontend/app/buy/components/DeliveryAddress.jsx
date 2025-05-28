@@ -26,17 +26,29 @@ const DeliveryAddress = ({ onSelect }) => {
     fetchAddresses();
   }, []);
 
-  const handleEdit = (id) => {
-    router.push(`/address/edit/${id}`);
+  // EDit Adresses
+  const handleEdit = (id, { mode = "cart", productId = null } = {}) => {
+    let returnTo = `/buy?mode=${mode}`;
+    if (mode === "single" && productId) {
+      returnTo += `&productId=${productId}`;
+    }
+
+    router.push(`/address/edit/${id}?returnTo=${encodeURIComponent(returnTo)}`);
+  };
+
+  /// Add NEw Addresses
+  const handleAddNew = ({ mode = "cart", productId = null } = {}) => {
+    let returnTo = `/buy?mode=${mode}`;
+    if (mode === "single" && productId) {
+      returnTo += `&productId=${productId}`;
+    }
+
+    router.push(`/address/add?returnTo=${encodeURIComponent(returnTo)}`);
   };
 
   const handleSelect = (address) => {
     setSelectedAddressId(address._id);
     onSelect?.(address); // Call parent handler
-  };
-
-  const handleAddNew = () => {
-    router.push("/address/add");
   };
 
   return (
