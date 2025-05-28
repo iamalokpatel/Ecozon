@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/utils/api";
 
 const AddAddress = () => {
@@ -15,18 +14,18 @@ const AddAddress = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const returnTo = searchParams.get("returnTo"); // ✅ Safe way
+  const returnTo = searchParams.get("returnTo");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const token = localStorage.getItem("token");
-      const res = await api.post(
+      await api.post(
         "/address/add",
         {
           fullName: fullname,
-          mobile: mobile,
+          mobile,
           pincode,
           addressLine: addressline,
           city,
@@ -39,12 +38,7 @@ const AddAddress = () => {
           },
         }
       );
-      // ✅ Redirect back after success
-      if (returnTo) {
-        router.push(returnTo); // go back to Buy page with original params
-      } else {
-        router.push("/buy"); // fallback
-      }
+      router.push(returnTo || "/buy");
     } catch (error) {
       console.error("Failed to add address:", error);
       alert("Error adding address.");

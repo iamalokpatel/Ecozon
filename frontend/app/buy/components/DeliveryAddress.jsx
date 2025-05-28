@@ -1,12 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/utils/api";
 
 const DeliveryAddress = ({ onSelect }) => {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Extract mode and productId from URL
+  const mode = searchParams.get("mode") || "cart";
+  const productId = searchParams.get("productId");
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -26,8 +31,7 @@ const DeliveryAddress = ({ onSelect }) => {
     fetchAddresses();
   }, []);
 
-  // EDit Adresses
-  const handleEdit = (id, { mode = "cart", productId = null } = {}) => {
+  const handleEdit = (id) => {
     let returnTo = `/buy?mode=${mode}`;
     if (mode === "single" && productId) {
       returnTo += `&productId=${productId}`;
@@ -36,8 +40,7 @@ const DeliveryAddress = ({ onSelect }) => {
     router.push(`/address/edit/${id}?returnTo=${encodeURIComponent(returnTo)}`);
   };
 
-  /// Add NEw Addresses
-  const handleAddNew = ({ mode = "cart", productId = null } = {}) => {
+  const handleAddNew = () => {
     let returnTo = `/buy?mode=${mode}`;
     if (mode === "single" && productId) {
       returnTo += `&productId=${productId}`;
@@ -48,7 +51,7 @@ const DeliveryAddress = ({ onSelect }) => {
 
   const handleSelect = (address) => {
     setSelectedAddressId(address._id);
-    onSelect?.(address); // Call parent handler
+    onSelect?.(address);
   };
 
   return (
@@ -60,11 +63,11 @@ const DeliveryAddress = ({ onSelect }) => {
           <div
             key={address._id}
             className={`relative p-5 rounded-2xl transition-all duration-200 cursor-pointer shadow-sm border-2 group
-          ${
-            selectedAddressId === address._id
-              ? "border-green-500 bg-green-50 ring-2 ring-green-400/30"
-              : "border-gray-300 bg-white hover:border-blue-400 hover:shadow-md"
-          }`}
+            ${
+              selectedAddressId === address._id
+                ? "border-green-500 bg-green-50 ring-2 ring-green-400/30"
+                : "border-gray-300 bg-white hover:border-blue-400 hover:shadow-md"
+            }`}
             onClick={() => handleSelect(address)}
           >
             <button
@@ -94,7 +97,6 @@ const DeliveryAddress = ({ onSelect }) => {
         ))
       )}
 
-      {/* Add New Address Button */}
       <div className="text-center mt-6">
         <button
           onClick={handleAddNew}

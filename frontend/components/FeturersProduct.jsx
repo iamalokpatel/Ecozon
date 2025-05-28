@@ -46,8 +46,8 @@ const FeaturedProducts = () => {
   }
 
   return (
-    <section className="py-10 bg-gray-100 rounded-2xl">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <section className="rounded-2xl">
+      <h2 className="text-2xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-16 after:h-1 after:bg-black after:mx-auto after:mt-2">
         Featured Products
       </h2>
 
@@ -58,7 +58,7 @@ const FeaturedProducts = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 4000 }}
         loop
-        className="w-full mx-auto !px-10"
+        className="w-full mx-auto "
         breakpoints={{
           0: {
             slidesPerView: 1, // For mobile
@@ -70,7 +70,7 @@ const FeaturedProducts = () => {
       >
         {products.map((product) => (
           <SwiperSlide key={product._id}>
-            <div className="bg-white rounded-2xl center overflow-hidden shadow-md hover:shadow-xl transition duration-300 transition-shadow duration-400 cursor-pointer  shadow-4xl transition-transform duration-500 hover:scale-[1.04] hover:shadow-2xl z-100">
+            <div className="bg-white rounded-2xl center overflow-hidden hover:shadow-xl transition duration-300 transition-shadow duration-400 cursor-pointer  shadow-4xl transition-transform duration-500 hover:scale-[1.04] hover:shadow-2xl z-100 mx-10 my-12">
               <FeaturesProjectCard key={product._id} product={product} />
             </div>
           </SwiperSlide>

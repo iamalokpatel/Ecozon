@@ -1,14 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import api from "@/utils/api";
 
 const EditAddress = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const returnTo = searchParams.get("returnTo"); // ✅ Safe way
   const { id } = useParams();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get("returnTo");
 
   const [fullname, setFullname] = useState("");
   const [mobile, setMobile] = useState("");
@@ -18,7 +17,6 @@ const EditAddress = () => {
   const [state, setState] = useState("");
   const [landmark, setLandmark] = useState("");
 
-  // Fetch address data on mount to prefill form
   useEffect(() => {
     const fetchAddress = async () => {
       try {
@@ -26,22 +24,27 @@ const EditAddress = () => {
         const res = await api.get(`/address/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const data = res.data.address;
 
-        setFullname(data.fullName || "");
-        setMobile(data.mobile || "");
-        setPincode(data.pincode || "");
-        setAddressLine(data.addressLine || "");
-        setCity(data.city || "");
-        setState(data.state || "");
-        setLandmark(data.landmark || "");
+        const data = res.data.address;
+        if (data) {
+          setFullname(data.fullName || "");
+          setMobile(data.mobile || "");
+          setPincode(data.pincode || "");
+          setAddressLine(data.addressLine || "");
+          setCity(data.city || "");
+          setState(data.state || "");
+          setLandmark(data.landmark || "");
+        } else {
+          alert("Address not found.");
+          router.push(returnTo || "/buy");
+        }
       } catch (error) {
         console.error("Failed to fetch address:", error);
         alert("Failed to load address data.");
       }
     };
 
-    fetchAddress();
+    if (id) fetchAddress();
   }, [id]);
 
   const handleSubmit = async (e) => {
@@ -61,17 +64,10 @@ const EditAddress = () => {
           landmark,
         },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
-      // ✅ Redirect back after success
-      if (returnTo) {
-        router.push(returnTo); // go back to Buy page with original params
-      } else {
-        router.push("/buy"); // fallback
-      }
+      router.push(returnTo || "/buy");
     } catch (error) {
       console.error("Failed to update address:", error);
       alert("Error updating address.");
