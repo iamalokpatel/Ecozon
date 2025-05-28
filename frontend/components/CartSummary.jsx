@@ -11,8 +11,8 @@ const CartSummary = ({ items }) => {
   const total = subtotal + tax;
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 w-full text-gray-800">
-      <h3 className="text-base font-semibold text-gray-700 pb-3 border-b border-gray-300 uppercase tracking-wide">
+    <div className="bg-white rounded-2xl  p-6 w-full text-gray-800">
+      <h3 className="text-base font-semibold text-gray-700 pb-3 border-b border-gray-100 uppercase tracking-wide">
         Price Details
       </h3>
 
@@ -25,17 +25,22 @@ const CartSummary = ({ items }) => {
           <span>Tax (10%)</span>
           <span>₹{tax.toFixed(2)}</span>
         </div>
-        <div className="flex justify-between text-green-600 font-medium">
+        <div className="flex justify-between">
           <span>Discount</span>
-          <span>− ₹{(subtotal * 0.1).toFixed(2)}</span>
+          <span className="text-green-600 text-xs">
+            − ₹{(subtotal * 0.1).toFixed(2)}
+          </span>
         </div>
         <div className="flex justify-between">
           <span>Delivery Charges</span>
-          <span className="text-green-600 font-medium">FREE</span>
+          <div>
+            <span className="line-through text-xs">₹40</span>
+            <span className="text-green-600 text-xs ml-2">Free</span>
+          </div>
         </div>
       </div>
 
-      <hr className="my-4 border-gray-300" />
+      <hr className="my-4 border-gray-100" />
 
       <div className="flex justify-between text-base font-semibold text-gray-900">
         <span>Total Amount</span>

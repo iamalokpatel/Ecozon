@@ -20,7 +20,7 @@ const UsersPage = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">
+      <h2 className="text-2xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-16 after:h-1 after:bg-black after:mx-auto after:mt-2">
         All Users
       </h2>
 
@@ -28,7 +28,7 @@ const UsersPage = () => {
         {users.map((user) => (
           <div
             key={user._id}
-            className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5"
+            className="bg-white w-auto border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5"
           >
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-semibold text-gray-800">

@@ -126,7 +126,7 @@ const BuyPage = () => {
         )}
 
         {step >= 3 && (
-          <section className="border rounded p-4 bg-white">
+          <section className=" p-4 bg-white  rounded-2xl shadow-md p-6 space-y-4">
             <h2 className="text-lg font-bold mb-2">3. Order Summary</h2>
             <OrderSummary
               products={productsToOrder}
