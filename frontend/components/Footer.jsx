@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full py-10 px-6 mt-10 shadow-inner ">
+    <footer className="w-full h-atuo py-6 px-6 shadow-inner ">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10">
         {/* Left Section */}
         <div className="md:w-1/2 space-y-2">

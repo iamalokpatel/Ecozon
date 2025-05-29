@@ -22,16 +22,16 @@ const AdminSidebar = ({ onLinkClick }) => {
 
   return (
     <aside className="h-screen w-64 bg-gray-900 p-4 sticky top-0 bg-white rounded-2xl shadow-md">
-      <h1 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
+      <h1 className="text-2xl font-bold text-center text-2xl font-bold tracking-wide text-center text-gray-800 mb-2 uppercase relative after:content-[''] after:block after:w-0 after:h-1 after:bg-black after:mx-auto after:mt-2">
         Admin Panel
       </h1>
-      <nav className="space-y-2">
+      <nav className="space-y-2 ml-3">
         {navItems.map((item) => (
           <button
             key={item.label}
             onClick={() => {
               router.push(item.href);
-              if (onLinkClick) onLinkClick(); // 👈 Close sidebar on click
+              if (onLinkClick) onLinkClick();
             }}
             className="flex items-center gap-3 px-3 py-2 w-full text-left cursor-pointer rounded hover:bg-gray-50"
           >
