@@ -15,16 +15,14 @@ const BuyPage = () => {
 
   const mode = searchParams.get("mode");
   const productId = searchParams.get("productId");
+  const token = typeof window !== "undefined" && localStorage.getItem("token");
 
   const [productsToOrder, setProductsToOrder] = useState([]);
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-
   const [step, setStep] = useState(2);
-
-  const token = typeof window !== "undefined" && localStorage.getItem("token");
 
   useEffect(() => {
     if (!token) {
@@ -32,28 +30,29 @@ const BuyPage = () => {
       return;
     }
 
-    if (mode === "single" && productId) {
-      api
-        .get(`/products/${productId}`)
-        .then((res) => setProductsToOrder([{ product: res.data, quantity: 1 }]))
-        .catch(() => setError("Failed to fetch product"));
-    } else if (mode === "cart") {
-      api
-        .get("/cart", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => setProductsToOrder(res.data.items))
-        .catch(() => setError("Failed to fetch cart items"));
-    }
+    const fetchData = async () => {
+      try {
+        if (mode === "single" && productId) {
+          const res = await api.get(`/products/${productId}`);
+          setProductsToOrder([{ product: res.data, quantity: 1 }]);
+        } else if (mode === "cart") {
+          const res = await api.get("/cart", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setProductsToOrder(res.data.items);
+        }
+      } catch {
+        setError("Failed to fetch products");
+      }
+    };
+
+    fetchData();
   }, [mode, productId]);
 
   const onQuantityChange = (index, newQty) => {
     const updated = [...productsToOrder];
     updated[index].quantity = newQty;
     setProductsToOrder(updated);
-    productsToOrder.map((product) => {
-      console.log(product.quantity);
-    });
 
     if (mode === "cart") {
       api
@@ -67,9 +66,7 @@ const BuyPage = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         )
-        .catch((err) => {
-          console.error("Failed to update cart quantity", err);
-        });
+        .catch((err) => console.error("Cart update failed", err));
     }
   };
 
@@ -81,12 +78,11 @@ const BuyPage = () => {
         mode,
         address,
         paymentMethod,
+        ...(mode === "single" && {
+          productId,
+          quantity: productsToOrder[0].quantity,
+        }),
       };
-
-      if (mode === "single" && productId) {
-        payload.productId = productId;
-        payload.quantity = productsToOrder[0].quantity; // ✅ FIX: Send updated quantity
-      }
 
       await api.post("/orders/buy", payload, {
         headers: { Authorization: `Bearer ${token}` },
@@ -104,17 +100,19 @@ const BuyPage = () => {
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-2 space-y-6">
         {step >= 1 && (
-          <section className="rounded p-4 bg-white">
+          <section className="rounded border border-gray-200 bg-white p-4 shadow-md">
             <LoginPage />
           </section>
         )}
 
         {step >= 2 && (
-          <section className="rounded p-4 bg-white">
-            <h2 className="text-lg font-bold mb-2">2. Delivery Address</h2>
-            <DeliveryAddress onSelect={(address) => setAddress(address)} />
+          <section className="shadow rounded bg-gray-100">
+            <h2 className="text-lg border-b border-gray-100 font-bold bg-white  pt-4 pb-4 pl-4">
+              2. Delivery Address
+            </h2>
+            <DeliveryAddress onSelect={setAddress} />
             <button
-              className="mt-4 bg-orange-600 text-white px-4 py-2 rounded"
+              className="w-full mt-3 bg-orange-600 text-white px-4 py-2.5 rounded"
               onClick={() => {
                 if (address) setStep(3);
                 else alert("Please select an address");
@@ -126,14 +124,16 @@ const BuyPage = () => {
         )}
 
         {step >= 3 && (
-          <section className=" p-4 bg-white  rounded-2xl shadow-md p-6 space-y-4">
-            <h2 className="text-lg font-bold mb-2">3. Order Summary</h2>
+          <section className="rounded bg-white shadow space-y-4">
+            <h2 className="text-lg font-bold mb-2 p-4 border-b border-gray-100">
+              3. Order Summary
+            </h2>
             <OrderSummary
               products={productsToOrder}
               onQuantityChange={onQuantityChange}
             />
             <button
-              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+              className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 rounded"
               onClick={() => setStep(4)}
             >
               Continue to Payment
@@ -142,8 +142,10 @@ const BuyPage = () => {
         )}
 
         {step >= 4 && (
-          <section className="border rounded p-4 bg-white">
-            <h2 className="text-lg font-bold mb-2">4. Payment Options</h2>
+          <section className="rounded bg-white shadow">
+            <h2 className="text-lg font-bold p-4 border-b border-gray-100">
+              4. Payment Options
+            </h2>
             <PaymentOptions
               selectedMethod={paymentMethod}
               setSelectedMethod={setPaymentMethod}

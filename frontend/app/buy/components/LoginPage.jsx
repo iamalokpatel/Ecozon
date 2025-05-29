@@ -23,7 +23,7 @@ const LoginInfo = () => {
     }
   }, []);
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md mb-6">
+    <div className="">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-bold text-gray-800 tracking-wide">
           1. LOGIN
@@ -34,7 +34,7 @@ const LoginInfo = () => {
       </div>
 
       {user ? (
-        <div className="mt-4 space-y-3">
+        <div className="mt-3 space-y-3">
           <div className="flex items-center gap-3">
             <div className="bg-gray-100 rounded-full px-4 py-1 text-sm text-gray-700 font-medium">
               {user.username}

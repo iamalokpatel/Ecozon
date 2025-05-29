@@ -3,7 +3,7 @@ const OrderSummary = ({ products, onQuantityChange }) => {
     <div className="space-y-2">
       {products.map((item, index) => (
         <div
-          key={item._id || index}
+          key={item.product._id || index}
           className="flex gap-4 items-center border-b border-gray-100 p-4 hover:shadow transition"
         >
           <img
