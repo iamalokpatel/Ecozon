@@ -15,10 +15,13 @@ const CartPage = () => {
   const handleRemove = async (productId) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await api.delete(`/cart/remove/${productId}`, {
+      await api.delete(`/cart/remove/${productId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setCartItems(res.data.cart.items);
+      const res = await api.get("/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCartItems(res.data.items);
     } catch (error) {
       console.error("Error removing item:", error);
     }
@@ -112,7 +115,6 @@ const CartPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left: Cart Items */}
           <div className="lg:col-span-2 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
             {cartItems.map((item) => (
               <CartItem
