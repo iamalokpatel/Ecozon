@@ -33,7 +33,7 @@ export default function OrderDetailsPage() {
   if (!order) return <p>Order not found.</p>;
 
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-8">
+    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-8 mb-12">
       <h1 className="text-2xl font-semibold mb-4 border-b border-gray-200 pb-2">
         Order #{order._id}
       </h1>

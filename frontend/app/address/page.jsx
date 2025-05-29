@@ -64,21 +64,21 @@ const AddressList = () => {
     <div className="min-h-screen bg-gray-100 py-10 px-4">
       <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-md">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          My Addresses
+          Manage Address
         </h2>
 
         {addresses.length === 0 ? (
           <p className="text-center text-gray-500">No addresses found.</p>
         ) : (
-          <div className="space-y-4 mb-6">
+          <div className="border-t border-l border-r border-gray-300">
             {addresses.map((address) => (
               <div
                 key={address._id}
-                className="relative border rounded-xl p-4 shadow-sm bg-gray-50"
+                className="relative border-b border-gray-300 p-6"
               >
                 <button
                   onClick={() => handleEdit(address._id)}
-                  className="absolute top-3 right-3 text-blue-600 hover:text-blue-800 font-semibold text-sm"
+                  className="absolute top-4 right-5 text-blue-600 hover:text-blue-800 text-xs cursor-pointer"
                   aria-label={`Edit address of ${address.fullName}`}
                 >
                   Edit
@@ -98,10 +98,10 @@ const AddressList = () => {
         )}
 
         {/* Add New Address Button */}
-        <div className="text-center mt-4">
+        <div className="text-center border border-gray-300 mt-4 w-full">
           <button
             onClick={handleAddNew}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+            className=" text-blue-500 px-6 py-3 rounded-lg hover:text-blue-800 transition font-semibold  uppercase cursor-pointer"
           >
             + Add New Address
           </button>

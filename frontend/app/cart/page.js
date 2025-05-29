@@ -105,7 +105,7 @@ const CartPage = () => {
           </p>
           <button
             onClick={() => router.push("/products")}
-            className="bg-blue-600 text-white px-12 py-3 rounded-md hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-12 py-3 rounded-md hover:bg-blue-700 transition cursor-pointer"
           >
             Shop Products
           </button>

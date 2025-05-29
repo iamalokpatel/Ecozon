@@ -67,7 +67,7 @@ const EditAddress = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      router.push(returnTo || "/buy");
+      router.push(returnTo || "/address");
     } catch (error) {
       console.error("Failed to update address:", error);
       alert("Error updating address.");

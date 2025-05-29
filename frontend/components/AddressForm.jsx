@@ -38,7 +38,7 @@ const AddAddress = () => {
           },
         }
       );
-      router.push(returnTo || "/buy");
+      router.push(returnTo || "/address");
     } catch (error) {
       console.error("Failed to add address:", error);
       alert("Error adding address.");

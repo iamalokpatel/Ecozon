@@ -55,61 +55,53 @@ const UserOrdersPage = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+    <div className="max-w-6xl mx-auto p-6 mb-12">
+      <h2 className="text-2xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-20 after:h-1 after:bg-black after:mx-auto after:mt-2">
         My Orders
       </h2>
 
       {orders.length === 0 ? (
         <p className="text-center text-gray-500">No orders found.</p>
       ) : (
-        <div className="grid gap-6">
+        <div className="flex flex-col gap-3">
           {orders.map((order) => (
             <div
               key={order._id}
               onClick={() => router.push(`/orders/${order._id}`)}
-              className="bg-white border border-gray-200 shadow-md rounded-2xl p-6 hover:shadow-lg transition-shadow cursor-pointer"
+              className="bg-white border border-gray-200 shadow-md rounded p-6 hover:shadow-lg transition-shadow cursor-pointer"
             >
-              <div className="mb-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  Products Ordered
-                </h3>
-                <ul className="space-y-1">
-                  {order.items.map((item) => (
-                    <li key={item._id} className="flex items-center gap-2">
-                      <span className="font-medium text-gray-700">
-                        {item.product?.title}
-                      </span>
-                      <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-2 py-0.5 rounded-full">
-                        Qty: {item.quantity}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="w-full flex justify-between items-start space-x-4">
+                <div className="relative w-20 h-20">
+                  <img
+                    src={order.items[0]?.product?.image}
+                    alt={order.items[0]?.product?.name || "Product Image"}
+                    className="w-20 h-20 object-cover rounded"
+                  />
+                  {order.items.length > 1 && (
+                    <div className="absolute top-16 left-2 bg-white  text-xs px-2 py-0.5 rounded shadow">
+                      +{order.items.length - 1} more
+                    </div>
+                  )}
+                </div>
+                <div className="flex justify-between items-center gap-12 ml-8 text-base text-gray-600">
+                  {order.items[0]?.product?.title}
+                </div>
+                <div className="text-sm text-gray-700">₹{order.totalPrice}</div>
+                <div className="text-sm text-gray-700">
+                  Status:{" "}
+                  <span
+                    className={`inline-block px-2 py-1 rounded-lg text-xs  ${
+                      order.status === "Delivered"
+                        ? "bg-green-100 text-green-800"
+                        : order.status === "Cancelled"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
               </div>
-
-              <p className="text-gray-700 mb-1">
-                <strong className="font-semibold text-gray-800">
-                  Total Price:
-                </strong>{" "}
-                ₹{order?.totalPrice}
-              </p>
-
-              <p className="text-gray-700 mb-1">
-                <strong className="font-semibold text-gray-800">
-                  Shipping Address:
-                </strong>{" "}
-                {typeof order.address === "string"
-                  ? order.address
-                  : `${order.address.fullName}, ${order.address.addressLine}, ${order.address.city}, ${order.address.state} - ${order.address.pincode}, Ph: ${order.address.mobile}`}
-              </p>
-
-              <p className="text-gray-700">
-                <strong className="font-semibold text-gray-800">
-                  Ordered on:
-                </strong>{" "}
-                {new Date(order.createdAt).toLocaleDateString()}
-              </p>
             </div>
           ))}
         </div>
