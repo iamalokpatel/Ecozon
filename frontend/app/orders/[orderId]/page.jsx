@@ -32,6 +32,8 @@ export default function OrderDetailsPage() {
   if (loading) return <p>Loading...</p>;
   if (!order) return <p>Order not found.</p>;
 
+  const address = order.address;
+
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-8 mb-12">
       <h1 className="text-2xl font-semibold mb-4 border-b border-gray-200 pb-2">
@@ -67,15 +69,19 @@ export default function OrderDetailsPage() {
         <h2 className="text-lg font-semibold border-b border-gray-200 pb-1 mb-3">
           Shipping Address
         </h2>
-        <p className="text-gray-800">
-          {order.address.fullName}
-          <br />
-          {order.address.street}, {order.address.city}
-          <br />
-          {order.address.state} - {order.address.pincode}
-          <br />
-          Phone: {order.address.mobile}
-        </p>
+        {address ? (
+          <p className="text-gray-800">
+            {address.fullName || "N/A"}
+            <br />
+            {address.addressLine || "N/A"}, {address.city || "N/A"}
+            <br />
+            {address.state || "N/A"} - {address.pincode || "N/A"}
+            <br />
+            Phone: {address.mobile || "N/A"}
+          </p>
+        ) : (
+          <p className="text-red-500">Shipping address not available.</p>
+        )}
       </section>
 
       <section className="mt-6">
@@ -90,12 +96,15 @@ export default function OrderDetailsPage() {
             >
               <div>
                 <p className="font-medium text-gray-900">
-                  {item.product.title}
+                  {item.product?.title || "Unknown Product"}
                 </p>
                 <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
               </div>
               <p className="font-semibold text-gray-900">
-                ₹{(item.product.price * item.quantity).toLocaleString()}
+                ₹
+                {item.product
+                  ? (item.product.price * item.quantity).toLocaleString()
+                  : "0"}
               </p>
             </li>
           ))}

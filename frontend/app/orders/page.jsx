@@ -64,46 +64,58 @@ const UserOrdersPage = () => {
         <p className="text-center text-gray-500">No orders found.</p>
       ) : (
         <div className="flex flex-col gap-3">
-          {orders.map((order) => (
-            <div
-              key={order._id}
-              onClick={() => router.push(`/orders/${order._id}`)}
-              className="bg-white border border-gray-200 shadow-md rounded p-6 hover:shadow-lg transition-shadow cursor-pointer"
-            >
-              <div className="w-full flex justify-between items-start space-x-4">
-                <div className="relative w-20 h-20">
-                  <img
-                    src={order.items[0]?.product?.image}
-                    alt={order.items[0]?.product?.name || "Product Image"}
-                    className="w-20 h-20 object-cover rounded"
-                  />
-                  {order.items.length > 1 && (
-                    <div className="absolute top-16 left-2 bg-white  text-xs px-2 py-0.5 rounded shadow">
-                      +{order.items.length - 1} more
+          {orders.map((order) => {
+            try {
+              const product = order.items[0]?.product;
+              return (
+                <div
+                  key={order._id}
+                  onClick={() => router.push(`/orders/${order._id}`)}
+                  className="bg-white border border-gray-200 shadow-md rounded p-6 hover:shadow-lg transition-shadow cursor-pointer"
+                >
+                  <div className="w-full flex justify-between items-start space-x-4">
+                    <div className="relative w-20 h-20">
+                      <img
+                        src={product?.image || "/placeholder.png"}
+                        alt={product?.name || "Product Image"}
+                        className="w-20 h-20 object-cover rounded"
+                      />
+                      {order.items.length > 1 && (
+                        <div className="absolute top-16 left-2 bg-white text-xs px-2 py-0.5 rounded shadow">
+                          +{order.items.length - 1} more
+                        </div>
+                      )}
                     </div>
-                  )}
+                    <div className="flex flex-col justify-between ml-8 text-base text-gray-600 gap-1">
+                      <div className="font-medium">
+                        {product?.title || "No product title"}
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-700 whitespace-nowrap">
+                      ₹{order.totalPrice}
+                    </div>
+                    <div className="text-sm text-gray-700 whitespace-nowrap">
+                      Status:{" "}
+                      <span
+                        className={`inline-block px-2 py-1 rounded-lg text-xs ${
+                          order.status === "Delivered"
+                            ? "bg-green-100 text-green-800"
+                            : order.status === "Cancelled"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-yellow-100 text-yellow-800"
+                        }`}
+                      >
+                        {order.status}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center gap-12 ml-8 text-base text-gray-600">
-                  {order.items[0]?.product?.title}
-                </div>
-                <div className="text-sm text-gray-700">₹{order.totalPrice}</div>
-                <div className="text-sm text-gray-700">
-                  Status:{" "}
-                  <span
-                    className={`inline-block px-2 py-1 rounded-lg text-xs  ${
-                      order.status === "Delivered"
-                        ? "bg-green-100 text-green-800"
-                        : order.status === "Cancelled"
-                        ? "bg-red-100 text-red-800"
-                        : "bg-yellow-100 text-yellow-800"
-                    }`}
-                  >
-                    {order.status}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
+              );
+            } catch (err) {
+              console.error("Error rendering order:", order._id, err);
+              return null;
+            }
+          })}
         </div>
       )}
     </div>

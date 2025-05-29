@@ -86,7 +86,7 @@ const EditAddress = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Address deleted successfully.");
-      router.push(returnTo || "/buy");
+      router.push(returnTo || "/address");
     } catch (error) {
       console.error("Failed to delete address:", error);
       alert("Error deleting address.");
