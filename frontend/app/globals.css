@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: black !important;
+  font-size: 24px !important; /* Controls icon size */
+  width: 40px !important; /* Optional: clickable area */
+  height: 40px !important; /* Optional: clickable area */
+  background: transparent; /* Remove background if any */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px !important; /* 👈 THIS is the key: sets actual arrow icon size */
+  font-weight: 200;
+}
