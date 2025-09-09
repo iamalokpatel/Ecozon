@@ -8,20 +8,23 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
-  background-color: gainsboro !important;
-  color: black !important;
-  font-size: 24px !important; /* Controls icon size */
-  width: 30px !important; /* Optional: clickable area */
-  height: 80px !important; /* Optional: clickable area */
-  background: transparent; /* Remove background if any */
+  /* Controls icon size */
   margin-left: -10px;
   margin-right: -10px;
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 20px !important; /* 👈 THIS is the key: sets actual arrow icon size */
+  color: black !important;
+  font-size: 14px !important; /* 👈 THIS is the key: sets actual arrow icon size */
   font-weight: 200;
+  background-color: gainsboro !important;
+  background: transparent; /* Remove background if any */
+  width: 30px !important; /* Optional: clickable area */
+  height: 80px !important; /* Optional: clickable area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Pagination container */

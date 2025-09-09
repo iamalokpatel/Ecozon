@@ -24,7 +24,7 @@ export default function AllProductsList() {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className="w-full mx-auto">
       {loading ? (
         <div className="flex justify-center py-10">
           <div className="w-12 h-12 border-4 border-gray-500 border-dashed rounded-full animate-spin"></div>
@@ -34,7 +34,7 @@ export default function AllProductsList() {
           No products found.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6  gap-4 flex justify-between items-center">
           {products
             .filter(
               (product) =>
@@ -47,7 +47,7 @@ export default function AllProductsList() {
                   `${product.title}-${product.price}` ||
                   `fallback-${index}`
                 }
-                className="rounded p-4 transition center flex justify-center"
+                className="rounded transition center flex justify-center"
               >
                 <ProductCard key={product._id} product={product} />
               </div>
