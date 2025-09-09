@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
   return (
     <div
       onClick={handleClick}
-      className=" w-74 bg-white  rounded-2xl overflow-hidden transition-shadow duration-400 cursor-pointer  shadow-4xl transition-transform duration-500 hover:scale-[1.10] hover:shadow-2xl  "
+      className=" w-74 bg-[#FFFFFF]   overflow-hidden transition-shadow duration-400 cursor-pointer  shadow-4xl transition-transform duration-500 hover:scale-[1.10] hover:shadow-2xl  "
     >
       <div className="w-full h-50">
         <img

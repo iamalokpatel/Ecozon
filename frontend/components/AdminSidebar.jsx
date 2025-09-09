@@ -21,7 +21,7 @@ const AdminSidebar = ({ onLinkClick }) => {
   const router = useRouter();
 
   return (
-    <aside className="h-screen w-64 bg-gray-900 p-4 sticky top-0 bg-white rounded-2xl shadow-md">
+    <aside className="h-screen w-64 bg-gray-900 p-4 sticky top-0 mt-2 bg-white shadow-md">
       <h1 className="text-2xl font-bold text-center text-2xl font-bold tracking-wide text-center text-gray-800 mb-2 uppercase relative after:content-[''] after:block after:w-0 after:h-1 after:bg-black after:mx-auto after:mt-2">
         Admin Panel
       </h1>

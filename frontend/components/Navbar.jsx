@@ -78,7 +78,7 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   return (
-    <nav className="w-full text-white h-20 sticky top-0 z-50 bg-[#0f1111] flex justify-between items-center px-4 border-b border-gray-600 font-[Montserrat]">
+    <nav className="w-full text-[#212121] h-20 sticky top-0 z-50 bg-[#FFFFFF] flex justify-between items-center px-4  font-[Montserrat]">
       <div className="flex items-center">
         <div
           className="md:hidden flex flex-col justify-between w-6 h-5 cursor-pointer mr-4"

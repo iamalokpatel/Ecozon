@@ -126,7 +126,7 @@ const ProductDetail = () => {
 
             <button
               onClick={() => handleBuy(product._id)}
-              className="px-8 py-3 bg-green-600 text-white rounded-full font-bold shadow-lg hover:bg-green-700 transition duration-300 hover:scale-105 active:scale-95"
+              className="px-8 py-3 bg-[#00FFE0] text-white rounded-full font-bold shadow-lg hover:bg-green-700 transition duration-300 hover:scale-105 active:scale-95"
             >
               Buy Now
             </button>

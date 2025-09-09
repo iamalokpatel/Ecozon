@@ -213,7 +213,7 @@ const EditProduct = ({ params }) => {
           <button
             type="button"
             onClick={handleDelete}
-            className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+            className="px-6 py-3 bg-[#FF3131] text-white rounded-lg hover:bg-red-600 transition"
           >
             Delete Product
           </button>
