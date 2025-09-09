@@ -84,9 +84,9 @@ const Navbar = () => {
           className="md:hidden flex flex-col justify-between w-6 h-5 cursor-pointer mr-4"
           onClick={toggleMenu}
         >
-          <span className="h-1 w-full bg-white rounded"></span>
-          <span className="h-1 w-full bg-white rounded"></span>
-          <span className="h-1 w-full bg-white rounded"></span>
+          <span className="h-1 w-full bg-black rounded"></span>
+          <span className="h-1 w-full bg-black rounded"></span>
+          <span className="h-1 w-full bg-black rounded"></span>
         </div>
         <div className="flex cursor-pointer" onClick={handleClick}>
           <img
@@ -101,8 +101,8 @@ const Navbar = () => {
       <ul
         ref={menuRef}
         className={`${
-          isMenuOpen ? "block" : "hidden"
-        } absolute top-20 left-0 w-full bg-[#0f1111] flex flex-col items-center gap-4 py-4 md:flex md:static md:flex-row md:w-auto md:gap-8 md:bg-transparent md:py-0`}
+          isMenuOpen ? "block text-white !w-[50%] h-screen " : "hidden "
+        } absolute top-20 left-0 w-full bg-[#0f1111]  flex flex-col items-center gap-4 py-4 md:flex md:static md:flex-row md:w-auto md:gap-8 md:bg-transparent md:py-0`}
       >
         <li className="hover:text-yellow-400" onClick={closeMenu}>
           <Link href="/">Home</Link>
