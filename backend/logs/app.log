@@ -33,3 +33,5 @@
 {"level":"error","message":"getaddrinfo ENOTFOUND ac-harsnkq-shard-00-00.sakl8ks.mongodb.net"}
 {"level":"error","message":"Operation `products.find()` buffering timed out after 10000ms"}
 {"level":"error","message":"Operation `products.find()` buffering timed out after 10000ms"}
+{"level":"error","message":"Operation `products.find()` buffering timed out after 10000ms"}
+{"level":"error","message":"Operation `products.find()` buffering timed out after 10000ms"}

@@ -108,20 +108,6 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-// GET /products/featured - top 3 most expensive products
-export const featureProducts = async (req, res) => {
-  try {
-    const featuredProducts = await Product.find({})
-      .sort({ price: -1 }) // Sort by price descending
-      .limit(6); // Limit to top 3
-
-    res.status(200).json({ products: featuredProducts });
-  } catch (err) {
-    console.error("Error fetching featured products:", err);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
 /// category
 export const CategorisedProduct = async (req, res) => {
   try {

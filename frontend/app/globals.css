@@ -8,18 +8,44 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
+  background-color: gainsboro !important;
   color: black !important;
   font-size: 24px !important; /* Controls icon size */
-  width: 40px !important; /* Optional: clickable area */
-  height: 40px !important; /* Optional: clickable area */
+  width: 30px !important; /* Optional: clickable area */
+  height: 80px !important; /* Optional: clickable area */
   background: transparent; /* Remove background if any */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 20px !important; /* 👈 THIS is the key: sets actual arrow icon size */
   font-weight: 200;
+}
+
+/* Pagination container */
+.custom-swiper .swiper-pagination {
+  bottom: 10px !important;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 6px; /* space between pills */
+}
+
+/* Base bullet (pill style) */
+.custom-swiper .swiper-pagination-bullet {
+  width: 20px;
+  height: 4px;
+  border-radius: 9999px;
+  background: gray;
+  opacity: 0.5;
+  transition: all 0.4s ease-in-out;
+}
+
+/* Active bullet (expand + darker color) */
+.custom-swiper .swiper-pagination-bullet-active {
+  width: 40px; /* expand horizontally */
+  background: black; /* active color */
+  opacity: 1;
 }
