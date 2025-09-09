@@ -52,9 +52,9 @@ export default function CategoryPage() {
       <div className="flex flex-wrap gap-3 mb-8">
         <button
           onClick={() => setSelected("")}
-          className={`px-4 h-8 text-sm rounded-full border ${
+          className={`px-4 h-8 text-sm rounded border ${
             selected === ""
-              ? "border border-green-600 rounded-xl text-green-600"
+              ? "border border-green-600 rounded-md text-green-600"
               : "bg-white text-gray-700 hover:bg-gray-100"
           }`}
         >
@@ -65,9 +65,9 @@ export default function CategoryPage() {
           <button
             key={cat}
             onClick={() => setSelected(cat)}
-            className={`px-4 py-1 h-8 text-sm rounded-full border capitalize ${
+            className={`px-4 py-1 h-8 text-sm rounded border capitalize ${
               selected === cat
-                ? "border border-green-600 rounded-xl text-green-600"
+                ? "border border-green-600 rounded-md text-green-600"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
