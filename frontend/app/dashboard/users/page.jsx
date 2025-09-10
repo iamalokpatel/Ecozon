@@ -27,7 +27,7 @@ const UsersPage = () => {
         {users.map((user) => (
           <div
             key={user._id}
-            className="bg-white w-auto border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5"
+            className="bg-white w-auto border border-gray-200 rounded shadow-sm hover:shadow-md transition-shadow p-5"
           >
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-semibold text-gray-800">

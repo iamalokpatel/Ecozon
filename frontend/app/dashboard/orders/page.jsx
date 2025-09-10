@@ -51,7 +51,7 @@ const AdminDashboard = () => {
           orders.map((order) => (
             <div
               key={order._id}
-              className="border border-gray-200 rounded-xl p-6 mb-6 bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
+              className="border border-gray-200 rounded p-6 mb-4 bg-white shadow-md hover:shadow-xl transition-shadow duration-300"
             >
               <p className="text-lg font-medium text-gray-800 mb-2">
                 <strong>User:</strong> {order.user?.username}
