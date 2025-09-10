@@ -4,17 +4,17 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full  py-6 px-6 shadow-inner">
+    <footer className="w-full  py-6 bg-[#1f1f1f]">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10">
         <div className="md:w-1/2 space-y-2">
-          <h2 className="text-2xl font-bold text-gray-800">Ecozon</h2>
-          <p className="text-gray-600">
+          <h2 className="text-2xl font-bold text-gray-400">Ecozon</h2>
+          <p className="text-gray-400">
             Find your dream home with ease. Explore the best properties in the
             city.
           </p>
         </div>
         <div>
-          <ul className="space-y-2 text-gray-700">
+          <ul className="space-y-2 text-white text-sm">
             <li>
               <Link href="/about" className="hover:underline">
                 About Us
@@ -40,7 +40,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="text-center mt-10 text-gray-500 text-sm">
+      <div className=" w-fulltext-center mt-10 pt-6 text-gray-500 text-sm border-t border-[#454d5e] flex text-align justify-center">
         &copy; {new Date().getFullYear()} Ecozon . All rights reserved.
       </div>
     </footer>

@@ -3,6 +3,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import Link from "next/link"; // 👈 Next.js Link use karenge
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -15,6 +16,7 @@ const FeaturedProducts = () => {
       description: "This is the first product description",
       price: 999,
       image: "/images/features1.webp",
+      category: "laptop", // 👈 category set
     },
     {
       _id: 2,
@@ -22,6 +24,7 @@ const FeaturedProducts = () => {
       description: "This is the second product description",
       price: 1499,
       image: "/images/features2.webp",
+      category: "mobiles", // 👈 category set
     },
     {
       _id: 3,
@@ -29,6 +32,7 @@ const FeaturedProducts = () => {
       description: "This is the third product description",
       price: 1999,
       image: "/images/features3.webp",
+      category: "camera", // 👈 category set
     },
   ];
 
@@ -49,17 +53,20 @@ const FeaturedProducts = () => {
       >
         {products.map((product) => (
           <SwiperSlide key={product._id}>
-            <div className="bg-black overflow-hidden mb-6 cursor-pointer">
-              <div className="w-full  overflow-hidden">
-                <div className="w-full h-60">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="object-obtain w-full h-full"
-                  />
+            {/* 👇 Link lagaya hai category page ke liye */}
+            <Link href={`/products?cat=${product.category}`}>
+              <div className="bg-black overflow-hidden mb-6 cursor-pointer">
+                <div className="w-full overflow-hidden">
+                  <div className="w-full h-60">
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
