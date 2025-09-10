@@ -56,7 +56,7 @@ const UserOrdersPage = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 mb-12">
-      <h2 className="text-2xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-20 after:h-1 after:bg-black after:mx-auto after:mt-2">
+      <h2 className="text-xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-20 after:h-1 after:bg-black after:mx-auto after:mt-2">
         My Orders
       </h2>
 

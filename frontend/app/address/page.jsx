@@ -61,20 +61,20 @@ const AddressList = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-md">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen py-4 px-4">
+      <div className="max-w-6xl mx-auto  p-4">
+        <h2 className=" text-xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-20 after:h-1 after:bg-black after:mx-auto after:mt-2">
           Manage Address
         </h2>
 
         {addresses.length === 0 ? (
           <p className="text-center text-gray-500">No addresses found.</p>
         ) : (
-          <div className="border-t border-l border-r border-gray-300">
+          <div className="">
             {addresses.map((address) => (
               <div
                 key={address._id}
-                className="relative border-b border-gray-300 p-6"
+                className="relative bg-[#FFFFFF] gap-2 mb-3 w-full h-32 border border-gray-200 shadow-md rounded p-8 hover:shadow-lg transition-shadow cursor-pointer"
               >
                 <button
                   onClick={() => handleEdit(address._id)}
