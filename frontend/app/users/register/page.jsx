@@ -12,10 +12,10 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/auth/register", {
+      const response = await api.post("/users/auth/register", {
+        username,
         email,
         password,
-        username,
       });
       if (response.status === 201) {
         localStorage.setItem("userId", response.data.user._id);

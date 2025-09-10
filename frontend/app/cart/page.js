@@ -94,7 +94,7 @@ const CartPage = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10 mb-36">
+    <div className="max-w-6xl mx-auto px-4 py-10">
       {cartItems.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-center">
           <img
