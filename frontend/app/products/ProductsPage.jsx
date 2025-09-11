@@ -70,8 +70,8 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="w-full mx-auto p-6">
-      <div className="flex flex-wrap gap-3 mb-8">
+    <div className="w-full mx-auto px-6 pt-8">
+      <div className="flex flex-wrap gap-3 mb-8 mt-2">
         <button
           onClick={() => handleCategoryChange("")}
           className={`px-4 h-8 text-sm rounded border ${
