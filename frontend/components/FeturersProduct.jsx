@@ -3,7 +3,8 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import Link from "next/link"; // 👈 Next.js Link use karenge
+import Link from "next/link";
+import Image from "next/image"; // 👈 Better than <img>
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -16,7 +17,7 @@ const FeaturedProducts = () => {
       description: "This is the first product description",
       price: 999,
       image: "/images/features1.webp",
-      category: "laptop", // 👈 category set
+      category: "laptop",
     },
     {
       _id: 2,
@@ -24,7 +25,7 @@ const FeaturedProducts = () => {
       description: "This is the second product description",
       price: 1499,
       image: "/images/features2.webp",
-      category: "mobiles", // 👈 category set
+      category: "mobiles",
     },
     {
       _id: 3,
@@ -32,7 +33,7 @@ const FeaturedProducts = () => {
       description: "This is the third product description",
       price: 1999,
       image: "/images/features3.webp",
-      category: "camera", // 👈 category set
+      category: "camera",
     },
   ];
 
@@ -53,17 +54,17 @@ const FeaturedProducts = () => {
       >
         {products.map((product) => (
           <SwiperSlide key={product._id}>
-            {/* 👇 Link lagaya hai category page ke liye */}
-            <Link href={`/products?cat=${product.category}`}>
-              <div className="bg-black overflow-hidden mb-6 cursor-pointer">
-                <div className="w-full overflow-hidden">
-                  <div className="w-full h-60">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
+            {/* ✅ Category lowercase in query param */}
+            <Link href={`/products?cat=${product.category.toLowerCase()}`}>
+              <div className="bg-black overflow-hidden mb-6 cursor-pointer relative">
+                <div className="w-full h-60">
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    width={600}
+                    height={400}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
             </Link>

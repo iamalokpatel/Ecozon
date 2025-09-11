@@ -2,7 +2,7 @@
 import api from "@/utils/api";
 import { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import { useSearchParams, useRouter, usePathname } from "next/navigation"; // 👈
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function ProductsPage() {
   const [categories, setCategories] = useState([]);
@@ -11,19 +11,22 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
 
   const searchParams = useSearchParams();
-  const router = useRouter(); // 👈
-  const pathname = usePathname(); // 👈
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const initialCategory = searchParams.get("cat"); // e.g. ?cat=laptop
+  // ✅ get cat param dynamically
+  const initialCategory = searchParams.get("cat");
 
-  // set default category from query param on first load
+  // ✅ update state whenever URL param changes (refresh ke bina)
   useEffect(() => {
     if (initialCategory) {
       setSelected(initialCategory.toLowerCase());
+    } else {
+      setSelected("");
     }
-  }, [initialCategory]);
+  }, [initialCategory]); // 👈 dependency fix
 
-  // Fetch categories
+  // ✅ Fetch categories once
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -36,7 +39,7 @@ export default function ProductsPage() {
     fetchCategories();
   }, []);
 
-  // Fetch products when category changes
+  // ✅ Fetch products whenever selected category changes
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -59,13 +62,12 @@ export default function ProductsPage() {
     fetchProducts();
   }, [selected]);
 
-  // 👇 handle category click (state + URL update both)
+  // ✅ category click handler (update URL)
   const handleCategoryChange = (cat) => {
-    setSelected(cat.toLowerCase());
     if (cat) {
       router.push(`${pathname}?cat=${cat.toLowerCase()}`);
     } else {
-      router.push(pathname); // reset to all data
+      router.push(pathname); // reset
     }
   };
 
