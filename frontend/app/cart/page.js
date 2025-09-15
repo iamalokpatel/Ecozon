@@ -94,7 +94,7 @@ const CartPage = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-4">
+    <div className="max-w-6xl mx-auto px-4 py-5">
       {cartItems.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-center">
           <img
@@ -114,7 +114,7 @@ const CartPage = () => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div className="lg:col-span-2 bg-white shadow-[0_0_4px_0_rgba(0,0,0,0.1)] transition-shadow">
             {cartItems.map((item) => (
               <CartItem
@@ -142,7 +142,7 @@ const CartPage = () => {
           </div>
 
           {/* Right: Summary */}
-          <div className="bg-white rounded shadow-md p-6 h-fit sticky top-20">
+          <div className="bg-white rounded shadow-md p-6 h-fit sticky top-23">
             <CartSummary items={cartItems} />
           </div>
         </div>
