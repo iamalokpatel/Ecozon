@@ -4,7 +4,7 @@ import React from "react";
 
 const CartItem = ({ item, onRemove, onIncrease, onDecrease }) => {
   return (
-    <div className="bg-white p-5 mb-4 flex flex-col md:flex-row items-center md:items-start justify-between border-b border-gray-50">
+    <div className="bg-white p-5 m-4 flex flex-col md:flex-row items-center md:items-start justify-between border-b border-gray-100">
       {/* Left: Image & Details */}
       <div className="flex items-center space-x-4 w-full md:w-2/3">
         <img

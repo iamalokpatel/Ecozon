@@ -115,7 +115,7 @@ const CartPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 rounded shadow-lg hover:shadow-xl transition-shadow">
+          <div className="lg:col-span-2 bg-white shadow-[0_0_4px_0_rgba(0,0,0,0.1)] transition-shadow">
             {cartItems.map((item) => (
               <CartItem
                 key={item._id}
@@ -134,7 +134,7 @@ const CartPage = () => {
             <div className="flex justify-end">
               <button
                 onClick={handleGoToPlaceCartOrder}
-                className="mt-4 mb-4 mr-4 w-auto px-16 bg-orange-500 text-white font-sans py-[10px] rounded-sm hover:bg-orange-600 transition font-semibold text-base shadow-md transition duration-300 tracking-wide uppercase"
+                className=" mb-4 mr-4 w-auto px-16 bg-orange-500 text-white font-sans py-[10px] rounded-sm hover:bg-orange-600 transition font-semibold text-base shadow-md transition duration-300 tracking-wide uppercase"
               >
                 PLACE ORDER
               </button>
