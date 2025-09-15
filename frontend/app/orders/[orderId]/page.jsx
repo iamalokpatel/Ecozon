@@ -35,7 +35,7 @@ export default function OrderDetailsPage() {
   const address = order.address;
 
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-8 mb-12">
+    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded p-6 my-4">
       <h1 className="text-2xl font-semibold mb-4 border-b border-gray-200 pb-2">
         Order #{order._id}
       </h1>
