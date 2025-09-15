@@ -10,7 +10,7 @@ const PriceDetails = ({ products }) => {
   const finalAmount = totalAmount - discount + deliveryCharge;
 
   return (
-    <div className="w-full max-w-md bg-white border border-gray-200 rounded-md shadow-sm p-5">
+    <div className="w-full max-w-md bg-white border border-gray-200 rounded shadow-sm p-5">
       <h2 className="text-gray-700 font-semibold text-lg mb-4 border-b pb-2">
         PRICE DETAILS
       </h2>

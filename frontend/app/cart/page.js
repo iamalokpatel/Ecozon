@@ -115,7 +115,7 @@ const CartPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+          <div className="lg:col-span-2 rounded shadow-lg hover:shadow-xl transition-shadow">
             {cartItems.map((item) => (
               <CartItem
                 key={item._id}
@@ -142,7 +142,7 @@ const CartPage = () => {
           </div>
 
           {/* Right: Summary */}
-          <div className="bg-white rounded-xl shadow-md p-6 h-fit sticky top-20">
+          <div className="bg-white rounded shadow-md p-6 h-fit sticky top-20">
             <CartSummary items={cartItems} />
           </div>
         </div>
