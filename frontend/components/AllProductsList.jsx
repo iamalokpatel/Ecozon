@@ -2,10 +2,15 @@
 import api from "@/utils/api";
 import { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
+import { useRouter } from "next/navigation";
 
 export default function AllProductsList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  // ✅ Limit products to show on homepage
+  const LIMIT = 18; // kitne products dikhane hain (change as per need)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,25 +39,41 @@ export default function AllProductsList() {
           No products found.
         </p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6  gap-4 flex justify-between items-center">
-          {products
-            .filter(
-              (product) =>
-                product && (product._id || (product.title && product.price))
-            )
-            .map((product, index) => (
-              <div
-                key={
-                  product._id ||
-                  `${product.title}-${product.price}` ||
-                  `fallback-${index}`
-                }
-                className="rounded transition center flex justify-center"
+        <>
+          {/* Limited Products */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {products
+              .slice(0, LIMIT) // ✅ show only first LIMIT products
+              .filter(
+                (product) =>
+                  product && (product._id || (product.title && product.price))
+              )
+              .map((product, index) => (
+                <div
+                  key={
+                    product._id ||
+                    `${product.title}-${product.price}` ||
+                    `fallback-${index}`
+                  }
+                  className="rounded transition flex justify-center"
+                >
+                  <ProductCard product={product} />
+                </div>
+              ))}
+          </div>
+
+          {/* Show All Button */}
+          {products.length > LIMIT && (
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={() => router.push("/products")}
+                className="px-6 py-2 text-sm font-medium bg-green-600 text-white rounded-md hover:bg-green-700 transition"
               >
-                <ProductCard key={product._id} product={product} />
-              </div>
-            ))}
-        </div>
+                Show All Products
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

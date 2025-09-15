@@ -6,7 +6,6 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function ProductsPage() {
   const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,17 +13,8 @@ export default function ProductsPage() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // ✅ get cat param dynamically
-  const initialCategory = searchParams.get("cat");
-
-  // ✅ update state whenever URL param changes (refresh ke bina)
-  useEffect(() => {
-    if (initialCategory) {
-      setSelected(initialCategory.toLowerCase());
-    } else {
-      setSelected("");
-    }
-  }, [initialCategory]); // 👈 dependency fix
+  // ✅ Always derive category from URL
+  const selected = searchParams.get("cat")?.toLowerCase() || "";
 
   // ✅ Fetch categories once
   useEffect(() => {
@@ -39,7 +29,7 @@ export default function ProductsPage() {
     fetchCategories();
   }, []);
 
-  // ✅ Fetch products whenever selected category changes
+  // ✅ Fetch products whenever category changes
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -72,8 +62,9 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="w-full mx-auto px-6 pt-8">
-      <div className="flex flex-wrap gap-3 mb-8 mt-2">
+    <div className="w-full mx-auto px-6 pt-4">
+      {/* Categories */}
+      <div className="flex flex-wrap gap-3 mb-6 mt-2">
         <button
           onClick={() => handleCategoryChange("")}
           className={`px-4 h-8 text-sm rounded border ${
@@ -100,6 +91,7 @@ export default function ProductsPage() {
         ))}
       </div>
 
+      {/* Products */}
       {loading ? (
         <div className="flex justify-center py-10">
           <div className="w-10 h-10 border-4 border-gray-500 border-dashed rounded-full animate-spin"></div>
@@ -109,7 +101,7 @@ export default function ProductsPage() {
           No products found in this category.
         </p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-4">
           {products
             .filter(
               (product) =>
