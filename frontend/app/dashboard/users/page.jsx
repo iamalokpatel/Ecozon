@@ -18,7 +18,7 @@ const UsersPage = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className=" min-h-screen p-6">
       <h2 className="text-2xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-16 after:h-1 after:bg-black after:mx-auto after:mt-2">
         All Users
       </h2>

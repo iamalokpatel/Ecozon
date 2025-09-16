@@ -97,7 +97,7 @@ const EditProduct = ({ params }) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10 bg-white rounded-2xl shadow-md mt-2">
+    <div className="max-w-4xl mx-auto px-6 py-8 bg-white rounded shadow-md my-9">
       <h2 className="text-3xl font-semibold text-gray-800 mb-8 text-center">
         Edit Product
       </h2>

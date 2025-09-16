@@ -91,7 +91,7 @@ const ProductDetail = () => {
     );
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16 center">
+    <div className="min-h-screen max-w-7xl mx-auto px-6 py-16 center">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start bg-gradient-to-br from-white via-gray-50 to-gray-100 p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-gray-200">
         <img
           src={product.image}
