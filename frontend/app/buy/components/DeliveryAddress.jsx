@@ -58,7 +58,7 @@ const DeliveryAddress = ({ onSelect }) => {
                 e.stopPropagation();
                 navigateTo(`/address/edit/${address._id}`);
               }}
-              className="absolute top-4 right-4 text-sm font-semibold text-blue-600 hover:text-blue-800"
+              className="absolute top-3 right-3 text-xs  text-blue-400 hover:text-blue-800 cursor-pointer"
             >
               Edit
             </button>
@@ -83,7 +83,7 @@ const DeliveryAddress = ({ onSelect }) => {
           onClick={() => navigateTo("/address/add")}
           className="w-full bg-white shadow  px-6 py-3 rounded  "
         >
-          <p className=" font-semibold text-blue-500 hover:text-blue-800">
+          <p className=" font-semibold text-blue-500 hover:text-blue-800 cursor-pointer">
             + Add New Address
           </p>
         </button>

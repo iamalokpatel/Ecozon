@@ -67,7 +67,7 @@ export default function ProductsPage() {
       <div className="flex flex-wrap gap-3 mb-6 mt-2">
         <button
           onClick={() => handleCategoryChange("")}
-          className={`px-4 h-8 text-sm rounded border ${
+          className={`px-4 h-8 text-sm rounded border cursor-pointer ${
             selected === ""
               ? "border border-green-600 rounded-md text-green-600"
               : "bg-white text-gray-700 hover:bg-gray-100"
@@ -80,7 +80,7 @@ export default function ProductsPage() {
           <button
             key={cat}
             onClick={() => handleCategoryChange(cat)}
-            className={`px-4 py-1 h-8 text-sm rounded border capitalize ${
+            className={`px-4 py-1 h-8 text-sm rounded border capitalize cursor-pointer ${
               selected === cat.toLowerCase()
                 ? "border border-green-600 rounded-md text-green-600"
                 : "bg-white text-gray-700 hover:bg-gray-100"

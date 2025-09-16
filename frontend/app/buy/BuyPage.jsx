@@ -112,7 +112,7 @@ const BuyPage = () => {
             </h2>
             <DeliveryAddress onSelect={setAddress} />
             <button
-              className="w-full mt-3 bg-orange-600 text-white px-4 py-2.5 rounded"
+              className="w-full mt-3 bg-orange-600 text-white px-4 py-2.5 rounded cursor-pointer"
               onClick={() => {
                 if (address) setStep(3);
                 else alert("Please select an address");
@@ -133,7 +133,7 @@ const BuyPage = () => {
               onQuantityChange={onQuantityChange}
             />
             <button
-              className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 rounded"
+              className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 rounded cursor-pointer"
               onClick={() => setStep(4)}
             >
               Continue to Payment
@@ -151,7 +151,7 @@ const BuyPage = () => {
               setSelectedMethod={setPaymentMethod}
             />
             <button
-              className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded"
+              className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded cursor-pointer"
               onClick={handleConfirmOrder}
             >
               Confirm Order

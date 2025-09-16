@@ -206,14 +206,14 @@ const EditProduct = ({ params }) => {
         <div className="md:col-span-2 flex justify-between mt-6">
           <button
             type="submit"
-            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition cursor-pointer"
           >
             Save Changes
           </button>
           <button
             type="button"
             onClick={handleDelete}
-            className="px-6 py-3 bg-[#FF3131] text-white rounded-lg hover:bg-red-600 transition"
+            className="px-6 py-3 bg-[#FF3131] text-white rounded-lg hover:bg-red-600 transition cursor-pointer"
           >
             Delete Product
           </button>

@@ -54,7 +54,7 @@ const FeaturedProducts = () => {
       >
         {products.map((product) => (
           <SwiperSlide key={product._id}>
-            {/* ✅ Category lowercase in query param */}
+            {/*  Category lowercase in query param */}
             <Link href={`/products?cat=${product.category.toLowerCase()}`}>
               <div className="bg-black overflow-hidden mb-6 cursor-pointer relative">
                 <div className="w-full h-60">

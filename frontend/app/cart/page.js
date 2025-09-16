@@ -134,7 +134,7 @@ const CartPage = () => {
             <div className="flex justify-end">
               <button
                 onClick={handleGoToPlaceCartOrder}
-                className=" mb-4 mr-4 w-auto px-16 bg-orange-500 text-white font-sans py-[10px] rounded-sm hover:bg-orange-600 transition font-semibold text-base shadow-md transition duration-300 tracking-wide uppercase"
+                className=" mb-4 mr-4 w-auto px-16 bg-orange-500 text-white font-sans py-[10px] rounded-sm hover:bg-orange-600 transition font-semibold text-base shadow-md transition duration-300 tracking-wide uppercase cursor-pointer"
               >
                 PLACE ORDER
               </button>

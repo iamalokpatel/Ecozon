@@ -17,6 +17,7 @@ export const getAllOrders = async (req, res) => {
   }
 };
 
+// For Find All Users For Admin
 export const getAllUsers = async (req, res) => {
   const users = await User.find().select("-password");
   res.json(users);

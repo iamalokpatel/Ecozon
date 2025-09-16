@@ -36,3 +36,6 @@
 {"level":"error","message":"Operation `products.find()` buffering timed out after 10000ms"}
 {"level":"error","message":"Operation `products.find()` buffering timed out after 10000ms"}
 {"level":"error","message":"read ECONNRESET"}
+{"level":"error","message":"read ECONNRESET"}
+{"level":"error","message":"read ECONNRESET"}
+{"level":"error","message":"read ECONNRESET"}

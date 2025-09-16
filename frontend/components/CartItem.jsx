@@ -38,14 +38,14 @@ const CartItem = ({ item, onRemove, onIncrease, onDecrease }) => {
         <div className="flex items-center border border-gray-200 rounded">
           <button
             onClick={() => onDecrease(item.product._id)}
-            className="px-3 py-1 text-gray-600 hover:text-gray-800 transition"
+            className="px-3 py-1 text-gray-600 hover:text-gray-800 transition cursor-pointer"
           >
             −
           </button>
           <span className="px-4 py-1 font-medium">{item.quantity}</span>
           <button
             onClick={() => onIncrease(item.product._id)}
-            className="px-3 py-1 text-gray-600 hover:text-gray-800 transition"
+            className="px-3 py-1 text-gray-600 hover:text-gray-800 transition cursor-pointer"
           >
             +
           </button>
@@ -53,7 +53,7 @@ const CartItem = ({ item, onRemove, onIncrease, onDecrease }) => {
 
         <button
           onClick={() => onRemove(item.product._id)}
-          className="text-red-500 hover:text-red-700 font-medium text-sm"
+          className="text-red-500 hover:text-red-700 font-medium text-sm cursor-pointer"
         >
           Remove
         </button>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import api from "@/utils/api";
 
@@ -9,8 +9,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState("");
   const router = useRouter();
-
-  // Ref for the menu <ul> element
+  const pathname = usePathname();
   const menuRef = useRef(null);
 
   const toggleMenu = () => {
@@ -58,10 +57,9 @@ const Navbar = () => {
     };
   }, []);
 
-  // Close menu on clicking outside of it
+  // Close menu on clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Agar menu open hai, aur click menu ke bahar hua hai to menu band kar do
       if (
         isMenuOpen &&
         menuRef.current &&
@@ -77,9 +75,16 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
+  // Helper for active link classes
+  const linkClasses = (path) =>
+    `hover:underline underline-offset-2 ${
+      pathname === path ? "underline" : ""
+    }`;
+
   return (
-    <nav className="w-full text-[#212121] h-18 sticky top-0 z-50 bg-[#FFFFFF] flex justify-between items-center px-4  font-[Montserrat]">
+    <nav className="w-full text-[#212121] h-18 sticky top-0 z-50 bg-[#FFFFFF] flex justify-between items-center px-4 font-[Montserrat]">
       <div className="flex items-center">
+        {/* Hamburger */}
         <div
           className="md:hidden flex flex-col justify-between w-6 h-5 cursor-pointer mr-4"
           onClick={toggleMenu}
@@ -88,6 +93,8 @@ const Navbar = () => {
           <span className="h-1 w-full bg-black rounded"></span>
           <span className="h-1 w-full bg-black rounded"></span>
         </div>
+
+        {/* Logo */}
         <div className="flex cursor-pointer" onClick={handleClick}>
           <img
             src="/images/logo.png"
@@ -98,69 +105,72 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Menu */}
       <ul
         ref={menuRef}
         className={`${
           isMenuOpen ? "block text-white !w-[50%] h-screen " : "hidden "
-        } absolute top-20 left-0 w-full bg-[#0f1111]  flex flex-col items-center gap-4 py-4 md:flex md:static md:flex-row md:w-auto md:gap-8 md:bg-transparent md:py-0`}
+        } absolute top-20 left-0 w-full bg-[#0f1111] flex flex-col items-center gap-4 py-4 
+          md:flex md:static md:flex-row md:w-auto md:gap-8 md:bg-transparent md:py-0`}
       >
-        <li className="hover:underline underline-offset-2" onClick={closeMenu}>
-          <Link href="/">Home</Link>
+        <li onClick={closeMenu}>
+          <Link href="/" className={linkClasses("/")}>
+            Home
+          </Link>
         </li>
 
         {isLoggedIn && userRole === "admin" && (
-          <li
-            className="hover:underline underline-offset-2"
-            onClick={closeMenu}
-          >
-            <Link href="/dashboard">Dashboard</Link>
+          <li onClick={closeMenu}>
+            <Link href="/dashboard" className={linkClasses("/dashboard")}>
+              Dashboard
+            </Link>
           </li>
         )}
 
-        <li className="hover:underline underline-offset-2" onClick={closeMenu}>
-          <Link href="/products">Products</Link>
+        <li onClick={closeMenu}>
+          <Link href="/products" className={linkClasses("/products")}>
+            Products
+          </Link>
         </li>
 
         {isLoggedIn && userRole === "user" && (
           <>
-            <li
-              className="hover:underline underline-offset-2"
-              onClick={closeMenu}
-            >
-              <Link href="/cart">Cart</Link>
+            <li onClick={closeMenu}>
+              <Link href="/cart" className={linkClasses("/cart")}>
+                Cart
+              </Link>
             </li>
-            <li
-              className="hover:underline underline-offset-2"
-              onClick={closeMenu}
-            >
-              <Link href="/address">Address</Link>
+            <li onClick={closeMenu}>
+              <Link href="/address" className={linkClasses("/address")}>
+                Address
+              </Link>
             </li>
-            <li
-              className="hover:underline underline-offset-2"
-              onClick={closeMenu}
-            >
-              <Link href="/orders">Orders</Link>
+            <li onClick={closeMenu}>
+              <Link href="/orders" className={linkClasses("/orders")}>
+                Orders
+              </Link>
             </li>
           </>
         )}
 
         {!isLoggedIn ? (
           <>
-            <li
-              className="hover:underline underline-offset-2"
-              onClick={closeMenu}
-            >
-              <Link href="/users/login">Login</Link>
+            <li onClick={closeMenu}>
+              <Link href="/users/login" className={linkClasses("/users/login")}>
+                Login
+              </Link>
             </li>
-            <li
-              className="hover:underline underline-offset-2"
-              onClick={closeMenu}
-            >
-              <Link href="/users/register">Register</Link>
+            <li onClick={closeMenu}>
+              <Link
+                href="/users/register"
+                className={linkClasses("/users/register")}
+              >
+                Register
+              </Link>
             </li>
           </>
         ) : (
-          <li className="hover:underline underline-offset-2">
+          <li>
             <button
               className="hover:underline underline-offset-2 cursor-pointer"
               onClick={handleLogout}

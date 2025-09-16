@@ -23,7 +23,7 @@ export const registerUser = async (req, res) => {
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "10d",
     });
     res.status(201).json({
       token,
@@ -55,7 +55,7 @@ export const loginUser = async (req, res) => {
       { id: user._id, role: user.role, username: user.username },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "10d",
       }
     );
     res.status(200).json({ token, user });

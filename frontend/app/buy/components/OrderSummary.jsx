@@ -18,7 +18,7 @@ const OrderSummary = ({ products, onQuantityChange }) => {
                 onClick={() =>
                   onQuantityChange(index, Math.max(1, item.quantity - 1))
                 }
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300"
+                className="bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300 cursor-pointer"
               >
                 −
               </button>
@@ -27,7 +27,7 @@ const OrderSummary = ({ products, onQuantityChange }) => {
               </span>
               <button
                 onClick={() => onQuantityChange(index, item.quantity + 1)}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300"
+                className="bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300 cursor-pointer"
               >
                 +
               </button>
