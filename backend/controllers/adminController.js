@@ -7,8 +7,8 @@ export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
       .populate("user", "username")
-      .populate("address", "address city state pincode")
-      .populate("items.product", "title price");
+      .populate("address", "addressLine city state pincode")
+      .populate("items.product", "title price image");
 
     res.json({ total: orders.length, orders });
   } catch (err) {

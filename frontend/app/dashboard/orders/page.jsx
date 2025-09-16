@@ -63,6 +63,11 @@ const AdminDashboard = () => {
                   <ol className="list-decimal ml-5 flex gap-6">
                     {order.items?.map((item, index) => (
                       <li key={index} className="p-3 rounded-lg">
+                        <img
+                          src={item.product?.image || "/placeholder.png"}
+                          alt={item.product?.title}
+                          className="w-16 h-16 rounded object-cover shadow-[0_2px_6px_0_rgba(0,0,0,0.15)]"
+                        />
                         <p>
                           <span className="font-semibold">Product:</span>{" "}
                           {item.product?.title}
@@ -84,7 +89,7 @@ const AdminDashboard = () => {
               <div className="mt-4 text-gray-700">
                 <p>
                   <span className="font-semibold">Address:</span>{" "}
-                  {order.address?.address}, {order.address?.city},{" "}
+                  {order.address?.addressLine}, {order.address?.city},{" "}
                   {order.address?.state} - {order.address?.pincode}
                 </p>
               </div>
