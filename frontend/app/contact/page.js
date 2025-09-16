@@ -9,6 +9,7 @@ export default function ContactPage() {
     message: "",
   });
   const [status, setStatus] = useState({ type: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,31 +17,34 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await api.post("/contacts/contact", formData);
       const data = res.data;
 
       setStatus({ type: "success", message: data.message });
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "" }); // reset form
     } catch (error) {
       console.error("Error sending email:", error);
-
       setStatus({
         type: "error",
-        message: "Failed to send message. Please try again.",
+        message: " Failed to send message. Please try again.",
       });
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setStatus({ type: "", message: "" });
+      }, 4000);
     }
-
-    setTimeout(() => {
-      setStatus({ type: "", message: "" });
-    }, 3000);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-2xl font-semibold text-center mb-6">Contact Us</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100 p-4">
+      <div className="bg-white rounded shadow-xl p-8 w-full max-w-md border border-gray-100">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">
+          Contact Us
+        </h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-700">
@@ -89,9 +93,12 @@ export default function ContactPage() {
 
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-200"
+            disabled={loading}
+            className={`bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-200 flex items-center justify-center ${
+              loading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           >
-            Send Message
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </form>
 
