@@ -67,9 +67,9 @@ export default function AllProductsList() {
             <div className="flex justify-center mt-4">
               <button
                 onClick={() => router.push("/products")}
-                className="px-6 py-2 text-sm font-medium bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                className="px-6 py-2 text-sm font-medium bg-gray-100 shadow-[0_0_4px_0_rgba(0,0,0,0.1)] text-gray-400 rounded-md cursor-pointer transition"
               >
-                Show All Products
+                See Collections
               </button>
             </div>
           )}

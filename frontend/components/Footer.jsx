@@ -16,23 +16,35 @@ const Footer = () => {
         <div>
           <ul className="space-y-2 text-white text-sm">
             <li>
-              <Link href="/about" className="hover:underline">
+              <Link
+                href="/about"
+                className="hover:underline underline-offset-2"
+              >
                 About Us
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="hover:underline">
+              <Link
+                href="/contact"
+                className="hover:underline underline-offset-2"
+              >
                 Contact Us
               </Link>
             </li>
 
             <li>
-              <Link href="/privacy" className="hover:underline">
+              <Link
+                href="/privacy"
+                className="hover:underline underline-offset-2"
+              >
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="hover:underline">
+              <Link
+                href="/terms"
+                className="hover:underline underline-offset-2"
+              >
                 Terms of Service
               </Link>
             </li>

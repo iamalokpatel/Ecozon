@@ -104,29 +104,41 @@ const Navbar = () => {
           isMenuOpen ? "block text-white !w-[50%] h-screen " : "hidden "
         } absolute top-20 left-0 w-full bg-[#0f1111]  flex flex-col items-center gap-4 py-4 md:flex md:static md:flex-row md:w-auto md:gap-8 md:bg-transparent md:py-0`}
       >
-        <li className="hover:text-yellow-400" onClick={closeMenu}>
+        <li className="hover:underline underline-offset-2" onClick={closeMenu}>
           <Link href="/">Home</Link>
         </li>
 
         {isLoggedIn && userRole === "admin" && (
-          <li className="hover:text-yellow-400" onClick={closeMenu}>
+          <li
+            className="hover:underline underline-offset-2"
+            onClick={closeMenu}
+          >
             <Link href="/dashboard">Dashboard</Link>
           </li>
         )}
 
-        <li className="hover:text-yellow-400" onClick={closeMenu}>
+        <li className="hover:underline underline-offset-2" onClick={closeMenu}>
           <Link href="/products">Products</Link>
         </li>
 
         {isLoggedIn && userRole === "user" && (
           <>
-            <li className="hover:text-yellow-400" onClick={closeMenu}>
+            <li
+              className="hover:underline underline-offset-2"
+              onClick={closeMenu}
+            >
               <Link href="/cart">Cart</Link>
             </li>
-            <li className="hover:text-yellow-400" onClick={closeMenu}>
+            <li
+              className="hover:underline underline-offset-2"
+              onClick={closeMenu}
+            >
               <Link href="/address">Address</Link>
             </li>
-            <li className="hover:text-yellow-400" onClick={closeMenu}>
+            <li
+              className="hover:underline underline-offset-2"
+              onClick={closeMenu}
+            >
               <Link href="/orders">Orders</Link>
             </li>
           </>
@@ -134,16 +146,27 @@ const Navbar = () => {
 
         {!isLoggedIn ? (
           <>
-            <li className="hover:text-yellow-400" onClick={closeMenu}>
+            <li
+              className="hover:underline underline-offset-2"
+              onClick={closeMenu}
+            >
               <Link href="/users/login">Login</Link>
             </li>
-            <li className="hover:text-yellow-400" onClick={closeMenu}>
+            <li
+              className="hover:underline underline-offset-2"
+              onClick={closeMenu}
+            >
               <Link href="/users/register">Register</Link>
             </li>
           </>
         ) : (
-          <li className="hover:text-yellow-400">
-            <button onClick={handleLogout}>Logout</button>
+          <li className="hover:underline underline-offset-2">
+            <button
+              className="hover:underline underline-offset-2 cursor-pointer"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           </li>
         )}
       </ul>
