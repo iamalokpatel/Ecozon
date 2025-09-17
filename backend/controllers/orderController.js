@@ -5,10 +5,11 @@ import Order from "../models/Order.js";
 import User from "../models/User.js";
 import Product from "../models/Product.js";
 
+/////////////////////// Place Buy Order ///////////////////////
 export const placeBuyOrder = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { mode, productId, quantity, address, paymentMethod } = req.body;
+    const { mode, productId, quantity, address } = req.body;
 
     if (!address) {
       return res.status(400).json({ message: "Address is required" });
@@ -28,16 +29,14 @@ export const placeBuyOrder = async (req, res) => {
 
       const order = new Order({
         user: userId,
-        items: [{ product: product._id, quantity: quantity }],
+        items: [{ product: product._id, quantity }],
         totalPrice: product.price * quantity,
         address,
-        paymentMethod,
-        paymentStatus: "pending",
+        paymentStatus: "pending", // paymentMethod removed
       });
 
       await order.save();
 
-      // *** Update user orders array ***
       await User.findByIdAndUpdate(
         userId,
         { $push: { orders: order._id } },
@@ -53,7 +52,6 @@ export const placeBuyOrder = async (req, res) => {
       const cart = await Cart.findOne({ user: userId }).populate(
         "items.product"
       );
-
       if (!cart || cart.items.length === 0) {
         return res.status(400).json({ message: "Cart is empty" });
       }
@@ -71,7 +69,6 @@ export const placeBuyOrder = async (req, res) => {
         })),
         totalPrice: total,
         address,
-        paymentMethod,
         paymentStatus: "pending",
       });
 
@@ -96,11 +93,40 @@ export const placeBuyOrder = async (req, res) => {
       .json({ message: "Invalid mode. Must be 'single' or 'cart'" });
   } catch (error) {
     console.error("Error placing order:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };
 
-////////////////////////   Order summary for buy page  ////////////////////////
+/////////////////////// Update Payment Method ///////////////////////
+export const updatePaymentMethod = async (req, res) => {
+  const { orderId } = req.params;
+  const { paymentMethod } = req.body;
+
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    if (order.user.toString() !== req.user._id.toString())
+      return res.status(403).json({ message: "Unauthorized access" });
+
+    if (order.paymentStatus !== "pending")
+      return res
+        .status(400)
+        .json({ message: "Cannot change payment method for processed orders" });
+
+    order.paymentMethod = paymentMethod;
+    await order.save();
+
+    res.json({ message: "Payment method updated successfully", order });
+  } catch (err) {
+    console.error("Error updating payment method:", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+/////////////////////// Order Summary ///////////////////////
 export const OrderSummary = async (req, res) => {
   const { mode, productId } = req.query;
   const userId = req.user._id;
@@ -140,24 +166,21 @@ export const OrderSummary = async (req, res) => {
     return res.status(400).json({ error: "Invalid mode" });
   } catch (err) {
     console.error("Order summary error:", err);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 };
 
-///GEt Orders BYId
+/////////////////////// Get Order Details ///////////////////////
 export const getOrderDetails = async (req, res) => {
   const { orderId } = req.params;
 
   try {
     const order = await Order.findById(orderId)
-      .populate("items.product") // gets full product info
-      .populate("address"); // gets full address info
+      .populate("items.product")
+      .populate("address");
 
-    if (!order) {
-      return res.status(404).json({ message: "Order not found" });
-    }
+    if (!order) return res.status(404).json({ message: "Order not found" });
 
-    // Make sure the logged-in user is the owner
     if (order.user.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Unauthorized access" });
     }
@@ -165,20 +188,23 @@ export const getOrderDetails = async (req, res) => {
     res.json(order);
   } catch (error) {
     console.error("Error fetching order details:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
-//////////////////   Get all orders for user   ///////////////////////
+/////////////////////// Get All User Orders ///////////////////////
 export const getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
-      .populate("items.product") // populates product details
-      .populate("address") // populates address details
+      .populate("items.product")
+      .populate("address")
       .sort({ createdAt: -1 });
+
     res.json(orders);
   } catch (error) {
     console.error("Error fetching orders:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 };

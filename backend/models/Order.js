@@ -28,8 +28,8 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ["upi", "card", "netbanking", , "cod"],
-      required: true,
+      enum: ["upi", "card", "netbanking", "cod"],
+      default: null, // because payment selected later
     },
     paymentStatus: {
       type: String,
@@ -38,11 +38,12 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["processing", "shipped", "delivered"],
+      enum: ["processing", "shipped", "delivered", "cancelled"],
       default: "processing",
     },
     totalPrice: {
       type: Number,
+      required: true,
     },
   },
   { timestamps: true }

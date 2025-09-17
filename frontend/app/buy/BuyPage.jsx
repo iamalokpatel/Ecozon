@@ -5,22 +5,18 @@ import { useSearchParams, useRouter } from "next/navigation";
 import api from "@/utils/api";
 import OrderSummary from "./components/OrderSummary";
 import PriceDetails from "./components/PriceDetails";
-import PaymentOptions from "@/app/buy/components/PaymentOptions";
 import LoginPage from "./components/LoginPage";
 import DeliveryAddress from "./components/DeliveryAddress";
 
 const BuyPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-
   const mode = searchParams.get("mode");
   const productId = searchParams.get("productId");
   const token = typeof window !== "undefined" && localStorage.getItem("token");
 
   const [productsToOrder, setProductsToOrder] = useState([]);
   const [address, setAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("cod");
-  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [step, setStep] = useState(2);
 
@@ -58,13 +54,8 @@ const BuyPage = () => {
       api
         .post(
           "/cart/update",
-          {
-            productId: updated[index].product._id,
-            quantity: newQty,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          { productId: updated[index].product._id, quantity: newQty },
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .catch((err) => console.error("Cart update failed", err));
     }
@@ -77,19 +68,18 @@ const BuyPage = () => {
       const payload = {
         mode,
         address,
-        paymentMethod,
         ...(mode === "single" && {
           productId,
           quantity: productsToOrder[0].quantity,
         }),
       };
 
-      await api.post("/orders/buy", payload, {
+      const res = await api.post("/orders/buy", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setSuccess("Order placed successfully!");
-      setTimeout(() => router.push("/orders"), 1200);
+      const orderId = res.data.order._id;
+      router.push(`/payments?orderId=${orderId}`);
     } catch (err) {
       console.error("Order error:", err);
       alert("Something went wrong!");
@@ -107,7 +97,7 @@ const BuyPage = () => {
 
         {step >= 2 && (
           <section className="shadow rounded bg-gray-100">
-            <h2 className="text-lg border-b border-gray-100 font-bold bg-white  pt-4 pb-4 pl-4">
+            <h2 className="text-lg border-b border-gray-100 font-bold bg-white pt-4 pb-4 pl-4">
               2. Delivery Address
             </h2>
             <DeliveryAddress onSelect={setAddress} />
@@ -134,29 +124,10 @@ const BuyPage = () => {
             />
             <button
               className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 rounded cursor-pointer"
-              onClick={() => setStep(4)}
+              onClick={handleConfirmOrder}
             >
               Continue to Payment
             </button>
-          </section>
-        )}
-
-        {step >= 4 && (
-          <section className="rounded bg-white shadow">
-            <h2 className="text-lg font-bold p-4 border-b border-gray-100">
-              4. Payment Options
-            </h2>
-            <PaymentOptions
-              selectedMethod={paymentMethod}
-              setSelectedMethod={setPaymentMethod}
-            />
-            <button
-              className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded cursor-pointer"
-              onClick={handleConfirmOrder}
-            >
-              Confirm Order
-            </button>
-            {success && <p className="text-green-600 mt-4">{success}</p>}
           </section>
         )}
       </div>
