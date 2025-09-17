@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import AddAddress from "@/components/AddressForm";
+import AddAddress from "@/components/AddAddress";
 
 export default function AddAddressPage() {
   return (
