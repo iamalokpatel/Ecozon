@@ -71,54 +71,61 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Search Products</h1>
-
+    <div className="min-h-screen max-w-6xl mx-auto p-4">
       {/* Filters */}
       <form
         onSubmit={handleSearch}
-        className="flex flex-col md:flex-row gap-4 mb-6 p-4 border rounded-lg shadow"
+        className="flex flex-row gap-2 mb-6 rounded"
       >
         <input
           type="text"
           placeholder="Search keyword..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          className="border px-3 py-2 rounded w-full md:w-1/3"
+          className="border px-3 py-1 rounded w-full text-xs md:w-30"
         />
 
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="border px-3 py-2 rounded w-full md:w-1/4"
-        >
-          <option value="">All Categories</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </option>
-          ))}
-        </select>
+        <div className="relative w-full md:w-30">
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="appearance-none border pl-2 py-1 rounded w-full text-xs pr-8" // pr-8 for arrow space
+          >
+            <option value="">All Categories</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </option>
+            ))}
+          </select>
+
+          {/* Custom Arrow */}
+          <span className="pointer-events-none text-xs absolute right-2 top-4/7 -translate-y-1/2 text-gray-500">
+            ▼
+          </span>
+        </div>
 
         <input
           type="number"
           placeholder="Min Price"
+          min={0}
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
-          className="border px-3 py-2 rounded w-1/2 md:w-24"
+          className="border px-3 py-1 rounded text-xs w-1/2 md:w-24"
         />
 
         <input
           type="number"
           placeholder="Max Price"
+          min={0}
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
-          className="border px-3 py-2 rounded w-1/2 md:w-24"
+          className="border px-3 py-1 rounded text-xs w-1/2 md:w-24"
         />
 
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+          className="bg-green-600 text-white px-5 py-1 rounded text-xs hover:bg-green-700 transition"
         >
           Apply
         </button>
