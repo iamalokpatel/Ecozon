@@ -5,6 +5,7 @@ import {
   getProductById,
   updateProduct,
   deleteProduct,
+  searchProducts,
   CategorisedProduct,
 } from "../controllers/productController.js";
 import upload from "../middlewares/multer.js";
@@ -13,6 +14,7 @@ import { protect, isAdmin } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 router.get("/", getAllProducts);
+router.get("/search", searchProducts);
 router.get("/categories", CategorisedProduct);
 router.post("/add", upload.single("image"), protect, isAdmin, createProduct);
 router.get("/:id", getProductById);

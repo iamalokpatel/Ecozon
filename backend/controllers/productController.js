@@ -52,6 +52,42 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
+// Search Products
+export const searchProducts = async (req, res) => {
+  try {
+    const { q, category, minPrice, maxPrice } = req.query;
+
+    let filter = {};
+
+    // Agar query string diya hai to title, subtitle aur description pe search
+    if (q) {
+      filter.$or = [
+        { title: { $regex: q, $options: "i" } },
+        { subtitle: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } },
+      ];
+    }
+
+    // Agar category filter diya hai
+    if (category) {
+      filter.category = category.toLowerCase();
+    }
+
+    // Price range filter
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) filter.price.$gte = Number(minPrice);
+      if (maxPrice) filter.price.$lte = Number(maxPrice);
+    }
+
+    const products = await Product.find(filter);
+    res.status(200).json(products);
+  } catch (err) {
+    console.error("Search API Error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // Get a Product by ID
 export const getProductById = async (req, res) => {
   try {

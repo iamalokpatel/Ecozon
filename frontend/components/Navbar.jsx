@@ -8,17 +8,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
   const router = useRouter();
   const pathname = usePathname();
   const menuRef = useRef(null);
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const closeMenu = () => setIsMenuOpen(false);
 
   const handleLogout = async () => {
     await api.post("/users/auth/logout");
@@ -36,6 +33,15 @@ const Navbar = () => {
   const handleClick = () => {
     router.push("/");
     closeMenu();
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+      closeMenu();
+    }
   };
 
   useEffect(() => {
@@ -105,6 +111,26 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Search Bar (desktop) */}
+      <form
+        onSubmit={handleSearch}
+        className="hidden md:flex items-center border border-gray-300 rounded-lg px-2 py-1 w-64"
+      >
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="flex-grow outline-none px-2"
+        />
+        <button
+          type="submit"
+          className="bg-green-600 text-white px-3 py-1 rounded ml-2"
+        >
+          Search
+        </button>
+      </form>
+
       {/* Menu */}
       <ul
         ref={menuRef}
@@ -113,6 +139,25 @@ const Navbar = () => {
         } absolute top-20 left-0 w-full bg-[#0f1111] flex flex-col items-center gap-4 py-4 
           md:flex md:static md:flex-row md:w-auto md:gap-8 md:bg-transparent md:py-0`}
       >
+        {/* Mobile Search */}
+        <li className="md:hidden w-full px-4">
+          <form onSubmit={handleSearch} className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-grow px-2 py-1 rounded border border-gray-300 text-black"
+            />
+            <button
+              type="submit"
+              className="bg-green-600 text-white px-3 py-1 rounded"
+            >
+              Go
+            </button>
+          </form>
+        </li>
+
         <li onClick={closeMenu}>
           <Link href="/" className={linkClasses("/")}>
             Home
