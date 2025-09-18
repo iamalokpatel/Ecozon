@@ -88,6 +88,7 @@ const PaymentsPage = () => {
                 items: productsToOrder,
                 address,
                 totalPrice: getTotalPrice(),
+                paymentMethod,
               },
               { headers: { Authorization: `Bearer ${token}` } }
             );

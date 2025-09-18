@@ -74,6 +74,7 @@ export const verifyPayment = async (req, res) => {
       items,
       address,
       totalPrice,
+      paymentMethod,
     } = req.body;
     const userId = req.user._id;
 
@@ -97,7 +98,7 @@ export const verifyPayment = async (req, res) => {
         quantity: i.quantity,
       })),
       address,
-      paymentMethod: "online",
+      paymentMethod,
       paymentStatus: "paid",
       totalPrice,
     });
