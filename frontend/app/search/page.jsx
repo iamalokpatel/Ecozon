@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import api from "@/utils/api";
+import ProductCard from "@/components/ProductCard";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
@@ -22,7 +23,7 @@ const SearchPage = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Categories list (fixed same as backend enum)
+  // Categories list
   const categories = [
     "mobiles",
     "laptop",
@@ -89,7 +90,7 @@ const SearchPage = () => {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="appearance-none border pl-2 py-1 rounded w-full text-xs pr-8" // pr-8 for arrow space
+            className="appearance-none border pl-2 py-1 rounded w-full text-xs pr-8"
           >
             <option value="">All Categories</option>
             {categories.map((cat) => (
@@ -98,9 +99,7 @@ const SearchPage = () => {
               </option>
             ))}
           </select>
-
-          {/* Custom Arrow */}
-          <span className="pointer-events-none text-xs absolute right-2 top-4/7 -translate-y-1/2 text-gray-500">
+          <span className="pointer-events-none text-xs absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">
             ▼
           </span>
         </div>
@@ -140,19 +139,7 @@ const SearchPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {results.map((product) => (
-          <div
-            key={product._id}
-            className="border rounded-lg p-4 shadow hover:shadow-md transition"
-          >
-            <img
-              src={product.image || "/images/placeholder.png"}
-              alt={product.title}
-              className="w-full h-40 object-cover rounded mb-2"
-            />
-            <h2 className="text-lg font-semibold">{product.title}</h2>
-            <p className="text-gray-600">{product.subtitle}</p>
-            <p className="font-bold mt-2">₹{product.price}</p>
-          </div>
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>
