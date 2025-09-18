@@ -8,14 +8,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen">
-        {/* Navbar */}
         <Navbar />
-
-        {/* Main Content */}
         <main className="flex-1">{children}</main>
-
-        {/* Footer always at bottom */}
         <Footer />
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </body>
     </html>
   );

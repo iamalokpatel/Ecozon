@@ -31,8 +31,6 @@ const PaymentsPage = () => {
   const [productsToOrder, setProductsToOrder] = useState([]);
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cod");
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -45,37 +43,71 @@ const PaymentsPage = () => {
     }
   }, []);
 
-  const handlePayment = async () => {
-    if (!productsToOrder || productsToOrder.length === 0 || !address) {
-      return alert("No products or address found");
-    }
+  const getTotalPrice = () =>
+    productsToOrder.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0
+    );
 
+  const handlePayment = async () => {
     try {
       const payload = {
         items: productsToOrder,
         address,
         paymentMethod,
+        totalPrice: getTotalPrice(),
       };
 
-      const res = await api.post("/orders/create", payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      if (paymentMethod === "cod") {
+        // ✅ COD → direct order create
+        await api.post("/orders/create", payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert("COD Order Placed!");
+        router.push("/orders");
+      } else {
+        // ✅ Razorpay flow
+        const res = await api.post("/orders/create", payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-      sessionStorage.removeItem("checkoutItems");
-      sessionStorage.removeItem("checkoutAddress");
+        const { razorpayOrder, key } = res.data;
 
-      setSuccess("Order and payment successful!");
-      setTimeout(() => router.push("/orders"), 1000);
+        const options = {
+          key,
+          amount: razorpayOrder.amount,
+          currency: "INR",
+          name: "MyShop",
+          description: "Order Payment",
+          order_id: razorpayOrder.id,
+          handler: async function (response) {
+            await api.post(
+              "/orders/verify",
+              {
+                ...response,
+                items: productsToOrder,
+                address,
+                totalPrice: getTotalPrice(),
+              },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+            alert("Payment successful!");
+            router.push("/orders");
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      }
     } catch (err) {
       console.error(err);
-      setError("Payment/order creation failed!");
+      alert("Payment failed!");
     }
   };
 
   return (
     <div className="min-h-screen max-w-2xl mx-auto p-4">
       <h2 className="text-xl font-bold mb-4">Select Payment Method</h2>
-
       <div className="rounded shadow-xl">
         {paymentMethods.map((method) => (
           <div
@@ -83,7 +115,7 @@ const PaymentsPage = () => {
             onClick={() => setPaymentMethod(method.value)}
             className={`flex items-center p-4 cursor-pointer border-b transition-all ${
               paymentMethod === method.value
-                ? "border-green-500 bg-green-50 ring-0.5 ring-green-400/40"
+                ? "border-green-500 bg-green-50"
                 : "border-gray-300 hover:border-blue-400 hover:shadow-md"
             }`}
           >
@@ -94,16 +126,12 @@ const PaymentsPage = () => {
           </div>
         ))}
       </div>
-
       <button
-        className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded cursor-pointer"
+        className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded"
         onClick={handlePayment}
       >
         Confirm Payment & Create Order
       </button>
-
-      {success && <p className="text-green-600 mt-2">{success}</p>}
-      {error && <p className="text-red-600 mt-2">{error}</p>}
     </div>
   );
 };

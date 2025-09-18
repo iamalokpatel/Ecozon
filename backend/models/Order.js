@@ -28,16 +28,13 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ["upi", "card", "netbanking", "cod"],
-      required: true, // Must be selected at order creation
+      enum: ["upi", "card", "netbanking", "cod", "online"],
+      required: true,
     },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid", "failed"],
-      default: function () {
-        // If COD, status is pending; otherwise assume paid
-        return this.paymentMethod === "cod" ? "pending" : "paid";
-      },
+      default: "pending",
     },
     status: {
       type: String,
