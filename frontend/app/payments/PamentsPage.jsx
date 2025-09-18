@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import api from "@/utils/api";
 import { CreditCard, Banknote, Wallet, IndianRupee } from "lucide-react";
 
@@ -25,30 +25,50 @@ const paymentMethods = [
 ];
 
 const PaymentsPage = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const token = typeof window !== "undefined" && localStorage.getItem("token");
-  const orderId = searchParams.get("orderId");
 
+  const [productsToOrder, setProductsToOrder] = useState([]);
+  const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const items = JSON.parse(sessionStorage.getItem("checkoutItems") || "[]");
+      const addr = JSON.parse(
+        sessionStorage.getItem("checkoutAddress") || "{}"
+      );
+      setProductsToOrder(items);
+      setAddress(addr);
+    }
+  }, []);
+
   const handlePayment = async () => {
-    if (!orderId) return alert("Order ID not found");
+    if (!productsToOrder || productsToOrder.length === 0 || !address) {
+      return alert("No products or address found");
+    }
 
     try {
-      await api.post(
-        `/orders/${orderId}/pay`,
-        { paymentMethod },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const payload = {
+        items: productsToOrder,
+        address,
+        paymentMethod,
+      };
 
-      setSuccess("Payment method selected successfully!");
+      const res = await api.post("/orders/create", payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      sessionStorage.removeItem("checkoutItems");
+      sessionStorage.removeItem("checkoutAddress");
+
+      setSuccess("Order and payment successful!");
       setTimeout(() => router.push("/orders"), 1000);
     } catch (err) {
       console.error(err);
-      setError("Payment failed!");
+      setError("Payment/order creation failed!");
     }
   };
 
@@ -56,7 +76,6 @@ const PaymentsPage = () => {
     <div className="min-h-screen max-w-2xl mx-auto p-4">
       <h2 className="text-xl font-bold mb-4">Select Payment Method</h2>
 
-      {/* Inline Payment Options */}
       <div className="rounded shadow-xl">
         {paymentMethods.map((method) => (
           <div
@@ -80,7 +99,7 @@ const PaymentsPage = () => {
         className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded cursor-pointer"
         onClick={handlePayment}
       >
-        Confirm Payment
+        Confirm Payment & Create Order
       </button>
 
       {success && <p className="text-green-600 mt-2">{success}</p>}

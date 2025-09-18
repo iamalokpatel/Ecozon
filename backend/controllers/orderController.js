@@ -5,123 +5,44 @@ import Order from "../models/Order.js";
 import User from "../models/User.js";
 import Product from "../models/Product.js";
 
-/////////////////////// Place Buy Order ///////////////////////
-export const placeBuyOrder = async (req, res) => {
+/////////////////////// Create Order with Payment ///////////////////////
+export const createOrderWithPayment = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { mode, productId, quantity, address } = req.body;
+    const { items, address, paymentMethod } = req.body;
 
-    if (!address) {
+    if (!address)
       return res.status(400).json({ message: "Address is required" });
-    }
+    if (!items || items.length === 0)
+      return res.status(400).json({ message: "No items to order" });
+    if (!paymentMethod)
+      return res.status(400).json({ message: "Payment method is required" });
 
-    if (mode === "single") {
-      if (!productId) {
-        return res
-          .status(400)
-          .json({ message: "Product ID is required for single order" });
-      }
+    // Calculate total price
+    const totalPrice = items.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0
+    );
 
-      const product = await Product.findById(productId);
-      if (!product) {
-        return res.status(404).json({ message: "Product not found" });
-      }
+    const order = new Order({
+      user: userId,
+      items: items.map((i) => ({
+        product: i.product._id,
+        quantity: i.quantity,
+      })),
+      address,
+      paymentMethod,
+      paymentStatus: paymentMethod === "cod" ? "pending" : "paid",
+      totalPrice,
+    });
 
-      const order = new Order({
-        user: userId,
-        items: [{ product: product._id, quantity }],
-        totalPrice: product.price * quantity,
-        address,
-        paymentStatus: "pending", // paymentMethod removed
-      });
-
-      await order.save();
-
-      await User.findByIdAndUpdate(
-        userId,
-        { $push: { orders: order._id } },
-        { new: true }
-      );
-
-      return res
-        .status(201)
-        .json({ message: "Order placed successfully", order });
-    }
-
-    if (mode === "cart") {
-      const cart = await Cart.findOne({ user: userId }).populate(
-        "items.product"
-      );
-      if (!cart || cart.items.length === 0) {
-        return res.status(400).json({ message: "Cart is empty" });
-      }
-
-      const total = cart.items.reduce(
-        (acc, item) => acc + item.product.price * item.quantity,
-        0
-      );
-
-      const order = new Order({
-        user: userId,
-        items: cart.items.map((item) => ({
-          product: item.product._id,
-          quantity: item.quantity,
-        })),
-        totalPrice: total,
-        address,
-        paymentStatus: "pending",
-      });
-
-      await order.save();
-
-      await User.findByIdAndUpdate(
-        userId,
-        { $push: { orders: order._id } },
-        { new: true }
-      );
-
-      cart.items = [];
-      await cart.save();
-
-      return res
-        .status(201)
-        .json({ message: "Cart order placed successfully", order });
-    }
-
-    return res
-      .status(400)
-      .json({ message: "Invalid mode. Must be 'single' or 'cart'" });
-  } catch (error) {
-    console.error("Error placing order:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
-  }
-};
-
-/////////////////////// Update Payment Method ///////////////////////
-export const updatePaymentMethod = async (req, res) => {
-  const { orderId } = req.params;
-  const { paymentMethod } = req.body;
-
-  try {
-    const order = await Order.findById(orderId);
-    if (!order) return res.status(404).json({ message: "Order not found" });
-
-    if (order.user.toString() !== req.user._id.toString())
-      return res.status(403).json({ message: "Unauthorized access" });
-
-    if (order.paymentStatus !== "pending")
-      return res
-        .status(400)
-        .json({ message: "Cannot change payment method for processed orders" });
-
-    order.paymentMethod = paymentMethod;
     await order.save();
 
-    res.json({ message: "Payment method updated successfully", order });
+    await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
+
+    res.status(201).json({ message: "Order created successfully", order });
   } catch (err) {
-    console.error("Error updating payment method:", err);
+    console.error("Error creating order:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
@@ -181,9 +102,8 @@ export const getOrderDetails = async (req, res) => {
 
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    if (order.user.toString() !== req.user._id.toString()) {
+    if (order.user.toString() !== req.user._id.toString())
       return res.status(403).json({ message: "Unauthorized access" });
-    }
 
     res.json(order);
   } catch (error) {

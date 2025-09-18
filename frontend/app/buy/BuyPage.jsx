@@ -61,29 +61,15 @@ const BuyPage = () => {
     }
   };
 
-  const handleConfirmOrder = async () => {
+  const handleContinueToPayment = () => {
     if (!address) return alert("Please select your address");
 
-    try {
-      const payload = {
-        mode,
-        address,
-        ...(mode === "single" && {
-          productId,
-          quantity: productsToOrder[0].quantity,
-        }),
-      };
-
-      const res = await api.post("/orders/buy", payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const orderId = res.data.order._id;
-      router.push(`/payments?orderId=${orderId}`);
-    } catch (err) {
-      console.error("Order error:", err);
-      alert("Something went wrong!");
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("checkoutItems", JSON.stringify(productsToOrder));
+      sessionStorage.setItem("checkoutAddress", JSON.stringify(address));
     }
+
+    router.push("/payments");
   };
 
   return (
@@ -124,7 +110,7 @@ const BuyPage = () => {
             />
             <button
               className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 rounded cursor-pointer"
-              onClick={handleConfirmOrder}
+              onClick={handleContinueToPayment}
             >
               Continue to Payment
             </button>
