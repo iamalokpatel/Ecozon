@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ["upi", "card", "netbanking", "cod", "online"],
+      enum: ["upi", "card", "netbanking", "wallet", "paylater"],
       required: true,
     },
     paymentStatus: {
@@ -45,6 +45,8 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    razorpay_order_id: { type: String },
+    razorpay_payment_id: { type: String },
   },
   { timestamps: true }
 );

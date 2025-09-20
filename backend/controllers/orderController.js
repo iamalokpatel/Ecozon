@@ -15,49 +15,27 @@ const razorpay = new Razorpay({
 export const createOrderWithPayment = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { items, address, paymentMethod, totalPrice } = req.body;
+    const { items, address, totalPrice } = req.body;
 
     if (!address)
       return res.status(400).json({ message: "Address is required" });
     if (!items || items.length === 0)
       return res.status(400).json({ message: "No items to order" });
-    if (!paymentMethod)
-      return res.status(400).json({ message: "Payment method is required" });
 
-    if (paymentMethod === "cod") {
-      // ✅ Direct order for COD
-      const order = new Order({
-        user: userId,
-        items: items.map((i) => ({
-          product: i.product._id,
-          quantity: i.quantity,
-        })),
-        address,
-        paymentMethod,
-        paymentStatus: "pending",
-        totalPrice,
-      });
+    // ✅ Always online → Create Razorpay order
+    const options = {
+      amount: totalPrice * 100, // amount in paisa
+      currency: "INR",
+      receipt: `order_${Date.now()}`,
+    };
 
-      await order.save();
-      await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
+    const razorpayOrder = await razorpay.orders.create(options);
 
-      return res.status(201).json({ success: true, order });
-    } else {
-      // ✅ Online payment → Create Razorpay order
-      const options = {
-        amount: totalPrice * 100,
-        currency: "INR",
-        receipt: `order_${Date.now()}`,
-      };
-
-      const razorpayOrder = await razorpay.orders.create(options);
-
-      return res.json({
-        success: true,
-        razorpayOrder,
-        key: process.env.RAZORPAY_KEY_ID,
-      });
-    }
+    return res.json({
+      success: true,
+      razorpayOrder,
+      key: process.env.RAZORPAY_KEY_ID,
+    });
   } catch (err) {
     console.error("Error creating order:", err);
     res.status(500).json({ message: "Server error", error: err.message });
@@ -74,10 +52,10 @@ export const verifyPayment = async (req, res) => {
       items,
       address,
       totalPrice,
-      paymentMethod,
     } = req.body;
     const userId = req.user._id;
 
+    // ✅ Signature verification
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -90,7 +68,14 @@ export const verifyPayment = async (req, res) => {
         .json({ success: false, message: "Invalid signature" });
     }
 
-    // ✅ Payment success → Create order
+    // ✅ Fetch payment details from Razorpay
+    const payment = await razorpay.payments.fetch(razorpay_payment_id);
+
+    const paymentMethod = payment.method; // upi, card, wallet, netbanking, paylater
+    const paymentStatus =
+      payment.status === "captured" ? "paid" : payment.status;
+
+    // ✅ Save order in DB
     const order = new Order({
       user: userId,
       items: items.map((i) => ({
@@ -98,13 +83,18 @@ export const verifyPayment = async (req, res) => {
         quantity: i.quantity,
       })),
       address,
-      paymentMethod,
-      paymentStatus: "paid",
       totalPrice,
+      paymentMethod,
+      paymentStatus,
+      razorpay_order_id,
+      razorpay_payment_id,
     });
 
     await order.save();
     await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
+
+    // ✅ Clear Cart after successful order
+    await Cart.findOneAndUpdate({ user: userId }, { $set: { items: [] } });
 
     res.json({ success: true, order });
   } catch (err) {

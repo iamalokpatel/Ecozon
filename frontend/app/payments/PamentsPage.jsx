@@ -3,34 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/utils/api";
-import { CreditCard, Banknote, Wallet, IndianRupee } from "lucide-react";
-
-const paymentMethods = [
-  { label: "UPI", value: "upi", icon: <IndianRupee className="h-5 w-5" /> },
-  {
-    label: "Credit/Debit Card",
-    value: "card",
-    icon: <CreditCard className="h-5 w-5" />,
-  },
-  {
-    label: "Net Banking",
-    value: "netbanking",
-    icon: <Banknote className="h-5 w-5" />,
-  },
-  {
-    label: "Cash on Delivery",
-    value: "cod",
-    icon: <Wallet className="h-5 w-5" />,
-  },
-];
 
 const PaymentsPage = () => {
   const router = useRouter();
   const token = typeof window !== "undefined" && localStorage.getItem("token");
 
   const [productsToOrder, setProductsToOrder] = useState([]);
-  const [address, setAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [address, setAddress] = useState({});
+  const [isVerifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -49,38 +29,42 @@ const PaymentsPage = () => {
       0
     );
 
-  const handlePayment = async () => {
+  const handleOnlinePayment = async () => {
     try {
       const payload = {
         items: productsToOrder,
         address,
-        paymentMethod,
+        paymentMethod: "online",
         totalPrice: getTotalPrice(),
       };
 
-      if (paymentMethod === "cod") {
-        // ✅ COD → direct order create
-        await api.post("/orders/create", payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        alert("COD Order Placed!");
-        router.push("/orders");
-      } else {
-        // ✅ Razorpay flow
-        const res = await api.post("/orders/create", payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+      /////////  Create Razorpay order   //////////
 
-        const { razorpayOrder, key } = res.data;
+      const res = await api.post("/orders/create", payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-        const options = {
-          key,
-          amount: razorpayOrder.amount,
-          currency: "INR",
-          name: "MyShop",
-          description: "Order Payment",
-          order_id: razorpayOrder.id,
-          handler: async function (response) {
+      const { razorpayOrder, key } = res.data;
+
+      const options = {
+        key,
+        amount: razorpayOrder.amount,
+        currency: "INR",
+        name: "Ecozon",
+        description: "Order Payment",
+        order_id: razorpayOrder.id,
+        prefill: {
+          name: address.name || "Customer",
+          email: address.email || "",
+          contact: address.phone || "",
+        },
+        theme: { color: "#f1f3f6" },
+        notes: { address: JSON.stringify(address) },
+
+        /////////   After successful payment  /////////////
+        handler: async function (response) {
+          try {
+            setIsVerifying(true);
             await api.post(
               "/orders/verify",
               {
@@ -88,51 +72,75 @@ const PaymentsPage = () => {
                 items: productsToOrder,
                 address,
                 totalPrice: getTotalPrice(),
-                paymentMethod,
               },
               { headers: { Authorization: `Bearer ${token}` } }
             );
-            alert("Payment successful!");
             router.push("/orders");
-          },
-        };
+          } catch (err) {
+            console.error(err);
+            alert("Verification failed!");
+            router.push("/");
+          } finally {
+            setIsVerifying(false);
+          }
+        },
+      };
 
-        const rzp = new window.Razorpay(options);
-        rzp.open();
-      }
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (err) {
       console.error(err);
       alert("Payment failed!");
+      router.push("/");
     }
   };
 
+  useEffect(() => {
+    if (productsToOrder.length > 0 && address) {
+      handleOnlinePayment();
+    }
+  }, [productsToOrder, address]);
+
   return (
-    <div className="min-h-screen max-w-2xl mx-auto p-4">
-      <h2 className="text-xl font-bold mb-4">Select Payment Method</h2>
-      <div className="rounded shadow-xl">
-        {paymentMethods.map((method) => (
-          <div
-            key={method.value}
-            onClick={() => setPaymentMethod(method.value)}
-            className={`flex items-center p-4 cursor-pointer border-b transition-all ${
-              paymentMethod === method.value
-                ? "border-green-500 bg-green-50"
-                : "border-gray-300 hover:border-blue-400 hover:shadow-md"
-            }`}
-          >
-            <div className="mr-4 text-blue-600">{method.icon}</div>
-            <div className="text-base font-medium text-gray-800">
-              {method.label}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      {isVerifying ? (
+        <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col items-center space-y-4 animate-fadeIn">
+          <div className="relative flex">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-blue-500 animate-pulse"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 11c0-1.104-.896-2-2-2H7V7h3c2.209 0 4 1.791 4 4v6h-2v-6z"
+                />
+              </svg>
             </div>
           </div>
-        ))}
-      </div>
-      <button
-        className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded"
-        onClick={handlePayment}
-      >
-        Confirm Payment & Create Order
-      </button>
+
+          <h2 className="text-xl font-semibold text-gray-800">
+            Verifying Your Payment
+          </h2>
+          <p className="text-gray-600 text-center text-sm leading-relaxed max-w-sm">
+            We’re confirming your transaction with the payment gateway. This may
+            take a few seconds. Please don’t refresh or close this page.
+          </p>
+          <div className="flex space-x-2 mt-2">
+            <span className="h-2 w-2 bg-blue-500 rounded-full animate-bounce"></span>
+            <span className="h-2 w-2 bg-blue-400 rounded-full animate-bounce delay-150"></span>
+            <span className="h-2 w-2 bg-blue-300 rounded-full animate-bounce delay-300"></span>
+          </div>
+        </div>
+      ) : (
+        <p className="text-gray-600">Redirecting to payment gateway...</p>
+      )}
     </div>
   );
 };
