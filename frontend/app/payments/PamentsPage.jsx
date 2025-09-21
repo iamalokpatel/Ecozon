@@ -11,6 +11,23 @@ const PaymentsPage = () => {
   const [productsToOrder, setProductsToOrder] = useState([]);
   const [address, setAddress] = useState({});
   const [isVerifying, setIsVerifying] = useState(false);
+  const [hasPaid, setHasPaid] = useState(false);
+
+  //////////  Countdown + Progress  //////////
+  const [count, setCount] = useState(5);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (!isVerifying && !hasPaid && count > 0) {
+      const timer = setTimeout(() => {
+        setCount((prev) => prev - 1);
+        setProgress((prev) => prev + 20);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (!isVerifying && !hasPaid && count === 0) {
+      handleOnlinePayment();
+    }
+  }, [count, isVerifying, hasPaid]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -39,7 +56,6 @@ const PaymentsPage = () => {
       };
 
       /////////  Create Razorpay order   //////////
-
       const res = await api.post("/orders/create", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -75,6 +91,10 @@ const PaymentsPage = () => {
               },
               { headers: { Authorization: `Bearer ${token}` } }
             );
+
+            setHasPaid(true);
+            sessionStorage.removeItem("checkoutItems");
+            sessionStorage.removeItem("checkoutAddress");
             router.push("/orders");
           } catch (err) {
             console.error(err);
@@ -96,14 +116,16 @@ const PaymentsPage = () => {
   };
 
   useEffect(() => {
-    if (productsToOrder.length > 0 && address) {
-      handleOnlinePayment();
+    if (productsToOrder.length > 0 && Object.keys(address).length > 0) {
+      setCount(5);
+      setProgress(0);
     }
   }, [productsToOrder, address]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       {isVerifying ? (
+        /////////   Verification UI  /////////////
         <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col items-center space-y-4 animate-fadeIn">
           <div className="relative flex">
             <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
@@ -139,7 +161,111 @@ const PaymentsPage = () => {
           </div>
         </div>
       ) : (
-        <p className="text-gray-600">Redirecting to payment gateway...</p>
+        /////////   Redirecting UI  /////////////
+        <div className="bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl px-8 py-10 w-[400px] flex flex-col items-center space-y-8 animate-fadeIn">
+          {/* Brand Header */}
+          <div className="flex flex-col items-center space-y-1">
+            <img src="/logo.png" alt="Ecozon Logo" className="w-14 h-14" />
+            <h1 className="text-xl font-bold text-gray-800">Ecozon</h1>
+            <p className="text-gray-500 text-sm">
+              Sustainable shopping, simplified
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between w-full text-xs text-gray-500">
+            <span className="font-medium text-green-600">Cart</span>
+            <span>→</span>
+            <span className="font-medium text-green-600">Address</span>
+            <span>→</span>
+            <span className="font-medium text-blue-600">Payment</span>
+            <span>→</span>
+            <span>Success</span>
+          </div>
+
+          {/*/////////   Circular Progress with Countdown  ///////////// */}
+          <div className="relative">
+            <svg className="w-24 h-24 transform -rotate-90">
+              <circle
+                cx="48"
+                cy="48"
+                r="42"
+                stroke="#e5e7eb"
+                strokeWidth="6"
+                fill="transparent"
+              />
+              <circle
+                cx="48"
+                cy="48"
+                r="42"
+                stroke="#3b82f6"
+                strokeWidth="6"
+                strokeDasharray={260}
+                strokeDashoffset={260 - (progress / 100) * 260}
+                strokeLinecap="round"
+                fill="transparent"
+                className="transition-all duration-500"
+              />
+            </svg>
+            <span className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-gray-700">
+              {count}s
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2 className="text-lg font-semibold text-gray-800">
+            Redirecting to Payment Gateway
+          </h2>
+          <p className="text-gray-600 text-center text-sm leading-relaxed">
+            We’re securely connecting you to Razorpay. <br />
+            Please don’t refresh or close this window. <br />
+            You’ll be able to complete your payment on the next screen.
+          </p>
+
+          {/* Helpful Tips */}
+          <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3 text-xs text-blue-600 w-full">
+            💡 <span className="font-semibold">Tip:</span> If the payment page
+            doesn’t load, click <span className="underline">Retry</span> below
+            or check your internet connection.
+          </div>
+
+          {/* Buttons */}
+          <div className="flex space-x-3">
+            <button
+              onClick={() => handleOnlinePayment()}
+              className="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg shadow hover:bg-blue-600 transition"
+              disabled={hasPaid}
+            >
+              Retry Now
+            </button>
+            <button
+              onClick={() => router.push("/")}
+              className="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded-lg shadow hover:bg-gray-300 transition"
+            >
+              Cancel
+            </button>
+          </div>
+
+          {/* Security Badges */}
+          <div className="flex flex-col items-center space-y-2 text-xs text-gray-500 mt-2">
+            <div className="flex space-x-2">
+              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                🔒 SSL Secured
+              </span>
+              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                ✅ PCI-DSS Compliant
+              </span>
+            </div>
+            <p>Secured by Razorpay • 256-bit Encryption</p>
+          </div>
+
+          {/* Support */}
+          <p className="text-xs text-gray-400">
+            Need help?{" "}
+            <a href="/support" className="text-blue-500 underline">
+              Contact Support
+            </a>
+          </p>
+        </div>
       )}
     </div>
   );
