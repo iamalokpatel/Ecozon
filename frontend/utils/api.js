@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api", // Backend API URL
+  baseURL: "https://ecozon.onrender.com/api", // Backend API URL
 });
 
 api.interceptors.request.use((config) => {
