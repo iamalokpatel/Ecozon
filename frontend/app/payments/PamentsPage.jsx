@@ -164,8 +164,9 @@ const PaymentsPage = () => {
         /////////   Redirecting UI  /////////////
         <div className="bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl px-8 py-10 w-[400px] flex flex-col items-center space-y-8 animate-fadeIn">
           {/* Brand Header */}
+
           <div className="flex flex-col items-center space-y-1">
-            <img src="/logo.png" alt="Ecozon Logo" className="w-14 h-14" />
+            {/* <img src="/logo.png" alt="Ecozon Logo" className="w-14 h-14" /> */}
             <h1 className="text-xl font-bold text-gray-800">Ecozon</h1>
             <p className="text-gray-500 text-sm">
               Sustainable shopping, simplified
@@ -221,13 +222,6 @@ const PaymentsPage = () => {
             You’ll be able to complete your payment on the next screen.
           </p>
 
-          {/* Helpful Tips */}
-          <div className="bg-blue-50 border border-blue-100 rounded-lg px-4 py-3 text-xs text-blue-600 w-full">
-            💡 <span className="font-semibold">Tip:</span> If the payment page
-            doesn’t load, click <span className="underline">Retry</span> below
-            or check your internet connection.
-          </div>
-
           {/* Buttons */}
           <div className="flex space-x-3">
             <button
@@ -257,14 +251,6 @@ const PaymentsPage = () => {
             </div>
             <p>Secured by Razorpay • 256-bit Encryption</p>
           </div>
-
-          {/* Support */}
-          <p className="text-xs text-gray-400">
-            Need help?{" "}
-            <a href="/support" className="text-blue-500 underline">
-              Contact Support
-            </a>
-          </p>
         </div>
       )}
     </div>

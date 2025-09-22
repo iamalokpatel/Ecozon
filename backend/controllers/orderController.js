@@ -24,7 +24,7 @@ export const createOrderWithPayment = async (req, res) => {
 
     // ✅ Always online → Create Razorpay order
     const options = {
-      amount: totalPrice * 100, // amount in paisa
+      amount: totalPrice * 100,
       currency: "INR",
       receipt: `order_${Date.now()}`,
     };

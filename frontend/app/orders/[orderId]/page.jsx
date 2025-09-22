@@ -129,6 +129,14 @@ export default function OrderDetailsPage() {
                 <span>Payment Method</span>
                 <span className="capitalize">{order.paymentMethod}</span>
               </div>
+              <div className="flex justify-between">
+                <span>paymentStatus</span>
+                <span className="capitalize">{order.paymentStatus}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Status</span>
+                <span className="capitalize">{order.status}</span>
+              </div>
               <div className="flex justify-between font-semibold border-t border-gray-200 pt-2">
                 <span>Total Amount</span>
                 <span className="text-indigo-600">
