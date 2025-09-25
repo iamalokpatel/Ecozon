@@ -117,7 +117,7 @@ const BuyPage = () => {
       </div>
 
       {/* Price Details */}
-      <div className="sticky top-6 h-fit">
+      <div className="sticky top-22 h-fit">
         {productsToOrder.length === 0 ? (
           <div className="p-4 bg-white border rounded">
             Loading price details...
