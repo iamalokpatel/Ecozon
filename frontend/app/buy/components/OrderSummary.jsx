@@ -1,10 +1,16 @@
 const OrderSummary = ({ products, onQuantityChange }) => {
   return (
-    <div className="space-y-2">
+    <div className="bg-[#fff]">
+      <h2 className="bg-[#2874f0] text-[#fff] text-base font-medium uppercase py-3 pl-4">
+        <span className="bg-[#f0f0f0]  text-[#2874f0] text-[12px] text-[#2874f0] rounded-[2px] px-[7px] py-[3px] align-baseline mr-[15px]">
+          3
+        </span>
+        Order Summary
+      </h2>
       {products.map((item, index) => (
         <div
           key={item.product._id || index}
-          className="flex gap-4 items-center border-b border-gray-100 p-4 hover:shadow transition"
+          className="flex gap-4 items-center border-b border-gray-100 p-4 hover:shadow transition last:shadow-[0_1px_1px_0_rgba(0,0,0,0.2)]"
         >
           <img
             src={item.product.image}

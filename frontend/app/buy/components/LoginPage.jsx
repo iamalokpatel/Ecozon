@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Check } from "lucide-react";
 import api from "@/utils/api"; // Make sure this is correctly configured with baseURL
 
 const LoginInfo = () => {
@@ -25,8 +26,12 @@ const LoginInfo = () => {
   return (
     <div className="">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold text-gray-800 tracking-wide">
-          1. LOGIN
+        <h3 className="text-[#878787] text-base font-medium mb-[6px] uppercase">
+          <span className="bg-[#f0f0f0]  text-[#2874f0] text-[12px] text-[#2874f0] rounded-[2px] px-1.5 py-0.5  align-baseline mr-[15px]">
+            1
+          </span>
+          LOGIN
+          <Check className="text-[#2874f0] ml-2 inline font-semibold w-6 h-4" />
         </h3>
         <span className="inline-block px-3 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
           Verified

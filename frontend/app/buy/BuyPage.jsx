@@ -74,7 +74,7 @@ const BuyPage = () => {
 
   return (
     <div className="min-h-screen max-w-6xl mx-auto p-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="md:col-span-2 space-y-4">
+      <div className="md:col-span-2 space-y-3.5">
         {/* Step 1 - Login */}
         {step >= 1 && (
           <section className="rounded border border-gray-200 bg-white p-4 shadow-md">
@@ -84,10 +84,7 @@ const BuyPage = () => {
 
         {/* Step 2 - Delivery Address */}
         {step >= 2 && (
-          <section className="shadow rounded bg-gray-100">
-            <h2 className="text-lg border-b border-gray-100 font-bold bg-white pt-4 pb-4 pl-4">
-              2. Delivery Address
-            </h2>
+          <section className="">
             <DeliveryAddress
               onSelect={(addr) => {
                 setAddress(addr);
@@ -99,20 +96,22 @@ const BuyPage = () => {
 
         {/* Step 3 - Order Summary */}
         {step >= 3 && (
-          <section className="rounded bg-white shadow space-y-4">
-            <h2 className="text-lg font-bold mb-2 p-4 border-b border-gray-100">
-              3. Order Summary
-            </h2>
+          <section className="rounded space-y-4">
             <OrderSummary
               products={productsToOrder}
               onQuantityChange={onQuantityChange}
             />
-            <button
-              className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 bg-orange-600 text-white px-4 py-2.5 rounded cursor-pointer"
-              onClick={handleContinueToPayment}
-            >
-              Continue
-            </button>
+            <div className="h-[80px] bg-[#fff] border-t border-[#f0f0f0] px-4 py-4 items-center">
+              <span className="inline-flex items-center justify-center mt-2">
+                For order confirmation click to continue...
+              </span>
+              <button
+                className="w-50 bg-[#fb641b] text-[#fff] px-4 py-2.5 rounded cursor-pointer uppercase h-[48px] w-[200px] uppercase text-base font-medium float-right"
+                onClick={handleContinueToPayment}
+              >
+                Continue
+              </button>
+            </div>
           </section>
         )}
       </div>
