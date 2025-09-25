@@ -94,23 +94,22 @@ const CartPage = () => {
   }
 
   return (
-    <div className="min-h-screen max-w-6xl mx-auto px-4 py-5">
+    <div className="min-h-screen max-w-6xl mx-auto px-4 py-4">
       {cartItems.length === 0 ? (
-        <div className="flex flex-col items-center justify-center text-center">
+        <div className="w-full h-110 flex flex-col bg-white  items-center justify-center text-center gap-3">
           <img
-            src="/images/empty-cart.png"
+            src="/images/cart.webp"
             alt="Empty Cart"
-            className="w-60 h-30 opacity-80 mb-6"
+            className="w-60 h-50 object-contain bg-transparent border-0 outline-none"
           />
 
-          <p className="text-md text-gray-600 mb-4">
-            Your Cart is Currently Empty
-          </p>
+          <p className="text-lg">Your cart is empty!</p>
+          <span className="text-xs mb-2">Add items to it now.</span>
           <button
             onClick={() => router.push("/products")}
-            className="bg-blue-600 text-white px-12 py-3 rounded-md hover:bg-blue-700 transition cursor-pointer"
+            className="bg-[rgb(40,116,240)] text-white text-sm px-18 py-3 rounded-[2px]  transition cursor-pointer mt-5 font-normal shadow-[0_2px_4px_0_rgba(0,0,0,0.2)] border-0"
           >
-            Shop Products
+            Shop now
           </button>
         </div>
       ) : (

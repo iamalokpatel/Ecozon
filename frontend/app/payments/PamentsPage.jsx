@@ -12,23 +12,13 @@ const PaymentsPage = () => {
   const [address, setAddress] = useState({});
   const [isVerifying, setIsVerifying] = useState(false);
   const [hasPaid, setHasPaid] = useState(false);
+  const [hasInitiatedPayment, setHasInitiatedPayment] = useState(false);
 
-  //////////  Countdown + Progress  //////////
+  // Countdown + progress
   const [count, setCount] = useState(5);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    if (!isVerifying && !hasPaid && count > 0) {
-      const timer = setTimeout(() => {
-        setCount((prev) => prev - 1);
-        setProgress((prev) => prev + 20);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else if (!isVerifying && !hasPaid && count === 0) {
-      handleOnlinePayment();
-    }
-  }, [count, isVerifying, hasPaid]);
-
+  // Load checkout items and address from sessionStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       const items = JSON.parse(sessionStorage.getItem("checkoutItems") || "[]");
@@ -40,14 +30,43 @@ const PaymentsPage = () => {
     }
   }, []);
 
+  // Reset countdown when products or address change
+  useEffect(() => {
+    if (productsToOrder.length > 0 && Object.keys(address).length > 0) {
+      setCount(5);
+      setProgress(0);
+    }
+  }, [productsToOrder, address]);
+
+  // Countdown logic
+  useEffect(() => {
+    if (!isVerifying && !hasPaid && !hasInitiatedPayment && count > 0) {
+      const timer = setTimeout(() => {
+        setCount((prev) => prev - 1);
+        setProgress((prev) => prev + 20);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (
+      !isVerifying &&
+      !hasPaid &&
+      !hasInitiatedPayment &&
+      count === 0
+    ) {
+      handleOnlinePayment();
+    }
+  }, [count, isVerifying, hasPaid, hasInitiatedPayment]);
+
   const getTotalPrice = () =>
     productsToOrder.reduce(
       (acc, item) => acc + item.product.price * item.quantity,
       0
     );
 
+  // Handle Razorpay payment
   const handleOnlinePayment = async () => {
     try {
+      setHasInitiatedPayment(true);
+
       const payload = {
         items: productsToOrder,
         address,
@@ -55,7 +74,6 @@ const PaymentsPage = () => {
         totalPrice: getTotalPrice(),
       };
 
-      /////////  Create Razorpay order   //////////
       const res = await api.post("/orders/create", payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -77,7 +95,6 @@ const PaymentsPage = () => {
         theme: { color: "#f1f3f6" },
         notes: { address: JSON.stringify(address) },
 
-        /////////   After successful payment  /////////////
         handler: async function (response) {
           try {
             setIsVerifying(true);
@@ -93,9 +110,6 @@ const PaymentsPage = () => {
             );
 
             setHasPaid(true);
-            sessionStorage.removeItem("checkoutItems");
-            sessionStorage.removeItem("checkoutAddress");
-            router.push("/orders");
           } catch (err) {
             console.error(err);
             alert("Verification failed!");
@@ -115,17 +129,19 @@ const PaymentsPage = () => {
     }
   };
 
+  // Redirect after successful verification
   useEffect(() => {
-    if (productsToOrder.length > 0 && Object.keys(address).length > 0) {
-      setCount(5);
-      setProgress(0);
+    if (hasPaid && !isVerifying) {
+      sessionStorage.removeItem("checkoutItems");
+      sessionStorage.removeItem("checkoutAddress");
+      router.push("/orders");
     }
-  }, [productsToOrder, address]);
+  }, [hasPaid, isVerifying]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       {isVerifying ? (
-        /////////   Verification UI  /////////////
+        // Verification UI
         <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col items-center space-y-4 animate-fadeIn">
           <div className="relative flex">
             <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
@@ -146,13 +162,12 @@ const PaymentsPage = () => {
               </svg>
             </div>
           </div>
-
           <h2 className="text-xl font-semibold text-gray-800">
             Verifying Your Payment
           </h2>
           <p className="text-gray-600 text-center text-sm leading-relaxed max-w-sm">
-            We’re confirming your transaction with the payment gateway. This may
-            take a few seconds. Please don’t refresh or close this page.
+            We’re confirming your transaction with the payment gateway. Please
+            don’t refresh or close this page.
           </p>
           <div className="flex space-x-2 mt-2">
             <span className="h-2 w-2 bg-blue-500 rounded-full animate-bounce"></span>
@@ -161,97 +176,84 @@ const PaymentsPage = () => {
           </div>
         </div>
       ) : (
-        /////////   Redirecting UI  /////////////
-        <div className="bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl px-8 py-10 w-[400px] flex flex-col items-center space-y-8 animate-fadeIn">
-          {/* Brand Header */}
+        // Countdown / Redirecting UI ONLY before popup is initiated
+        !hasInitiatedPayment && (
+          <div className="bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl px-8 py-10 w-[400px] flex flex-col items-center space-y-8 animate-fadeIn">
+            {/* Brand Header */}
+            <div className="flex flex-col items-center space-y-1">
+              <h1 className="text-xl font-bold text-gray-800">Ecozon</h1>
+              <p className="text-gray-500 text-sm">
+                Sustainable shopping, simplified
+              </p>
+            </div>
 
-          <div className="flex flex-col items-center space-y-1">
-            {/* <img src="/logo.png" alt="Ecozon Logo" className="w-14 h-14" /> */}
-            <h1 className="text-xl font-bold text-gray-800">Ecozon</h1>
-            <p className="text-gray-500 text-sm">
-              Sustainable shopping, simplified
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between w-full text-xs text-gray-500">
-            <span className="font-medium text-green-600">Cart</span>
-            <span>→</span>
-            <span className="font-medium text-green-600">Address</span>
-            <span>→</span>
-            <span className="font-medium text-blue-600">Payment</span>
-            <span>→</span>
-            <span>Success</span>
-          </div>
-
-          {/*/////////   Circular Progress with Countdown  ///////////// */}
-          <div className="relative">
-            <svg className="w-24 h-24 transform -rotate-90">
-              <circle
-                cx="48"
-                cy="48"
-                r="42"
-                stroke="#e5e7eb"
-                strokeWidth="6"
-                fill="transparent"
-              />
-              <circle
-                cx="48"
-                cy="48"
-                r="42"
-                stroke="#3b82f6"
-                strokeWidth="6"
-                strokeDasharray={260}
-                strokeDashoffset={260 - (progress / 100) * 260}
-                strokeLinecap="round"
-                fill="transparent"
-                className="transition-all duration-500"
-              />
-            </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-gray-700">
-              {count}s
-            </span>
-          </div>
-
-          {/* Title */}
-          <h2 className="text-lg font-semibold text-gray-800">
-            Redirecting to Payment Gateway
-          </h2>
-          <p className="text-gray-600 text-center text-sm leading-relaxed">
-            We’re securely connecting you to Razorpay. <br />
-            Please don’t refresh or close this window. <br />
-            You’ll be able to complete your payment on the next screen.
-          </p>
-
-          {/* Buttons */}
-          <div className="flex space-x-3">
-            <button
-              onClick={() => handleOnlinePayment()}
-              className="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg shadow hover:bg-blue-600 transition"
-              disabled={hasPaid}
-            >
-              Retry Now
-            </button>
-            <button
-              onClick={() => router.push("/")}
-              className="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded-lg shadow hover:bg-gray-300 transition"
-            >
-              Cancel
-            </button>
-          </div>
-
-          {/* Security Badges */}
-          <div className="flex flex-col items-center space-y-2 text-xs text-gray-500 mt-2">
-            <div className="flex space-x-2">
-              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full">
-                🔒 SSL Secured
-              </span>
-              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full">
-                ✅ PCI-DSS Compliant
+            {/* Progress / Countdown */}
+            <div className="relative">
+              <svg className="w-24 h-24 transform -rotate-90">
+                <circle
+                  cx="48"
+                  cy="48"
+                  r="42"
+                  stroke="#e5e7eb"
+                  strokeWidth="6"
+                  fill="transparent"
+                />
+                <circle
+                  cx="48"
+                  cy="48"
+                  r="42"
+                  stroke="#3b82f6"
+                  strokeWidth="6"
+                  strokeDasharray={260}
+                  strokeDashoffset={260 - (progress / 100) * 260}
+                  strokeLinecap="round"
+                  fill="transparent"
+                  className="transition-all duration-500"
+                />
+              </svg>
+              <span className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-gray-700">
+                {count}s
               </span>
             </div>
-            <p>Secured by Razorpay • 256-bit Encryption</p>
+
+            <h2 className="text-lg font-semibold text-gray-800">
+              Redirecting to Payment Gateway
+            </h2>
+            <p className="text-gray-600 text-center text-sm leading-relaxed">
+              We’re securely connecting you to Razorpay. Please don’t refresh or
+              close this window.
+            </p>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={() => handleOnlinePayment()}
+                className="px-4 py-2 bg-blue-500 text-white text-sm rounded-lg shadow hover:bg-blue-600 transition"
+                disabled={hasPaid}
+              >
+                Retry Now
+              </button>
+              <button
+                onClick={() => router.push("/")}
+                className="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded-lg shadow hover:bg-gray-300 transition"
+              >
+                Cancel
+              </button>
+            </div>
+
+            {/* Security Badges */}
+            <div className="flex flex-col items-center space-y-2 text-xs text-gray-500 mt-2">
+              <div className="flex space-x-2">
+                <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                  🔒 SSL Secured
+                </span>
+                <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                  ✅ PCI-DSS Compliant
+                </span>
+              </div>
+              <p>Secured by Razorpay • 256-bit Encryption</p>
+            </div>
           </div>
-        </div>
+        )
       )}
     </div>
   );
