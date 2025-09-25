@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import React from "react";
 
@@ -7,10 +8,12 @@ const CartItem = ({ item, onRemove, onIncrease, onDecrease }) => {
     <div className="bg-white p-5 m-4 flex flex-col md:flex-row items-center md:items-start justify-between border-b border-gray-100">
       {/* Left: Image & Details */}
       <div className="flex items-center space-x-4 w-full md:w-2/3">
-        <img
+        <Image
           src={item.product.image}
           alt={item.product.title}
-          className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-lg "
+          width={96}
+          height={96}
+          className="md:w-28 md:h-28 object-cover rounded-lg"
         />
         <div className="flex-1">
           <h4 className="font-semibold text-lg text-gray-800 hover:text-blue-600 transition-colors">

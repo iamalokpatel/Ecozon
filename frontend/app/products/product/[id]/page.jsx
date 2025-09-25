@@ -2,6 +2,7 @@
 import api from "@/utils/api";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import Image from "next/image"; // ✅ Import Next.js Image
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -91,12 +92,14 @@ const ProductDetail = () => {
     );
 
   return (
-    <div className="min-h-screen max-w-7xl mx-auto px-6  flex items-center justify-center ">
+    <div className="min-h-screen max-w-7xl mx-auto px-6 flex items-center justify-center">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-start p-10 rounded">
         <div className="bg-white">
-          <img
+          <Image
             src={product.image}
             alt={product.title}
+            width={600} // ✅ required
+            height={544} // ✅ required
             className="w-full h-[34rem] object-contain rounded"
           />
         </div>

@@ -1,8 +1,10 @@
+import Image from "next/image";
+
 const OrderSummary = ({ products, onQuantityChange }) => {
   return (
     <div className="bg-[#fff]">
       <h2 className="bg-[#2874f0] text-[#fff] text-base font-medium uppercase py-3 pl-4">
-        <span className="bg-[#f0f0f0]  text-[#2874f0] text-[12px] text-[#2874f0] rounded-[2px] px-[7px] py-[3px] align-baseline mr-[15px]">
+        <span className="bg-[#f0f0f0] text-[#2874f0] text-[12px] rounded-[2px] px-[7px] py-[3px] align-baseline mr-[15px]">
           3
         </span>
         Order Summary
@@ -12,10 +14,12 @@ const OrderSummary = ({ products, onQuantityChange }) => {
           key={item.product._id || index}
           className="flex gap-4 items-center border-b border-gray-100 p-4 hover:shadow transition last:shadow-[0_1px_1px_0_rgba(0,0,0,0.2)]"
         >
-          <img
+          <Image
             src={item.product.image}
             alt={item.product.title}
-            className="w-20 h-20 object-contain"
+            width={80}
+            height={80}
+            className="object-contain"
           />
           <div className="flex-1">
             <p className="font-medium text-gray-900">{item.product.title}</p>

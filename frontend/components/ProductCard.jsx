@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -25,9 +26,15 @@ const ProductCard = ({ product }) => {
       className=" w-60 bg-[#FFFFFF]   overflow-hidden transition-shadow duration-400 cursor-pointer rounded shadow-4xl transition-transform duration-500 hover:scale-[1.04] hover:shadow-2xl gap-2  "
     >
       <div className="w-full h-50">
-        <img
+        <Image
           src={product.image}
           alt={product.title}
+          width={200}
+          height={200}
+          quality={80}
+          sizes="(max-width: 768px) 100vw, 33vw"
+          priority={false}
+          loading="lazy"
           className="object-contain w-full h-full rounded-2xl p-2"
         />
       </div>
