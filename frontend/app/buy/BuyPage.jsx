@@ -16,7 +16,7 @@ const BuyPage = () => {
   const token = typeof window !== "undefined" && localStorage.getItem("token");
 
   const [productsToOrder, setProductsToOrder] = useState([]);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(null);
   const [error, setError] = useState("");
   const [step, setStep] = useState(2);
 
@@ -75,30 +75,29 @@ const BuyPage = () => {
   return (
     <div className="min-h-screen max-w-6xl mx-auto p-4 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-2 space-y-4">
+        {/* Step 1 - Login */}
         {step >= 1 && (
           <section className="rounded border border-gray-200 bg-white p-4 shadow-md">
             <LoginPage />
           </section>
         )}
 
+        {/* Step 2 - Delivery Address */}
         {step >= 2 && (
           <section className="shadow rounded bg-gray-100">
             <h2 className="text-lg border-b border-gray-100 font-bold bg-white pt-4 pb-4 pl-4">
               2. Delivery Address
             </h2>
-            <DeliveryAddress onSelect={setAddress} />
-            <button
-              className="w-full mt-3 bg-orange-600 text-white px-4 py-2.5 rounded cursor-pointer"
-              onClick={() => {
-                if (address) setStep(3);
-                else alert("Please select an address");
+            <DeliveryAddress
+              onSelect={(addr) => {
+                setAddress(addr);
+                setStep(3);
               }}
-            >
-              Deliver Here
-            </button>
+            />
           </section>
         )}
 
+        {/* Step 3 - Order Summary */}
         {step >= 3 && (
           <section className="rounded bg-white shadow space-y-4">
             <h2 className="text-lg font-bold mb-2 p-4 border-b border-gray-100">
@@ -109,15 +108,16 @@ const BuyPage = () => {
               onQuantityChange={onQuantityChange}
             />
             <button
-              className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 rounded cursor-pointer"
+              className="mt-4 w-full bg-blue-600 text-white px-4 py-2.5 bg-orange-600 text-white px-4 py-2.5 rounded cursor-pointer"
               onClick={handleContinueToPayment}
             >
-              Continue to Payment
+              Continue
             </button>
           </section>
         )}
       </div>
 
+      {/* Price Details */}
       <div className="sticky top-6 h-fit">
         {productsToOrder.length === 0 ? (
           <div className="p-4 bg-white border rounded">

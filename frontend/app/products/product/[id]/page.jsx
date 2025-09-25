@@ -91,13 +91,15 @@ const ProductDetail = () => {
     );
 
   return (
-    <div className="min-h-screen max-w-7xl mx-auto px-6 py-16 center">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start bg-gradient-to-br from-white via-gray-50 to-gray-100 p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-gray-200">
-        <img
-          src={product.image}
-          alt={product.title}
-          className="w-full h-[26rem] object-contain rounded-[1.5rem] transition-transform duration-500 ease-in-out hover:scale-105 hover:rotate-1"
-        />
+    <div className="min-h-screen max-w-7xl mx-auto px-6  flex items-center justify-center ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-start p-10 rounded">
+        <div className="bg-white">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-full h-[34rem] object-contain rounded"
+          />
+        </div>
 
         <div className="space-y-6 center">
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight leading-tight">
