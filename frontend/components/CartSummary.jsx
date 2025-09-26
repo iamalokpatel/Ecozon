@@ -11,7 +11,7 @@ const CartSummary = ({ items }) => {
   const total = subtotal + tax;
 
   return (
-    <div className="bg-white rounded p-6 w-full text-gray-800">
+    <div className="bg-white rounded p-7 w-full text-gray-800">
       <h3 className="text-base font-semibold text-gray-700 pb-3 border-b border-gray-100 uppercase tracking-wide">
         Price Details
       </h3>

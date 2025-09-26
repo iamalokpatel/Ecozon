@@ -144,7 +144,7 @@ const CartPage = () => {
           </div>
 
           {/* Right: Summary */}
-          <div className="bg-white rounded shadow-md p-6 h-fit sticky top-23">
+          <div className="bg-white rounded shadow- sticky top-22 h-fit">
             <CartSummary items={cartItems} />
           </div>
         </div>
