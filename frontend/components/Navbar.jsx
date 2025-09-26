@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import api from "@/utils/api";
 
 const Navbar = () => {
@@ -104,10 +105,12 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="flex cursor-pointer" onClick={handleClick}>
-          <img
+          <Image
             src="/images/logo.png"
-            className="bg-transparent w-12 rounded-full shadow-none"
             alt="Logo"
+            width={48}
+            height={10}
+            className="bg-transparent w-12 rounded-full shadow-none"
           />
           <p className="text-lg font-semibold flex mt-[6px]">Ecozon</p>
         </div>

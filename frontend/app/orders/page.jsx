@@ -1,5 +1,6 @@
 "use client";
 import api from "@/utils/api";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
 
@@ -75,10 +76,12 @@ const UserOrdersPage = () => {
                 >
                   <div className="w-full flex justify-between items-start space-x-4">
                     <div className="relative w-20 h-20">
-                      <img
+                      <Image
                         src={product?.image || "/placeholder.png"}
                         alt={product?.name || "Product Image"}
-                        className="w-20 h-20 object-cover rounded"
+                        height={80}
+                        width={80}
+                        className="object-cover rounded"
                       />
                       {order.items.length > 1 && (
                         <div className="absolute top-16 left-2 bg-white text-xs px-2 py-0.5 rounded shadow">

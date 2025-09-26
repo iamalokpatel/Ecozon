@@ -1,6 +1,7 @@
 "use client";
 
 import api from "@/utils/api";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
 import CartItem from "@/components/CartItem";
@@ -97,10 +98,12 @@ const CartPage = () => {
     <div className="min-h-screen max-w-6xl mx-auto px-4 py-4">
       {cartItems.length === 0 ? (
         <div className="w-full h-110 flex flex-col bg-white  items-center justify-center text-center gap-3">
-          <img
+          <Image
             src="/images/cart.webp"
             alt="Empty Cart"
-            className="w-60 h-50 object-contain bg-transparent border-0 outline-none"
+            height={200}
+            width={240}
+            className="object-contain bg-transparent border-0 outline-none"
           />
 
           <p className="text-lg">Your cart is empty!</p>

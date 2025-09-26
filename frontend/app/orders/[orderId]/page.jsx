@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import api from "@/utils/api";
+import Image from "next/image";
 
 export default function OrderDetailsPage() {
   const { orderId } = useParams();
@@ -47,10 +48,12 @@ export default function OrderDetailsPage() {
                   className="flex items-center justify-between py-4"
                 >
                   <div className="flex items-center gap-4">
-                    <img
+                    <Image
                       src={item.product?.image || "/placeholder.png"}
                       alt={item.product?.title}
-                      className="w-16 h-16 rounded object-cover shadow-[0_2px_6px_0_rgba(0,0,0,0.15)]"
+                      width={64}
+                      height={64}
+                      className="rounded object-cover shadow-[0_2px_6px_0_rgba(0,0,0,0.15)]"
                     />
                     <div>
                       <p className="font-medium">{item.product?.title}</p>
