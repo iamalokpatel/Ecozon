@@ -31,8 +31,28 @@ export default function AllProductsList() {
   return (
     <div className="w-full mx-auto">
       {loading ? (
-        <div className="flex justify-center py-10">
-          <div className="w-12 h-12 border-4 border-gray-500 border-dashed rounded-full animate-spin"></div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 pb-4">
+          {Array.from({ length: 18 }).map((_, i) => (
+            <div
+              key={i}
+              className="w-60 bg-white overflow-hidden rounded shadow-4xl transition-transform duration-500 hover:scale-[1.04] hover:shadow-2xl"
+            >
+              {/* Image placeholder */}
+              <div className="w-full h-50 p-2 animate-pulse"></div>
+
+              {/* Text / Price placeholder */}
+              <div className="p-4 space-y-1">
+                {/* Title */}
+                <div className="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
+                {/* Price */}
+                <div className="flex gap-4 justify-center mt-2">
+                  <div className="h-4 w-12 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 w-10 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 w-8 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : products.length === 0 ? (
         <p className="text-gray-500 text-center col-span-full">

@@ -5,6 +5,7 @@ import api from "@/utils/api";
 
 const AddressList = () => {
   const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [accessMessage, setAccessMessage] = useState("");
   const router = useRouter();
 
@@ -30,6 +31,7 @@ const AddressList = () => {
           return;
         }
 
+        setLoading(true);
         const res = await api.get("/address", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,6 +40,8 @@ const AddressList = () => {
         setAddresses(res.data.addresses);
       } catch (error) {
         console.error("Error fetching addresses:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -62,15 +66,24 @@ const AddressList = () => {
 
   return (
     <div className="min-h-screen py-4 px-4">
-      <div className="max-w-6xl mx-auto  p-4">
-        <h2 className=" text-xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-20 after:h-1 after:bg-black after:mx-auto after:mt-2">
+      <div className="max-w-6xl mx-auto p-4">
+        <h2 className="text-xl font-bold tracking-wide text-center text-gray-800 mb-10 uppercase relative after:content-[''] after:block after:w-20 after:h-1 after:bg-black after:mx-auto after:mt-2">
           Manage Address
         </h2>
 
-        {addresses.length === 0 ? (
+        {loading ? (
+          <>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="relative bg-[#FFFFFF] gap-2 mb-3 w-full h-32 border border-gray-200 shadow-md rounded p-8 animate-pulse"
+              ></div>
+            ))}
+          </>
+        ) : addresses.length === 0 ? (
           <p className="text-center text-gray-500">No addresses found.</p>
         ) : (
-          <div className="">
+          <div>
             {addresses.map((address) => (
               <div
                 key={address._id}
@@ -101,7 +114,7 @@ const AddressList = () => {
         <div className="text-center border border-gray-300 mt-4 w-full">
           <button
             onClick={handleAddNew}
-            className=" text-blue-500 px-6 py-3 rounded-lg hover:text-blue-800 transition font-semibold  uppercase cursor-pointer"
+            className="text-blue-500 px-6 py-3 rounded-lg hover:text-blue-800 transition font-semibold uppercase cursor-pointer"
           >
             + Add New Address
           </button>

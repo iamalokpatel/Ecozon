@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from "react";
 
 const UserOrdersPage = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [accessMessage, setAccessMessage] = useState("");
   const hasCheckedRef = useRef(false);
   const router = useRouter();
@@ -35,12 +36,15 @@ const UserOrdersPage = () => {
 
     const fetchOrders = async () => {
       try {
+        setLoading(true);
         const res = await api.get("/orders", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(res.data);
       } catch (error) {
         console.error("Error fetching orders:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -61,7 +65,26 @@ const UserOrdersPage = () => {
         My Orders
       </h2>
 
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="flex flex-col gap-3">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white border border-gray-200 shadow-md rounded p-6 animate-pulse"
+            >
+              <div className="w-full flex justify-between items-start space-x-4">
+                <div className="w-20 h-20 bg-gray-200 rounded"></div>
+                <div className="flex-1 flex flex-col gap-2 ml-4">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                </div>
+                <div className="h-4 bg-gray-200 rounded w-16"></div>
+                <div className="h-4 bg-gray-200 rounded w-24"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : orders.length === 0 ? (
         <p className="text-center text-gray-500">No orders found.</p>
       ) : (
         <div className="flex flex-col gap-3">
