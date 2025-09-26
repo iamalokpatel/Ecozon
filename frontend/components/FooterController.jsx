@@ -1,4 +1,4 @@
-"use client"; // client component
+"use client";
 import { usePathname } from "next/navigation";
 import HomeFooter from "./HomeFooter";
 import MainFooter from "./MainFooter";

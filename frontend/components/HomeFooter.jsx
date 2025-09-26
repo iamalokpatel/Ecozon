@@ -4,12 +4,10 @@ import Link from "next/link";
 
 const HomeFooter = () => {
   return (
-    <footer className="w-full pt-6  px-8 xl:px-0">
-      <div className="bg-[#f5f5f5] text-[#878787] p-4 space-y-6">
-        <h2 className="font-bold text-base">
-          Ecozon: The One-stop Shopping Destination
-        </h2>
-        <p>
+    <footer className="w-full pt-2  px-8 xl:px-0">
+      <div className="bg-[#f5f5f5] text-[#878787] p-4 space-y-2">
+        <h2 className="font-medium  text-xs">Ecozon :</h2>
+        <p className="text-xs">
           E-commerce is revolutionizing the way we all shop in India. Why do you
           want to hop from one store to another in search of the latest phone
           when you can find it on the Internet in a single click? Not only
@@ -26,9 +24,8 @@ const HomeFooter = () => {
           working hours, Ecozon is your best bet. Shop in your PJs, at night or
           in the wee hours of the morning. This e-commerce never shuts down.
         </p>
-
-        <h2 className="font-bold text-base">Mobile Phones</h2>
-        <p>
+        <h2 className="font-medium  text-xs">Mobile Phones</h2>
+        <p className="text-xs">
           From budget phones to state-of-the-art smartphones, we have a mobile
           for everybody out there. Whether you're looking for larger, fuller
           screens, power-packed batteries, blazing-fast processors,
@@ -45,38 +42,101 @@ const HomeFooter = () => {
           comprehensive range of post-purchase problems, with door-to-door
           services.
         </p>
-
-        <h2 className="font-bold text-base">
-          Electronic Devices and Accessories
-        </h2>
-        <p>
-          When it comes to laptops, we are not far behind. Filter among dozens
-          of super-fast operating systems, hard disk capacity, RAM, lifestyle,
-          screen size and many other criterias for personalized results in a
-          flash. All you students out there, confused about what laptop to get?
-          Our <b>Back To College Store</b> segregates laptops purpose wise
-          (gaming, browsing and research, project work, entertainment, design,
-          multitasking) with recommendations from top brands and industry
-          experts, facilitating a shopping experience that is quicker and
-          simpler.
+        <h2 className="font-medium text-xs">EMI on Debit Cards</h2>
+        <p className="text-xs">
+          Did you know debit card holders account for 79.38 crore in the
+          country, while there are only 3.14 crore credit card holders? After
+          enabling EMI on Credit Cards, in another attempt to make online
+          shopping accessible to everyone, Flipkart introduces EMI on Debit
+          Cards, empowering you to shop confidently with us without having to
+          worry about pauses in monthly cash flow. At present, we have partnered
+          with Axis Bank, HDFC Bank, State Bank of India and ICICI Bank for this
+          facility. More power to all our shoppers! Terms and conditions apply.
         </p>
 
-        <h2 className="font-bold text-base">Home and Furniture</h2>
-        <p>
+        <h2 className="font-medium text-xs">Mobile Exchange Offers</h2>
+        <p className="text-xs">
+          Get an instant discount on the phone that you have been eyeing on.
+          Exchange your old mobile for a new one after the Flipkart experts
+          calculate the value of your old phone, provided it is in a working
+          condition without damage to the screen. If a phone is applicable for
+          an exchange offer, you will see the 'Buy with Exchange' option on the
+          product description of the phone. So, be smart, always opt for an
+          exchange wherever possible. Terms and conditions apply.
+        </p>
+
+        <h2 className="font-medium text-xs">Large Appliances</h2>
+        <p className="text-xs">
+          Sleek TVs, power-saving refrigerators, rapid-cooling ACs, resourceful
+          washing machines - discover everything you need to run a house under
+          one roof. Our
+          <span className="font-medium text-xs">
+            Dependable TV and Appliance Store
+          </span>
+          ensures zero transit damage, with a replacement guarantee if anything
+          goes wrong; delivery and installation as per your convenience and a
+          double warranty (Official Brand Warranty along with an extended
+          Flipkart Warranty) - rest assured, value for money is what is promised
+          and delivered. Shop from market leaders in the country like Samsung,
+          LG, Whirlpool, Midea, Mi, Vu, Panasonic, Godrej, Sony, Daikin, and
+          Hitachi among many others. For certain product categories, Customers
+          meeting the eligibility criteria will have the option to buy larger
+          quantities. To know more on the eligibility criteria and terms and
+          conditions, please reach out to
+        </p>
+        <h2 className="font-medium text-xs">Lifestyle</h2>
+        <p className="text-xs">
+          Flipkart,
+          <span className="font-medium text-xs">
+            'India ka Fashion Capital'
+          </span>
+          , is your one-stop fashion destination for anything and everything you
+          need to look good. Our exhaustive range of Western and Indian wear,
+          summer and winter clothing, formal and casual footwear, bridal and
+          artificial jewellery, long-lasting make-up, grooming tools and
+          accessories are sure to sweep you off your feet. Shop from crowd
+          favourites like Vero Moda, Forever 21, Only, Arrow, Woodland, Nike,
+          Puma, Revlon, Mac, and Sephora among dozens of other top-of-the-ladder
+          names. From summer staple maxi dresses, no-nonsense cigarette pants,
+          traditional Bandhani kurtis to street-smart biker jackets, you can
+          rely on us for a wardrobe that is up to date. Explore our in-house
+          brands like Metronaut, Anmi, and Denizen, to name a few, for carefully
+          curated designs that are the talk of the town. Get ready to be spoiled
+          for choice.Festivals, office get-togethers, weddings, brunches, or
+          nightwear - Flipkart will have your back each time.
+        </p>
+        <h2 className="font-medium text-xs">Home and Furniture</h2>
+        <p className="text-xs">
           Moving to a new place is never easy, especially if you're buying new
           furniture. Beds, sofa sets, dining tables, wardrobes, and TV units -
           it's not easy to set up everything again. With the hundreds of options
           thrown at you, the ride could be overwhelming. What place is reliable,
           what furniture will stand the test of time? These are questions you
-          must ask before you choose a store. Well, our{" "}
-          <b>Durability Certified Furniture Store</b> has not only curated a
-          range of furniture keeping in mind the modern Indian consumer but
-          furniture that comes with a lab certification, ensuring they last you
-          for up to 10 years. Yes, all our furniture has gone through 35
-          stability and load tests so that you receive only the best-quality
-          furniture. <b>Be FurniSure</b>, always. Names to look out for are
-          Nilkamal, Godrej Interio, Urban Ladder, HomeTown, Durian and Perfect
-          Homes.
+          must ask before you choose a store. Well, our
+          <span className="font-medium text-xs">
+            Durability Certified Furniture Store
+          </span>
+          has not only curated a range of furniture keeping in mind the modern
+          Indian consumer but furniture that comes with a lab certification,
+          ensuring they last you for up to 10 years. Yes, all our furniture has
+          gone through 35 stability and load tests so that you receive only the
+          best-quality furniture. Be FurniSure, always. Names to look out for
+          are Nilkamal, Godrej Interio, Urban Ladder, HomeTown, Durian and
+          Perfect Homes.
+        </p>
+        <h2 className="font-medium text-xs">
+          Electronic Devices and Accessories
+        </h2>
+        <p className="text-xs">
+          When it comes to laptops, we are not far behind. Filter among dozens
+          of super-fast operating systems, hard disk capacity, RAM, lifestyle,
+          screen size and many other criterias for greatest personalized results
+          in a flash. All you students out there, confused about what samsung
+          latest laptop to get? Our Back To College Store segregates laptops
+          purpose wise (gaming, browsing and research, project work,
+          entertainment, design, multitasking) with recommendatons from top
+          brands and industry experts, facilitating a shopping experience that
+          is quicker and simpler.
         </p>
       </div>
 
