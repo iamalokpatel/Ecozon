@@ -108,9 +108,17 @@ const Navbar = () => {
           <Image
             src="/images/logo.png"
             alt="Logo"
+            style={{
+              width: "22%",
+              height: "auto",
+            }}
             width={48}
-            height={10}
-            className="bg-transparent w-12 rounded-full shadow-none"
+            height={24}
+            quality={50}
+            loading="lazy"
+            priority={false}
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="bg-transparent rounded-full shadow-none"
           />
           <p className="text-lg font-semibold flex mt-[6px]">Ecozon</p>
         </div>

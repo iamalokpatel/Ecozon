@@ -31,10 +31,10 @@ const ProductCard = ({ product }) => {
           alt={product.title}
           width={200}
           height={200}
-          quality={80}
-          sizes="(max-width: 768px) 100vw, 33vw"
-          priority={false}
+          quality={50}
           loading="lazy"
+          priority={false}
+          sizes="(max-width: 768px) 100vw, 33vw"
           className="object-contain w-full h-full rounded-2xl p-2"
         />
       </div>
