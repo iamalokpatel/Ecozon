@@ -72,13 +72,12 @@ const UserOrdersPage = () => {
               key={i}
               className="bg-white border border-gray-200 shadow-md rounded p-6 animate-pulse"
             >
-              <div className="w-full flex justify-between items-start space-x-4">
+              <div className="w-full flex justify-around items-start space-x-4">
                 <div className="w-20 h-20 bg-gray-200 rounded"></div>
-                <div className="flex-1 flex flex-col gap-2 ml-4">
-                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                <div className="flex-1 flex ml-8">
+                  <div className="h-4 bg-gray-200 rounded w-2/4"></div>
                 </div>
-                <div className="h-4 bg-gray-200 rounded w-16"></div>
+                <div className="h-4 bg-gray-200 rounded w-14"></div>
                 <div className="h-4 bg-gray-200 rounded w-24"></div>
               </div>
             </div>
@@ -123,12 +122,12 @@ const UserOrdersPage = () => {
                     <div className="text-sm text-gray-700 whitespace-nowrap">
                       Status:{" "}
                       <span
-                        className={`inline-block px-2 py-1 rounded-lg text-xs ${
+                        className={`inline-block px-2 py-1 rounded text-xs ${
                           order.status === "Delivered"
-                            ? "bg-green-100 text-green-800"
+                            ? "text-green-800"
                             : order.status === "Cancelled"
-                            ? "bg-red-100 text-red-800"
-                            : "bg-yellow-100 text-yellow-800"
+                            ? "text-red-800"
+                            : "text-yellow-800"
                         }`}
                       >
                         {order.status}

@@ -1,8 +1,6 @@
 import "./globals.css";
-import React from "react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Script from "next/script";
+import FooterController from "@/components/FooterController"; // client footer
 
 export const metadata = {
   title: "Ecozon",
@@ -18,11 +16,7 @@ export default function RootLayout({ children }) {
       <body className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <Footer />
-        <Script
-          src="https://checkout.razorpay.com/v1/checkout.js"
-          strategy="afterInteractive"
-        />
+        <FooterController />
       </body>
     </html>
   );

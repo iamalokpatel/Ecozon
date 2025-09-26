@@ -77,7 +77,12 @@ const AddressList = () => {
               <div
                 key={i}
                 className="relative bg-[#FFFFFF] gap-2 mb-3 w-full h-32 border border-gray-200 shadow-md rounded p-8 animate-pulse"
-              ></div>
+              >
+                <div className="flex flex-col gap-4 justify-center mt-2">
+                  <div className="h-4 w-[25%] bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 w-[60%] bg-gray-200 rounded animate-pulse"></div>
+                </div>
+              </div>
             ))}
           </>
         ) : addresses.length === 0 ? (

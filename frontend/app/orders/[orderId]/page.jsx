@@ -32,6 +32,7 @@ export default function OrderDetailsPage() {
     return <p className="text-center text-red-500 py-10">Order not found.</p>;
 
   const address = order.address;
+  console.log(order);
 
   return (
     <div className="min-h-screen max-w-5xl mx-auto p-6">
@@ -40,7 +41,11 @@ export default function OrderDetailsPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* Items */}
           <div className="bg-white rounded p-5 shadow-sm">
-            <h2 className="text-lg font-semibold mb-4">Items in this order</h2>
+            <h2 className="text-lg font-semibold mb-4">
+              OrderId:{" "}
+              <span className="text-sm text-yellow-700">[ {order._id} ]</span>
+            </h2>
+
             <ul className="divide-y divide-gray-200">
               {order.items.map((item, idx) => (
                 <li
