@@ -44,8 +44,8 @@ const ProductCard = ({ product }) => {
         <p className="inline-block text-base font-medium text-gray-900">
           ₹{product.price}
         </p>
-        <p className="text-sm text-gray-400 line-through">
-          {product.price + (product.price / 100) * 10}
+        <p className="text-sm text-gray-600 line-through">
+          {parseInt((10 * product.price) / 9)}
         </p>
         <p className="text-sm text-green-700 tracking-tight font-medium">
           10% off
