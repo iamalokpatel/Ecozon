@@ -151,7 +151,6 @@ const AddProducts = () => {
               alt="Preview"
               width={160}
               height={160}
-              fill
               priority
               className="object-cover rounded-xl border mt-2"
             />

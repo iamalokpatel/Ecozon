@@ -197,7 +197,6 @@ const EditProduct = ({ params }) => {
                 alt="Preview"
                 width={128}
                 height={128}
-                fill
                 priority
                 className="mt-3 object-cover border rounded-md shadow "
               />

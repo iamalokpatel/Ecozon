@@ -108,13 +108,8 @@ const Navbar = () => {
           <Image
             src="/images/logo.png"
             alt="Logo"
-            style={{
-              width: "22%",
-              height: "auto",
-            }}
             width={48}
             height={24}
-            fill
             priority
             className="bg-transparent rounded-full shadow-none"
           />

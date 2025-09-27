@@ -19,7 +19,6 @@ const OrderSummary = ({ products, onQuantityChange }) => {
             alt={item.product.title}
             width={80}
             height={80}
-            fill
             priority
             className="object-cover"
           />

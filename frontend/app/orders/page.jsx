@@ -103,7 +103,6 @@ const UserOrdersPage = () => {
                         alt={product?.name || "Product Image"}
                         height={80}
                         width={80}
-                        fill
                         priority
                         className="object-cover rounded"
                       />

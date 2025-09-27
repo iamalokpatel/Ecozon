@@ -100,7 +100,6 @@ const ProductDetail = () => {
             alt={product.title}
             width={600}
             height={544}
-            fill
             priority
             className="w-full object-cover rounded"
           />
