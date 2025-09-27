@@ -184,43 +184,23 @@ const HomeFooter = () => {
             <div className="flex flex-col text-[#878787] text-[12px] mb-3">
               ABOUT
             </div>
-            <Link
-              href="/helpcentre?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Contact Us"
-            >
+            <Link href="/contact" className="HlWMPX" aria-label="Contact Us">
               Contact Us
             </Link>
-            <Link
-              href="https://corporate.flipkart.net/corporate-home"
-              className="HlWMPX"
-              aria-label="About Us"
-            >
+            <Link href="/about" className="HlWMPX" aria-label="About Us">
               About Us
             </Link>
-            <Link
-              href="https://www.flipkartcareers.com/?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Careers"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Careers">
               Careers
             </Link>
-            <Link
-              href="http://stories.flipkart.com/?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Flipkart Stories"
-            >
-              Flipkart Stories
+            <Link href="/" className="HlWMPX" aria-label="Flipkart Stories">
+              Ecozon Stories
             </Link>
-            <Link
-              href="http://stories.flipkart.com/category/top-stories/news/"
-              className="HlWMPX"
-              aria-label="Press"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Press">
               Press
             </Link>
             <Link
-              href="/corporate-information"
+              href="/"
               className="HlWMPX"
               aria-label="Corporate Information"
             >
@@ -260,37 +240,55 @@ const HomeFooter = () => {
             >
               Shopsy
             </Link>
+            <Link
+              href="https://www.flipkart.com"
+              className="HlWMPX"
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="Flipcart"
+            >
+              Flipcart
+            </Link>
+            <Link
+              href="https://www.amazon.in"
+              className="HlWMPX"
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="Amazon"
+            >
+              Amazon
+            </Link>
+            <Link
+              href="https://www.instamart.in"
+              className="HlWMPX"
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="Instamart"
+            >
+              Instamart
+            </Link>
           </div>
 
           {/* HELP */}
           <div className="flex flex-col">
             <div className="text-[#878787] text-[12px] mb-3">HELP</div>
-            <Link
-              href="/pages/payments"
-              className="HlWMPX"
-              aria-label="Payments"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Payments">
               Payments
             </Link>
-            <Link
-              href="/pages/shipping"
-              className="HlWMPX"
-              aria-label="Shipping"
-            >
+            <Link href="/orders" className="HlWMPX" aria-label="Orders">
+              Orders
+            </Link>
+            <Link href="/" className="HlWMPX" aria-label="Shipping">
               Shipping
             </Link>
             <Link
-              href="/helpcentre?catalog=55c9c6edb000002e002c1701&amp;view=CATALOG"
+              href="/"
               className="HlWMPX"
               aria-label="Cancellation &amp; Returns"
             >
               Cancellation &amp; Returns
             </Link>
-            <Link
-              href="/helpcentre?catalog=55c9c8e2b0000023002c1702&amp;view=CATALOG"
-              className="HlWMPX"
-              aria-label="FAQ"
-            >
+            <Link href="/" className="HlWMPX" aria-label="FAQ">
               FAQ
             </Link>
           </div>
@@ -301,52 +299,28 @@ const HomeFooter = () => {
               CONSUMER POLICY
             </div>
             <Link
-              href="/pages/returnpolicy?otracker=footer_navlinks"
+              href="/"
               className="HlWMPX"
               aria-label="Cancellation &amp; Returns"
             >
               Cancellation &amp; Returns
             </Link>
-            <Link
-              href="/pages/terms?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Terms Of Use"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Terms Of Use">
               Terms Of Use
             </Link>
-            <Link
-              href="/pages/paymentsecurity?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Security"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Security">
               Security
             </Link>
-            <Link
-              href="/pages/privacypolicy?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Privacy"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Privacy">
               Privacy
             </Link>
-            <Link
-              href="/sitemap?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Sitemap"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Sitemap">
               Sitemap
             </Link>
-            <Link
-              href="/pages/grievance-redressal-mechanism?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="Grievance Redressal"
-            >
+            <Link href="/" className="HlWMPX" aria-label="Grievance Redressal">
               Grievance Redressal
             </Link>
-            <Link
-              href="/pages/ewaste-compliance-tnc?otracker=footer_navlinks"
-              className="HlWMPX"
-              aria-label="EPR Compliance"
-            >
+            <Link href="/" className="HlWMPX" aria-label="EPR Compliance">
               EPR Compliance
             </Link>
           </div>
@@ -367,10 +341,7 @@ const HomeFooter = () => {
             <div className="text-[#878787] text-[12px] my-3">Social:</div>
             <div className="flex items-center gap-2">
               <div className="_2l3nc-">
-                <Link
-                  href="https://www.facebook.com/flipkart"
-                  aria-label="Facebook"
-                >
+                <Link href="https://www.facebook.com" aria-label="Facebook">
                   <img
                     src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNSAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyLjkzMzEgMjFDMTcuOTAzNyAyMSAyMS45MzMxIDE2Ljk3MDYgMjEuOTMzMSAxMkMyMS45MzMxIDcuMDI5NDQgMTcuOTAzNyAzIDEyLjkzMzEgM0M3Ljk2MjU0IDMgMy45MzMxMSA3LjAyOTQ0IDMuOTMzMTEgMTJDMy45MzMxMSAxNi45NzA2IDcuOTYyNTQgMjEgMTIuOTMzMSAyMVoiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE2LjY4MzEgOC4yNUgxNS4xODMxQzE0LjU4NjQgOC4yNSAxNC4wMTQxIDguNDg3MDUgMTMuNTkyMSA4LjkwOTAxQzEzLjE3MDIgOS4zMzA5NyAxMi45MzMxIDkuOTAzMjYgMTIuOTMzMSAxMC41VjIxIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik05LjkzMzExIDEzLjVIMTUuOTMzMSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K"
                     alt="Facebook"
@@ -380,10 +351,7 @@ const HomeFooter = () => {
                 </Link>
               </div>
               <div className="_2l3nc-">
-                <Link
-                  href="https://www.twitter.com/flipkart"
-                  aria-label="Twitter"
-                >
+                <Link href="https://www.twitter.com" aria-label="Twitter">
                   <img
                     src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzE4M18yMCkiPgo8cGF0aCBkPSJNMTMuNTQzNiAxMC42MTc5TDIwLjA5NzEgM0gxOC41NDQxTDEyLjg1MzcgOS42MTQ0OEw4LjMwODg3IDNIMy4wNjY4OUw5LjkzOTY0IDEzLjAwMjNMMy4wNjY4OSAyMC45OTA4SDQuNjE5OTRMMTAuNjI5MSAxNC4wMDU2TDE1LjQyODggMjAuOTkwOEgyMC42NzA4TDEzLjU0MzIgMTAuNjE3OUgxMy41NDM2Wk0xMS40MTY1IDEzLjA5MDRMMTAuNzIwMiAxMi4wOTQ0TDUuMTc5NTMgNC4xNjkxMUg3LjU2NDkxTDEyLjAzNjMgMTAuNTY1MUwxMi43MzI2IDExLjU2MTFMMTguNTQ0OCAxOS44NzQ4SDE2LjE1OTVMMTEuNDE2NSAxMy4wOTA4VjEzLjA5MDRaIiBmaWxsPSJ3aGl0ZSIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzE4M18yMCI+CjxyZWN0IHg9IjMuMDY2ODkiIHk9IjMiIHdpZHRoPSIxNy42MDM5IiBoZWlnaHQ9IjE4IiByeD0iMC4yIiBmaWxsPSJ3aGl0ZSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM+Cjwvc3ZnPgo="
                     alt="Twitter"
@@ -393,10 +361,7 @@ const HomeFooter = () => {
                 </Link>
               </div>
               <div className="_2l3nc-">
-                <Link
-                  href="https://www.youtube.com/flipkart"
-                  aria-label="YouTube"
-                >
+                <Link href="https://www.youtube.com" aria-label="YouTube">
                   <img
                     src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/YoutubeLogo-8425c4.svg"
                     alt="YouTube"
@@ -406,10 +371,7 @@ const HomeFooter = () => {
                 </Link>
               </div>
               <div className="ml-1">
-                <Link
-                  href="https://www.instagram.com/flipkart"
-                  aria-label="Instagram"
-                >
+                <Link href="https://www.instagram.com" aria-label="Instagram">
                   <img
                     src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/InstagramLogo-43f906.svg"
                     alt="Instagram"
@@ -450,10 +412,7 @@ const HomeFooter = () => {
                   width="13"
                   height="12"
                 />
-                <Link
-                  href="https://seller.flipkart.com/?utm_source=fkwebsite&amp;utm_medium=websitedirect"
-                  aria-label="Become a Seller"
-                >
+                <Link href="/" aria-label="Become a Seller">
                   <span>Become a Seller</span>
                 </Link>
               </div>
@@ -465,7 +424,7 @@ const HomeFooter = () => {
                   width="14"
                   height="14"
                 />
-                <Link href="https://brands.flipkart.com" aria-label="Advertise">
+                <Link href="/" aria-label="Advertise">
                   <span>Advertise</span>
                 </Link>
               </div>
@@ -477,10 +436,7 @@ const HomeFooter = () => {
                   width="13"
                   height="13"
                 />
-                <Link
-                  href="/the-gift-card-store?otracker=footer_navlinks"
-                  aria-label="Gift Cards"
-                >
+                <Link href="/" aria-label="Gift Cards">
                   <span>Gift Cards</span>
                 </Link>
               </div>
@@ -492,10 +448,7 @@ const HomeFooter = () => {
                   width="13"
                   height="13"
                 />
-                <Link
-                  href="/helpcentre?otracker=footer_navlinks"
-                  aria-label="Help Center"
-                >
+                <Link href="/" aria-label="Help Center">
                   <span>Help Center</span>
                 </Link>
               </div>
