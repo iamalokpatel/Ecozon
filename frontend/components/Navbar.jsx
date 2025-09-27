@@ -125,100 +125,107 @@ const Navbar = () => {
       </div>
 
       {/* Search Bar (always visible, responsive) */}
-      <form
-        onSubmit={handleSearch}
-        className=" flex items-center border border-gray-300 bg-gray-100 rounded-lg px-2 w-[60%] relative right-[20px] xl:static mx-2"
-      >
-        <button
-          type="submit"
-          className="text-gray-400 flex items-center justify-center cursor-pointer"
+      <div className="w-80">
+        <form
+          onSubmit={handleSearch}
+          className=" flex items-center border border-gray-300 bg-gray-100 rounded-lg px-2  mx-2"
         >
-          <Search size={18} />
-        </button>
-        <input
-          type="text"
-          placeholder="Search for Products Brands and More..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-grow outline-none px-1 py-1 bg-gray-100 text-sm"
-        />
-      </form>
+          <button
+            type="submit"
+            className="text-gray-400 flex items-center justify-center cursor-pointer"
+          >
+            <Search size={18} />
+          </button>
+          <input
+            type="text"
+            placeholder="Search for Products Brands and More..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-grow outline-none px-1 py-1 bg-gray-100 text-sm"
+          />
+        </form>
+      </div>
 
       {/* Menu */}
-      <ul
-        ref={menuRef}
-        className={`${
-          isMenuOpen ? "block text-white !w-[60%] h-screen " : "hidden "
-        } absolute top-20 left-0 w-full bg-[#0f1111] flex flex-col items-center gap-4 py-4 
+      <div>
+        <ul
+          ref={menuRef}
+          className={`${
+            isMenuOpen ? "block text-white !w-[60%] h-screen " : "hidden "
+          } absolute top-20 left-0 w-full bg-[#0f1111] flex flex-col items-center gap-4 py-4 
           md:flex md:static md:flex-row md:w-auto md:gap-8 md:bg-transparent md:py-0`}
-      >
-        <li onClick={closeMenu}>
-          <Link href="/" className={linkClasses("/")}>
-            Home
-          </Link>
-        </li>
-
-        {isLoggedIn && userRole === "admin" && (
+        >
           <li onClick={closeMenu}>
-            <Link href="/dashboard" className={linkClasses("/dashboard")}>
-              Dashboard
+            <Link href="/" className={linkClasses("/")}>
+              Home
             </Link>
           </li>
-        )}
 
-        <li onClick={closeMenu}>
-          <Link href="/products" className={linkClasses("/products")}>
-            Products
-          </Link>
-        </li>
+          {isLoggedIn && userRole === "admin" && (
+            <li onClick={closeMenu}>
+              <Link href="/dashboard" className={linkClasses("/dashboard")}>
+                Dashboard
+              </Link>
+            </li>
+          )}
 
-        {isLoggedIn && userRole === "user" && (
-          <>
-            <li onClick={closeMenu}>
-              <Link href="/cart" className={linkClasses("/cart")}>
-                Cart
-              </Link>
-            </li>
-            <li onClick={closeMenu}>
-              <Link href="/address" className={linkClasses("/address")}>
-                Address
-              </Link>
-            </li>
-            <li onClick={closeMenu}>
-              <Link href="/orders" className={linkClasses("/orders")}>
-                Orders
-              </Link>
-            </li>
-          </>
-        )}
-
-        {!isLoggedIn ? (
-          <>
-            <li onClick={closeMenu}>
-              <Link href="/users/login" className={linkClasses("/users/login")}>
-                Login
-              </Link>
-            </li>
-            <li onClick={closeMenu}>
-              <Link
-                href="/users/register"
-                className={linkClasses("/users/register")}
-              >
-                Register
-              </Link>
-            </li>
-          </>
-        ) : (
-          <li>
-            <button
-              className="hover:underline underline-offset-2 cursor-pointer"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+          <li onClick={closeMenu}>
+            <Link href="/products" className={linkClasses("/products")}>
+              Products
+            </Link>
           </li>
-        )}
-      </ul>
+
+          {isLoggedIn && userRole === "user" && (
+            <>
+              <li onClick={closeMenu}>
+                <Link href="/cart" className={linkClasses("/cart")}>
+                  Cart
+                </Link>
+              </li>
+              <li onClick={closeMenu}>
+                <Link href="/address" className={linkClasses("/address")}>
+                  Address
+                </Link>
+              </li>
+              <li onClick={closeMenu}>
+                <Link href="/orders" className={linkClasses("/orders")}>
+                  Orders
+                </Link>
+              </li>
+            </>
+          )}
+
+          {!isLoggedIn ? (
+            <>
+              <li onClick={closeMenu}>
+                <Link
+                  href="/users/login"
+                  className={linkClasses("/users/login")}
+                >
+                  Login
+                </Link>
+              </li>
+              <li onClick={closeMenu}>
+                <Link
+                  href="/users/register"
+                  className={linkClasses("/users/register")}
+                >
+                  Register
+                </Link>
+              </li>
+            </>
+          ) : (
+            <li>
+              <button
+                className="hover:underline underline-offset-2 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </li>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 };
