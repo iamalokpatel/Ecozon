@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
           alt={product.title}
           width={200}
           height={200}
-          priority
+          fetchPriority="high"
           className="object-cover w-full h-full rounded p-2"
         />
       </div>
