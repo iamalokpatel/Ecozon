@@ -61,8 +61,9 @@ const FeaturedProducts = () => {
                   <Image
                     src={product.image}
                     alt={product.title}
-                    fill
-                    className="object-cover"
+                    width={1502}
+                    height={240}
+                    className="object-cover h-full"
                   />
                 </div>
               </div>
