@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import api from "@/utils/api";
 
 const AddProducts = () => {
@@ -145,10 +146,15 @@ const AddProducts = () => {
             className="w-46 p-2 text-sm text-gray-700 border-gray-300 rounded-lg shadow-sm"
           />
           {preview && (
-            <img
+            <Image
               src={preview}
               alt="Preview"
-              className="w-40 h-40 object-cover rounded-xl border mt-2"
+              width={160}
+              height={160}
+              quality={50}
+              priority
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover rounded-xl border mt-2"
             />
           )}
           <button

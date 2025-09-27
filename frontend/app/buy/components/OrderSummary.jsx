@@ -19,6 +19,7 @@ const OrderSummary = ({ products, onQuantityChange }) => {
             alt={item.product.title}
             width={80}
             height={80}
+            quality
             className="object-contain"
           />
           <div className="flex-1">

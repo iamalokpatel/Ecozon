@@ -4,7 +4,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Link from "next/link";
-import Image from "next/image"; // 👈 Better than <img>
+import Image from "next/image";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -64,7 +64,6 @@ const FeaturedProducts = () => {
                     width={600}
                     height={400}
                     quality={50}
-                    loading="lazy"
                     priority={false}
                     className="object-cover w-full h-full"
                   />

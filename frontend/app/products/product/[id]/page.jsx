@@ -100,6 +100,9 @@ const ProductDetail = () => {
             alt={product.title}
             width={600} // ✅ required
             height={544} // ✅ required
+            quality={50}
+            priority
+            sizes="(max-width: 768px) 100vw, 33vw"
             className="w-full h-[34rem] object-contain rounded"
           />
         </div>

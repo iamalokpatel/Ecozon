@@ -134,6 +134,9 @@ export default function OrderDetailsPage() {
                         alt={item.product?.title || "Product Image"}
                         width={64}
                         height={64}
+                        quality={50}
+                        priority
+                        sizes="(max-width: 768px) 100vw, 33vw"
                         className="rounded object-cover shadow-[0_2px_6px_0_rgba(0,0,0,0.15)]"
                       />
                       <div>

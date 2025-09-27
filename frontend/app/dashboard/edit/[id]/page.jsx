@@ -195,7 +195,12 @@ const EditProduct = ({ params }) => {
               <img
                 src={preview}
                 alt="Preview"
-                className="mt-3 w-32 h-32 object-cover border rounded-md shadow "
+                width={128}
+                height={128}
+                quality={50}
+                priority
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="mt-3 object-cover border rounded-md shadow "
               />
             ) : (
               <p className="text-sm text-gray-400 mt-2">No image selected</p>

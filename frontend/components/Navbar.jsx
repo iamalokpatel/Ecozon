@@ -115,8 +115,7 @@ const Navbar = () => {
             width={48}
             height={24}
             quality={50}
-            loading="lazy"
-            priority={false}
+            priority
             sizes="(max-width: 768px) 100vw, 33vw"
             className="bg-transparent rounded-full shadow-none"
           />
