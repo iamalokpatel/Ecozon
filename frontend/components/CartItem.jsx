@@ -13,7 +13,6 @@ const CartItem = ({ item, onRemove, onIncrease, onDecrease }) => {
           alt={item.product.title}
           width={96}
           height={96}
-          priority
           className="md:w-28 md:h-28 object-cover rounded-lg"
         />
         <div className="flex-1">

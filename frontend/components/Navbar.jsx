@@ -110,7 +110,6 @@ const Navbar = () => {
             alt="Logo"
             width={48}
             height={24}
-            priority
             className="bg-transparent rounded-full shadow-none"
           />
           <p className="text-lg font-semibold flex mt-[6px]">Ecozon</p>
@@ -128,10 +127,11 @@ const Navbar = () => {
             className="text-gray-400 flex items-center justify-center cursor-pointer"
           >
             <Search size={18} />
+            Search
           </button>
           <input
             type="text"
-            placeholder="Search for Products Brands and More..."
+            placeholder="for Products Brands and More..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-grow outline-none px-1 py-1 bg-gray-100 text-sm"

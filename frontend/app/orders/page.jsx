@@ -103,7 +103,6 @@ const UserOrdersPage = () => {
                         alt={product?.name || "Product Image"}
                         height={80}
                         width={80}
-                        priority
                         className="object-cover rounded"
                       />
                       {order.items.length > 1 && (

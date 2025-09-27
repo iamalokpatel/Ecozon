@@ -63,7 +63,6 @@ const FeaturedProducts = () => {
                     alt={product.title}
                     width={600}
                     height={400}
-                    priority
                     className="object-cover w-full h-full"
                   />
                 </div>
