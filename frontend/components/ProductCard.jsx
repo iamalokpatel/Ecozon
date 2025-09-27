@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
           width={200}
           height={200}
           quality={50}
-          priority
+          priority={index === 0}
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-contain w-full h-full rounded-2xl p-2"
         />

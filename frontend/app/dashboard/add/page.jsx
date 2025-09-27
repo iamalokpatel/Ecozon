@@ -152,7 +152,7 @@ const AddProducts = () => {
               width={160}
               height={160}
               quality={50}
-              priority
+              priority={index === 0}
               sizes="(max-width: 768px) 100vw, 33vw"
               className="object-cover rounded-xl border mt-2"
             />

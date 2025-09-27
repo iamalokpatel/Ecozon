@@ -115,7 +115,7 @@ const Navbar = () => {
             width={48}
             height={24}
             quality={50}
-            priority
+            priority={index === 0}
             sizes="(max-width: 768px) 100vw, 33vw"
             className="bg-transparent rounded-full shadow-none"
           />

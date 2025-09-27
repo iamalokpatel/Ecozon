@@ -98,10 +98,10 @@ const ProductDetail = () => {
           <Image
             src={product.image}
             alt={product.title}
-            width={600} // ✅ required
-            height={544} // ✅ required
+            width={600}
+            height={544}
             quality={50}
-            priority
+            priority={index === 0}
             sizes="(max-width: 768px) 100vw, 33vw"
             className="w-full h-[34rem] object-contain rounded"
           />
