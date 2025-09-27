@@ -103,9 +103,8 @@ const UserOrdersPage = () => {
                         alt={product?.name || "Product Image"}
                         height={80}
                         width={80}
-                        quality={50}
-                        priority={index === 0}
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        fill
+                        priority
                         className="object-cover rounded"
                       />
                       {order.items.length > 1 && (

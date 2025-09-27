@@ -19,8 +19,9 @@ const OrderSummary = ({ products, onQuantityChange }) => {
             alt={item.product.title}
             width={80}
             height={80}
-            priority={index === 0}
-            className="object-contain"
+            fill
+            priority
+            className="object-cover"
           />
           <div className="flex-1">
             <p className="font-medium text-gray-900">{item.product.title}</p>

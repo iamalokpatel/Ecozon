@@ -197,9 +197,8 @@ const EditProduct = ({ params }) => {
                 alt="Preview"
                 width={128}
                 height={128}
-                quality={50}
-                priority={index === 0}
-                sizes="(max-width: 768px) 100vw, 33vw"
+                fill
+                priority
                 className="mt-3 object-cover border rounded-md shadow "
               />
             ) : (

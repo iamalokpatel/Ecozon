@@ -63,8 +63,8 @@ const FeaturedProducts = () => {
                     alt={product.title}
                     width={600}
                     height={400}
-                    quality={50}
-                    priority={index === 0}
+                    fill
+                    priority
                     className="object-cover w-full h-full"
                   />
                 </div>

@@ -114,9 +114,8 @@ const Navbar = () => {
             }}
             width={48}
             height={24}
-            quality={50}
-            priority={index === 0}
-            sizes="(max-width: 768px) 100vw, 33vw"
+            fill
+            priority
             className="bg-transparent rounded-full shadow-none"
           />
           <p className="text-lg font-semibold flex mt-[6px]">Ecozon</p>

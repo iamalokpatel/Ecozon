@@ -151,9 +151,8 @@ const AddProducts = () => {
               alt="Preview"
               width={160}
               height={160}
-              quality={50}
-              priority={index === 0}
-              sizes="(max-width: 768px) 100vw, 33vw"
+              fill
+              priority
               className="object-cover rounded-xl border mt-2"
             />
           )}
