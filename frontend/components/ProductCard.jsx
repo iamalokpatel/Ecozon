@@ -23,28 +23,33 @@ const ProductCard = ({ product }) => {
   return (
     <div
       onClick={handleClick}
-      className=" w-60 bg-[#FFFFFF]   overflow-hidden transition-shadow duration-400 cursor-pointer rounded shadow-4xl transition-transform duration-500 hover:scale-[1.04] hover:shadow-2xl gap-2  "
+      className=" w-60 bg-[#FFFFFF] p-4 flex flex-col gap-2 overflow-hidden transition-shadow duration-400 cursor-pointer rounded shadow-4xl transition-transform duration-500 hover:scale-[1.04] hover:shadow-2xl gap-2  "
     >
-      <div className="w-full h-50">
+      <div className="w-full h-50 overflow-hidden">
         <Image
           src={product.image}
           alt={product.title}
           width={200}
           height={200}
-          className="object-cover w-full h-full rounded p-2"
+          className="object-cover w-full h-full rounded"
         />
       </div>
-      <div className="p-4 space-y-1">
-        <h3 className=" w-full overflow-hidden whitespace-nowrap text-ellipsis text-sm text-gray-600 text-center">
+      <div className="">
+        <h3 className=" w-full truncate text-sm text-gray-600 text-center">
           {product.title}
         </h3>
-        <div className=" flex gap-4 center justify-center">
-          <p className="mt-2 text-gray-600 center">₹{product.price}</p>
-          <p className="text-sm mt-2   text-gray-400 line-through">
-            {product.price + (product.price / 100) * 10}
-          </p>
-          <p className="text-sm mt-2  font-medium text-green-600">10% off</p>
-        </div>
+      </div>
+
+      <div className=" flex flex-row gap-2 items-center justify-center">
+        <p className="inline-block text-base font-medium text-gray-900">
+          ₹{product.price}
+        </p>
+        <p className="text-sm text-gray-400 line-through">
+          {product.price + (product.price / 100) * 10}
+        </p>
+        <p className="text-sm text-green-700 tracking-tight font-medium">
+          10% off
+        </p>
       </div>
     </div>
   );

@@ -124,17 +124,16 @@ const Navbar = () => {
         >
           <button
             type="submit"
-            className="text-gray-400 flex items-center justify-center cursor-pointer"
+            className="text-sm text-gray-600 flex items-center justify-center cursor-pointer"
           >
             <Search size={18} />
-            Search
           </button>
           <input
             type="text"
-            placeholder="for Products Brands and More..."
+            placeholder="Search for Products Brands and More..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-grow outline-none px-1 py-1 bg-gray-100 text-sm"
+            className="flex-grow outline-none px-1 py-1 bg-gray-100 text-sm text-gray-600  placeholder-gray-500 "
           />
         </form>
       </div>
