@@ -5,9 +5,9 @@ import Link from "next/link";
 const MainFooter = () => {
   return (
     <footer className="w-full pt-6">
-      <div className="w-full h-auto bg-[#1f1f1f] text-white mt-2">
+      <div className="w-full h-auto bg-[#1f1f1f] text-white mt-2 px-4">
         {/* Top Grid Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 px-6 md:px-12 lg:px-[60px] pt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 pt-10">
           {/* ABOUT */}
           <div className="flex flex-col">
             <div className="flex flex-col text-[#878787] text-[12px] mb-3">
@@ -231,9 +231,9 @@ const MainFooter = () => {
         </div>
         <div>
           {/* Bottom Section*/}
-          <div className="border-t border-[#454d5e] py-[25px] mt-10 w-full flex flex-col lg:flex-row md:flex-col justify-between items-center gap-4 md:gap-2 px-4">
+          <div className="border-t border-[#454d5e] py-[25px] mt-10 w-full flex flex-col lg:flex-row md:flex-col justify-between items-center gap-4 md:gap-2">
             {/* Left Section */}
-            <div className="flex flex-row items-center justify-center gap-5 md:gap-20 text-xs px-4">
+            <div className="flex flex-row items-center justify-center gap-4 md:gap-20 text-xs">
               <div className="flex items-center gap-2">
                 <img
                   src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/sell-image-9de8ef.svg"
