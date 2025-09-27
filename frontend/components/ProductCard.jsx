@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
           alt={product.title}
           width={200}
           height={200}
-          className="object-cover w-full h-full rounded"
+          className="object-cover rounded"
         />
       </div>
       <div className="">
